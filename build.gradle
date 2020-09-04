@@ -3,6 +3,7 @@ plugins {
 	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
 	id 'java'
 	id 'war'
+	id 'jacoco'
 }
 
 group = 'ar.edu.unq.desapp.grupo-L-022020'
@@ -27,5 +28,26 @@ dependencies {
 }
 
 test {
-	useJUnitPlatform()
+    finalizedBy jacocoTestReport
+}
+
+// Code coverage
+jacoco {
+    toolVersion = '0.8.5'
+    applyTo junitPlatformTest
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        html.enabled true
+    }
+}
+
+check.dependsOn jacocoTestReport
+
+junitPlatformTest {
+    jacoco {
+        destinationFile = file("$buildDir/jacoco/test.exec")
+    }
 }
