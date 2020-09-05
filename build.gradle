@@ -45,7 +45,8 @@ dependencies {
 }
 
 test {
-    finalizedBy jacocoTestReport
+	useJUnitPlatform()
+//    finalizedBy jacocoTestReport
 }
 
 // Code coverage
