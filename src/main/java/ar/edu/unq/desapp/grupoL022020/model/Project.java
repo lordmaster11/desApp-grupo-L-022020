@@ -1,15 +1,41 @@
 package ar.edu.unq.desapp.grupoL022020.model;
 
-import java.util.Date;
-import java.util.List;
+import java.util.Calendar;
 
 public class Project {
-	private String name;
-	private String factor;
-	private Location location;
-	private Date dateInitial;
-	private Date dateEnding;
-	private Integer percentageMinimun;
-	private Integer percentageMissing;
-	private List<User> donors;
+	
+	Location locationProject;
+	Integer factor = 1000;
+	Integer percentageRequiredForClosing = 100; //between 50 and 100
+	String fantasyName;
+	Calendar projectStart;
+	Calendar endOfProject;
+
+	public Project(Location location) {
+		locationProject = location;	
+	}
+	
+	public Integer calculateMoneyNeeded() {
+		return factor * locationProject.getPopulation();
+	}
+
+	public void setFactor(Integer factor) {
+		this.factor = factor;
+	}
+
+	public void setPercentageRequiredForClosing(Integer percentageRequiredForClosing) {
+		this.percentageRequiredForClosing = percentageRequiredForClosing;
+	}
+
+	public void setFantasyName(String fantasyName) {
+		this.fantasyName = fantasyName;
+	}
+
+	public void setProjectStart(Calendar projectStart) {
+		this.projectStart = projectStart;
+	}
+
+	public void setEndOfProject(Calendar endOfProject) {
+		this.endOfProject = endOfProject;
+	}
 }
