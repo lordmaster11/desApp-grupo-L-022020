@@ -18,8 +18,7 @@ public class Administrator {
 	
 	public void addUser(User user) {
 		users.add(user);
-	}
-	
+	}	
 	public List<User> top10DonorUsers() {
 		List<User> user= new ArrayList<User>();
 		user = users.stream()
@@ -27,8 +26,16 @@ public class Administrator {
 				.collect(Collectors.toList());
 
 		return user.stream().limit(10).collect(Collectors.toList());
-	}	
-	
+	}
+	public List<User> bestDonors() {
+		List<User> user= new ArrayList<User>();
+		user = users.stream()
+				.sorted(Comparator.comparing(User::totalDonation).reversed())
+				.collect(Collectors.toList());
+
+		return user.stream().limit(10).collect(Collectors.toList());
+	}
+		
 	public List<Project> getProjects() {
 		return projects;
 	}
