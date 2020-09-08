@@ -20,6 +20,9 @@ eclipseJdt {
 compileJava.options.encoding = 'utf-8'
 compileTestJava.options.encoding = 'utf-8'
 
+apply plugin: 'java'
+apply plugin: 'jacoco'
+
 group = 'ar.edu.unq.desapp.grupo-L-022020'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
@@ -44,24 +47,17 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 }
 
-test {
-	useJUnitPlatform()
-//    finalizedBy jacocoTestReport
-}
-
-// Code coverage
-jacoco {
-    toolVersion = "0.8.5"
-    reportsDir = file("$buildDir/customJacocoReportDir")   
-}
-
 jacocoTestReport {
     reports {
-        xml.enabled true
-        csv.enabled false
-        html.destination file("${buildDir}/jacocoHtml")
+        xml.enabled = true
+        html.enabled = true
     }
+    dependsOn test
 }
 
 check.dependsOn jacocoTestReport
 
+test {
+	useJUnitPlatform()
+	finalizedBy jacocoTestReport
+}
