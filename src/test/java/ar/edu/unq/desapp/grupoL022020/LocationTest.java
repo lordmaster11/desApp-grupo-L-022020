@@ -1,5 +1,6 @@
 package ar.edu.unq.desapp.grupoL022020;
 
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
@@ -8,7 +9,7 @@ import ar.edu.unq.desapp.grupoL022020.model.Location;
 
 public class LocationTest {
 	@Test
-	public void createNewLocation() {
+	public void createNewLocation(){
 		Location location = new Location();
 		location.setHasConnectivity(false);
 		location.setName("Mendoza");

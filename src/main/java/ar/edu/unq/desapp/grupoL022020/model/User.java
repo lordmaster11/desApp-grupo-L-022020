@@ -19,6 +19,17 @@ public class User {
 			this.donations = new ArrayList<Donation>();
 	}
 
+	public Integer totalDonation() {
+		Integer myTotalDonation = 0;
+		for (Donation donation : donations) {
+			myTotalDonation = myTotalDonation + donation.amount;
+		}
+		
+		int sum = donations.stream()
+				.mapToInt(Donation::getAmount).sum();
+		return sum;
+	}
+
 	public String getName() {
 		return name;
 	}

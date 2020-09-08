@@ -1,5 +1,6 @@
 package ar.edu.unq.desapp.grupoL022020.model;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class Project {
@@ -10,9 +11,11 @@ public class Project {
 	String fantasyName;
 	Calendar projectStart;
 	Calendar endOfProject;
-
+	ArrayList<Donation> donations;
+	
 	public Project(Location location) {
 		locationProject = location;	
+		donations = new ArrayList<Donation>();
 	}
 	
 	public Integer calculateMoneyNeeded() {

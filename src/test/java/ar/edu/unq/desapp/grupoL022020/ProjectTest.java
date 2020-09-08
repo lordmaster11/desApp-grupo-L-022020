@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 import java.util.Calendar;
-
 import org.junit.jupiter.api.Test;
 
 import ar.edu.unq.desapp.grupoL022020.model.Location;
@@ -18,7 +17,7 @@ public class ProjectTest {
 		when(location.getPopulation()).thenReturn(300);
 
 		Project myProject = new Project(location);
-		assertEquals(1000,myProject.calculateMoneyNeeded(), 300000);
+		assertEquals(myProject.calculateMoneyNeeded(), 300000);
 	}
 	@Test
 	public void createProjectWithFactor200() {
@@ -27,7 +26,7 @@ public class ProjectTest {
 
 		Project myProject = new Project(location);
 		myProject.setFactor(200);
-		assertEquals(1000,myProject.calculateMoneyNeeded(), 60000);
+		assertEquals(myProject.calculateMoneyNeeded(), 60000);
 	}
 	@Test
 	public void createProjectWCompleteWithFactor10() {
@@ -41,6 +40,6 @@ public class ProjectTest {
 		myProject.setPercentageRequiredForClosing(75);
 		myProject.setProjectStart(Calendar.getInstance());
 		
-		assertEquals(1000,myProject.calculateMoneyNeeded(), 3000);
+		assertEquals(myProject.calculateMoneyNeeded(), 3000);
 	}
 }
