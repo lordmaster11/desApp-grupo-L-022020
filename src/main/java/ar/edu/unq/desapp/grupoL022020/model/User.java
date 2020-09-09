@@ -1,6 +1,7 @@
 package ar.edu.unq.desapp.grupoL022020.model;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class User {
@@ -17,17 +18,6 @@ public class User {
 			this.password = aPassword;
 			this.points = 0;
 			this.donations = new ArrayList<Donation>();
-	}
-
-	public Integer totalDonation() {
-		Integer myTotalDonation = 0;
-		for (Donation donation : donations) {
-			myTotalDonation = myTotalDonation + donation.amount;
-		}
-		
-		int sum = donations.stream()
-				.mapToInt(Donation::getAmount).sum();
-		return sum;
 	}
 
 	public String getName() {
@@ -76,5 +66,38 @@ public class User {
 
 	public void setDonations(List<Donation> donations) {
 		this.donations = donations;
+	}
+	
+	public void addDonation(Donation donation) {
+		this.donations.add(donation);
+	}
+	
+	public void donate(Integer money, Project aProject){
+		Integer accumulatedPoints = this.points;
+		Calendar currentDate = Calendar.getInstance();
+		Integer population = aProject.getLocationProject().getPopulation();
+		
+		if (money > 1000){
+			accumulatedPoints = money;
+		}	
+		if (population < 2000){
+			accumulatedPoints += money*2;
+		}	
+		
+		setPoints(accumulatedPoints);
+		Donation donation = new Donation(this, aProject, currentDate, money);
+		this.addDonation(donation);
+		aProject.addDonor(this);
 	}	
+	
+	public Integer totalDonation() {
+		Integer myTotalDonation = 0;
+		for (Donation donation : donations) {
+			myTotalDonation = myTotalDonation + donation.getAmount();
+		}
+		
+		int sum = donations.stream()
+				.mapToInt(Donation::getAmount).sum();
+		return sum;
+	}
 }

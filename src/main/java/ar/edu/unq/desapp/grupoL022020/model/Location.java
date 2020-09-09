@@ -1,11 +1,10 @@
 package ar.edu.unq.desapp.grupoL022020.model;
 
 public class Location {
-
-	String name;
-	String province;
-	Integer population;
-	Boolean hasConnectivity;
+	private String name;
+	private String province;
+	private Integer population;
+	private Boolean hasConnectivity;
 	
 	public Location() {}
 	
