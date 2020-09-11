@@ -1,7 +1,6 @@
 package ar.edu.unq.desapp.grupoL022020;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 import java.util.Calendar;
@@ -9,7 +8,6 @@ import java.util.GregorianCalendar;
 
 import org.junit.jupiter.api.Test;
 
-import ar.edu.unq.desapp.grupoL022020.model.Donation;
 import ar.edu.unq.desapp.grupoL022020.model.Location;
 import ar.edu.unq.desapp.grupoL022020.model.Project;
 import ar.edu.unq.desapp.grupoL022020.model.User;

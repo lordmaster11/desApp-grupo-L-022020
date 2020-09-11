@@ -11,12 +11,12 @@ public class Project {
 	private String fantasyName;
 	private Calendar projectStart;
 	private Calendar endOfProject;
-	private ArrayList<Donation> donations;
+//	private List<Donation> donations;  Hay q ver si es mejor tener donaciones, donantes o ambos; o sino buscar dentro de donaciones a los donates!!!!!!!
 	private List<User> donors;
 
 	public Project(Location location) {
 		locationProject = location;	
-		donations = new ArrayList<Donation>();
+//		donations = new ArrayList<Donation>();
 		this.donors = new ArrayList<User>();
 	}
 	
@@ -56,7 +56,23 @@ public class Project {
 		return donors;
 	}
 
-	public void setLocationProject(Location locationProject) {
-		this.locationProject = locationProject;
+	public Integer getFactor() {
+		return factor;
+	}
+
+	public Integer getPercentageRequiredForClosing() {
+		return percentageRequiredForClosing;
+	}
+
+	public String getFantasyName() {
+		return fantasyName;
+	}
+
+	public Calendar getProjectStart() {
+		return projectStart;
+	}
+
+	public Calendar getEndOfProject() {
+		return endOfProject;
 	}
 }
