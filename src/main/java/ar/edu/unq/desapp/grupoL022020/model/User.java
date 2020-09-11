@@ -11,13 +11,16 @@ public class User {
 	private String nick;
 	private Integer points;
 	private List<Donation> donations;
+	private Calendar lastDonationDate;
 			
-	public User(String aName, String aMail, String aPassword) {
+	public User(String aName, String aMail, String aPassword, String aNick) {
 			this.name = aName;
 			this.mail = aMail;
 			this.password = aPassword;
+			this.nick = aNick;
 			this.points = 0;
 			this.donations = new ArrayList<Donation>();
+			this.lastDonationDate = null;
 	}
 
 	public String getName() {
@@ -63,11 +66,15 @@ public class User {
 	public List<Donation> getDonations() {
 		return donations;
 	}
-
-	public void setDonations(List<Donation> donations) {
-		this.donations = donations;
-	}
 	
+	public Calendar getLastDonationDate() {
+		return lastDonationDate;
+	}
+
+	public void setLastDonationDate(Calendar lastDonationDate) {
+		this.lastDonationDate = lastDonationDate;
+	}
+
 	public void addDonation(Donation donation) {
 		this.donations.add(donation);
 	}
@@ -83,8 +90,12 @@ public class User {
 		if (population < 2000){
 			accumulatedPoints += money*2;
 		}	
+		if (this.lastDonationDate != null && (currentDate.get(Calendar.MONTH) == lastDonationDate.get(Calendar.MONTH))){
+			accumulatedPoints += 500;
+		}	
 		
-		setPoints(accumulatedPoints);
+		this.lastDonationDate = currentDate;
+		this.points += accumulatedPoints;
 		Donation donation = new Donation(this, aProject, currentDate, money);
 		this.addDonation(donation);
 		aProject.addDonor(this);
