@@ -3,11 +3,14 @@ package ar.edu.unq.desapp.grupoL022020;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import ar.edu.unq.desapp.grupoL022020.model.Donation;
 import ar.edu.unq.desapp.grupoL022020.model.Location;
 import ar.edu.unq.desapp.grupoL022020.model.Project;
 import ar.edu.unq.desapp.grupoL022020.model.User;
@@ -15,7 +18,7 @@ import ar.edu.unq.desapp.grupoL022020.model.User;
 public class UserTest {
 	@Test
 	public void newUser(){ 
-		User aUser = new User ("Juan", "juan@gmail.com", "1234", "Master");
+		User aUser = new User.UserBuilder("Juan", "juan@gmail.com", "1234", "Master").build();
 		
 		assertEquals(aUser.getName(), "Juan");		
 		assertEquals(aUser.getMail(), "juan@gmail.com");
@@ -26,14 +29,14 @@ public class UserTest {
 	
 	@Test
 	public void settersUser(){ 
-		User aUser = new User ("Juan", "juan@gmail.com", "1234", "Master");
-		
-		aUser.setName("Juan Carlos");
-		aUser.setMail("juanca@gmail.com");
-		aUser.setPassword("12345");
-		aUser.setNick("Juanca");
-		aUser.setPoints(10000);
-		
+		User aUser = new User.UserBuilder ("Juan", "juan@gmail.com", "1234", "Master")
+								.withName("Juan Carlos")
+								.withMail("juanca@gmail.com")
+								.withPassword("12345")
+								.withNick("Juanca")
+								.withPoints(10000)
+								.build();
+
 		assertEquals(aUser.getName(), "Juan Carlos");		
 		assertEquals(aUser.getMail(), "juanca@gmail.com");
 		assertEquals(aUser.getPassword(), "12345");
@@ -43,7 +46,7 @@ public class UserTest {
 	
 	@Test
 	public void donateInAProjectWhithLessThan$1000(){ 	
-		User aUser = new User ("Pepe", "pepe@gmail.com", "1234", "Argento");
+		User aUser = new User.UserBuilder("Pepe", "pepe@gmail.com", "1234", "Argento").build();
 
 		Project project = mock(Project.class);
 		Location location = mock(Location.class);
@@ -59,7 +62,7 @@ public class UserTest {
 	
 	@Test
 	public void donateInAProjectWhithMoreThan$1000(){ 	
-		User aUser = new User ("Pepe", "pepe@gmail.com", "1234", "Argento");
+		User aUser = new User.UserBuilder("Pepe", "pepe@gmail.com", "1234", "Argento").build();
 
 		Project project = mock(Project.class);
 		Location location = mock(Location.class);
@@ -75,7 +78,7 @@ public class UserTest {
 	
 	@Test
 	public void donateInAProjectInATownWhithLessThan2000Populations(){ 	
-		User aUser = new User ("Esteban", "esteban@gmail.com", "1234", "Kito");
+		User aUser = new User.UserBuilder("Esteban", "esteban@gmail.com", "1234", "Kito").build();
 
 		Project project = mock(Project.class);
 		Location location = mock(Location.class);
@@ -91,7 +94,7 @@ public class UserTest {
 	
 	@Test
 	public void donateInAProjectInATownWhithLessThan2000PopulationsAndMoreThan$1000(){ 	
-		User aUser = new User ("Francisco", "fran@gmail.com", "1234", "pancho");
+		User aUser = new User.UserBuilder("Francisco", "fran@gmail.com", "1234", "pancho").build();
 
 		Project project = mock(Project.class);
 		Location location = mock(Location.class);
@@ -107,7 +110,7 @@ public class UserTest {
 	
 	@Test
 	public void donateInTwoAProjectsInTheSameMonth(){ 	
-		User aUser = new User ("Fede", "fede@gmail.com", "1234", "facha");
+		User aUser = new User.UserBuilder("Fede", "fede@gmail.com", "1234", "facha").build();
 
 		Project project = mock(Project.class);
 		Location location = mock(Location.class);
@@ -125,13 +128,14 @@ public class UserTest {
 		assertEquals(aUser.getPoints(), 8000);		
 		assertEquals(aUser.getDonations().size(), 2);
 		assertEquals(aUser.totalDonation(), 3500);
-	}
+}
 	
 	@Test
 	public void donateInTwoAProjectsIndifferentMonth(){ 	
-		User aUser = new User ("Fede", "fede@gmail.com", "1234", "facha");
-
-		aUser.setLastDonationDate(new GregorianCalendar(2020, Calendar.APRIL,11));
+		User aUser = new User.UserBuilder("Fede", "fede@gmail.com", "1234", "facha")
+								.withLastDonationDate(new GregorianCalendar
+														(2020, Calendar.APRIL,11))
+								.build();
 		
 		Project project2 = mock(Project.class);
 		Location location2 = mock(Location.class);
@@ -143,4 +147,88 @@ public class UserTest {
 		assertEquals(aUser.getPoints(), 1500);
 		assertEquals(aUser.totalDonation(), 1500);
 	}
+	
+	@Test
+	public void myTop10DonationWith12Donation(){ 
+		
+		Donation donation1 = mock(Donation.class);
+		when(donation1.getAmount()).thenReturn(1);
+		Donation donation2 = mock(Donation.class);
+		when(donation2.getAmount()).thenReturn(10);
+		Donation donation3 = mock(Donation.class);
+		when(donation3.getAmount()).thenReturn(30);
+		Donation donation4 = mock(Donation.class);
+		when(donation4.getAmount()).thenReturn(40);
+		Donation donation5 = mock(Donation.class);
+		when(donation5.getAmount()).thenReturn(50);
+		Donation donation6 = mock(Donation.class);
+		when(donation6.getAmount()).thenReturn(60);
+		Donation donation7 = mock(Donation.class);
+		when(donation7.getAmount()).thenReturn(70);
+		Donation donation8 = mock(Donation.class);
+		when(donation8.getAmount()).thenReturn(80);
+		Donation donation9 = mock(Donation.class);
+		when(donation9.getAmount()).thenReturn(90);
+		Donation donation10 = mock(Donation.class);
+		when(donation10.getAmount()).thenReturn(100);
+		Donation donation11 = mock(Donation.class);
+		when(donation11.getAmount()).thenReturn(1000);
+		Donation donation12 = mock(Donation.class);
+		when(donation12.getAmount()).thenReturn(2);	
+		
+		List<Donation> donations = new ArrayList<Donation>();
+		donations.add(donation1);
+		donations.add(donation2);
+		donations.add(donation3);
+		donations.add(donation4);
+		donations.add(donation5);
+		donations.add(donation6);
+		donations.add(donation7);
+		donations.add(donation8);
+		donations.add(donation9);
+		donations.add(donation10);
+		donations.add(donation11);
+		donations.add(donation12);
+		User aUser = new User.UserBuilder("Mariano", "mar23@gmail.com", "1234", "facha")
+								.withDonations(donations).
+								build();
+
+		assertEquals(aUser.myTop10Donation().size(), 10);
+		assertEquals(aUser.myTop10Donation().get(0), donation11);
+		assertEquals(aUser.myTop10Donation().get(1), donation10);
+		assertEquals(aUser.myTop10Donation().get(2), donation9);
+		assertEquals(aUser.myTop10Donation().get(3), donation8);
+		assertEquals(aUser.myTop10Donation().get(4), donation7);
+		assertEquals(aUser.myTop10Donation().get(5), donation6);
+		assertEquals(aUser.myTop10Donation().get(6), donation5);
+		assertEquals(aUser.myTop10Donation().get(7), donation4);
+		assertEquals(aUser.myTop10Donation().get(8), donation3);
+		assertEquals(aUser.myTop10Donation().get(9), donation2);
+	}
+	
+	@Test
+	public void myTop10DonationWith3Donation(){ 
+		
+		Donation donation1 = mock(Donation.class);
+		when(donation1.getAmount()).thenReturn(110);
+		Donation donation2 = mock(Donation.class);
+		when(donation2.getAmount()).thenReturn(10);
+		Donation donation3 = mock(Donation.class);
+		when(donation3.getAmount()).thenReturn(30);
+		
+		List<Donation> donations = new ArrayList<Donation>();
+		donations.add(donation1);
+		donations.add(donation2);
+		donations.add(donation3);
+
+		User aUser = new User.UserBuilder("Mariano", "mar23@gmail.com", "1234", "facha")
+								.withDonations(donations).
+								build();
+
+		assertEquals(aUser.myTop10Donation().size(), 3);
+		assertEquals(aUser.myTop10Donation().get(0), donation1);
+		assertEquals(aUser.myTop10Donation().get(1), donation3);
+		assertEquals(aUser.myTop10Donation().get(2), donation2);
+	}
+	
 }
