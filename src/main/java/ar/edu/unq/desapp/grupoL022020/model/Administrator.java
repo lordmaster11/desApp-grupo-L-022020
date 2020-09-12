@@ -18,42 +18,45 @@ public class Administrator {
 	
 	public void addUser(User user) {
 		users.add(user);
-	}	
-	public List<User> top10DonorUsers() {
-		List<User> user= new ArrayList<User>();
-		user = users.stream()
-				.sorted(Comparator.comparing(User::totalDonation).reversed())
-				.collect(Collectors.toList());
-
-		return user.stream().limit(10).collect(Collectors.toList());
 	}
-	public List<User> bestDonors() {
-		List<User> user= new ArrayList<User>();
-		user = users.stream()
+	
+	//Tarea de Usuario con rol gestor de Proyectos // User abstracto?
+	public void createNewProject(Location location) throws ProjetException {
+		Project newProject = new Project.ProjectBuilder(location).build();
+		projects.add(newProject);
+	}
+	
+	public List<User> top10DonorUsers() {
+		return users.stream()
 				.sorted(Comparator.comparing(User::totalDonation).reversed())
+				.limit(10)
 				.collect(Collectors.toList());
+	}
+	
+	public List<Donation> best10Donations() {
+		List<Donation> allDonations= new ArrayList<Donation>();
+		for(User user:users) {
+			allDonations.addAll(user.myTop10Donation());
+		}
+		return allDonations.stream()
+							.sorted(Comparator.comparing(Donation::getAmount).reversed())
+							.limit(10)
+							.collect(Collectors.toList());
 
-		return user.stream().limit(10).collect(Collectors.toList());
+	}
+	
+	public List<Project> donationFreeLocationsForLonger() {
+		return projects.stream()
+						.sorted(Comparator.comparing(Project::getLastDonation))
+						.limit(10)
+						.collect(Collectors.toList());
 	}
 		
-	public List<Project> getProjects() {
-		return projects;
-	}
 	public void setProjects(List<Project> projects) {
 		this.projects = projects;
 	}
+	
 	public List<Location> getLocations() {
 		return locations;
-	}
-	public void setLocations(List<Location> locations) {
-		this.locations = locations;
-	}
-
-	public List<User> getUsers() {
-		return users;
-	}
-
-	public void setUsers(List<User> users) {
-		this.users = users;
 	}
 }
