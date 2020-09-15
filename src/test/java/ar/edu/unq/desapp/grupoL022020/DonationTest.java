@@ -1,8 +1,7 @@
 package ar.edu.unq.desapp.grupoL022020;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.util.Calendar;
 
@@ -31,5 +30,4 @@ class DonationTest {
 		assertEquals(donation.getDateDonation(), date);
 		assertEquals(donation.getAmount(), 500);
 	}
-
 }

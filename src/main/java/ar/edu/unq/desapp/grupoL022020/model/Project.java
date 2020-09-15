@@ -11,7 +11,7 @@ public class Project {
 	private String fantasyName;
 	private Calendar projectStart;
 	private Calendar endOfProject;
-	private List<Donation> donations;  //Hay q ver si es mejor tener donaciones, donantes o ambos; o sino buscar dentro de donaciones a los donates!!!!!!!
+	private List<Donation> donations;
 	private List<User> donors;
 	private Calendar lastDonation;
 
@@ -126,19 +126,19 @@ public static class ProjectBuilder {
         return this;
     }
 
-    public Project build() throws ProjetException {
+    public Project build() throws ProjetcException {
     	Project project =  new Project(this);
     	validateProjectObject(project);
         return project;
     }
 
-	private void validateProjectObject(Project project) throws ProjetException {
+	private void validateProjectObject(Project project) throws ProjetcException {
 		if(project.percentageRequiredForClosing > 100 ||project.percentageRequiredForClosing  < 50 ){
-            throw new ProjetException(
+            throw new ProjetcException(
                     "The percentage required to close the project must be between 50 and 100 percent");
             }
-		if(project.factor < 0 || project.factor >100000) {
-            throw new ProjetException(
+		if(project.factor < 0 || project.factor > 100000) {
+            throw new ProjetcException(
                     "The project factor must be between 0 and 100000");
             }
 	} 

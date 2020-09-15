@@ -5,9 +5,7 @@ public class Location {
 	private String province;
 	private Integer population;
 	private Boolean hasConnectivity;
-	
-	public Location() {}
-	
+		
 	public Integer getPopulation() {
 		return population;
 	}

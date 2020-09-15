@@ -8,12 +8,14 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import ar.edu.unq.desapp.grupoL022020.model.Donation;
 import ar.edu.unq.desapp.grupoL022020.model.Location;
 import ar.edu.unq.desapp.grupoL022020.model.Project;
 import ar.edu.unq.desapp.grupoL022020.model.User;
+import ar.edu.unq.desapp.grupoL022020.model.UserException;
 
 public class UserTest {
 	@Test
@@ -45,7 +47,7 @@ public class UserTest {
 	}
 	
 	@Test
-	public void donateInAProjectWhithLessThan$1000(){ 	
+	public void donateInAProjectWhithLessThan1000() throws UserException{ 	
 		User aUser = new User.UserBuilder("Pepe", "pepe@gmail.com", "1234", "Argento").build();
 
 		Project project = mock(Project.class);
@@ -61,7 +63,7 @@ public class UserTest {
 	}
 	
 	@Test
-	public void donateInAProjectWhithMoreThan$1000(){ 	
+	public void donateInAProjectWhithMoreThan1000() throws UserException{ 	
 		User aUser = new User.UserBuilder("Pepe", "pepe@gmail.com", "1234", "Argento").build();
 
 		Project project = mock(Project.class);
@@ -77,7 +79,7 @@ public class UserTest {
 	}
 	
 	@Test
-	public void donateInAProjectInATownWhithLessThan2000Populations(){ 	
+	public void donateInAProjectInATownWhithLessThan2000Populations() throws UserException{ 	
 		User aUser = new User.UserBuilder("Esteban", "esteban@gmail.com", "1234", "Kito").build();
 
 		Project project = mock(Project.class);
@@ -93,7 +95,7 @@ public class UserTest {
 	}
 	
 	@Test
-	public void donateInAProjectInATownWhithLessThan2000PopulationsAndMoreThan$1000(){ 	
+	public void donateInAProjectInATownWhithLessThan2000PopulationsAndMoreThan1000() throws UserException{ 	
 		User aUser = new User.UserBuilder("Francisco", "fran@gmail.com", "1234", "pancho").build();
 
 		Project project = mock(Project.class);
@@ -109,29 +111,29 @@ public class UserTest {
 	}
 	
 	@Test
-	public void donateInTwoAProjectsInTheSameMonth(){ 	
-		User aUser = new User.UserBuilder("Fede", "fede@gmail.com", "1234", "facha").build();
+	public void donateInTwoAProjectsInTheSameMonth() throws UserException{ 	
+		User aUser = new User.UserBuilder("Fede", "fede@gmail.com", "12345", "facha").build();
 
 		Project project = mock(Project.class);
 		Location location = mock(Location.class);
 		when(project.getLocationProject()).thenReturn(location);
-		when(location.getPopulation()).thenReturn(1000);
+		when(location.getPopulation()).thenReturn(500);
 		
 		Project project2 = mock(Project.class);
 		Location location2 = mock(Location.class);
 		when(project2.getLocationProject()).thenReturn(location2);
 		when(location2.getPopulation()).thenReturn(30000);
 								
-		aUser.donate(2000, project);
+		aUser.donate(3000, project);
 		aUser.donate(1500, project2);
 
-		assertEquals(aUser.getPoints(), 8000);		
+		assertEquals(aUser.getPoints(), 11000);		
 		assertEquals(aUser.getDonations().size(), 2);
-		assertEquals(aUser.totalDonation(), 3500);
-}
+		assertEquals(aUser.totalDonation(), 4500);
+    }
 	
 	@Test
-	public void donateInTwoAProjectsIndifferentMonth(){ 	
+	public void donateInTwoAProjectsIndifferentMonth() throws UserException{ 	
 		User aUser = new User.UserBuilder("Fede", "fede@gmail.com", "1234", "facha")
 								.withLastDonationDate(new GregorianCalendar
 														(2020, Calendar.APRIL,11))
@@ -150,7 +152,6 @@ public class UserTest {
 	
 	@Test
 	public void myTop10DonationWith12Donation(){ 
-		
 		Donation donation1 = mock(Donation.class);
 		when(donation1.getAmount()).thenReturn(1);
 		Donation donation2 = mock(Donation.class);
@@ -208,7 +209,6 @@ public class UserTest {
 	
 	@Test
 	public void myTop10DonationWith3Donation(){ 
-		
 		Donation donation1 = mock(Donation.class);
 		when(donation1.getAmount()).thenReturn(110);
 		Donation donation2 = mock(Donation.class);
@@ -231,4 +231,39 @@ public class UserTest {
 		assertEquals(aUser.myTop10Donation().get(2), donation2);
 	}
 	
+	@Test
+	public void theUserIsNotAddedToTheDonorList() throws UserException{
+		User aUser = new User.UserBuilder("Oscar", "oscar@gmail.com", "12345", "Oscar").build();
+
+		Project project = mock(Project.class);
+		Location location = mock(Location.class);
+		when(project.getLocationProject()).thenReturn(location);
+		when(location.getPopulation()).thenReturn(100000);
+		
+	    ArrayList<User> donors = new ArrayList<User>();    
+	    donors.add(aUser);
+
+		when(project.getDonors()).thenReturn(donors);
+		
+		aUser.donate(1000, project);
+		aUser.donate(5000, project);
+
+	    assertEquals(project.getDonors().size(), 1);
+	}
+	
+	@Test
+	public void userException() throws UserException{
+		User aUser = new User.UserBuilder("Felipe", "felipe@gmail.com", "12345", "Felix").build();
+
+		Project project = mock(Project.class);
+		Location location = mock(Location.class);
+		when(project.getLocationProject()).thenReturn(location);
+		when(location.getPopulation()).thenReturn(100000);
+		
+		UserException exception = Assertions.assertThrows(UserException.class, () -> {
+			aUser.donate(0, project);
+		});	
+	    
+		assertEquals("The donation cannot be less than 0", exception.getMessage());
+	}
 }
