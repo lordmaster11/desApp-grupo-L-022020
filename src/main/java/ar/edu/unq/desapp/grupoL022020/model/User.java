@@ -57,27 +57,31 @@ public class User {
 		this.donations.add(donation);
 	}
 	
-	public void donate(Integer money, Project aProject){
+	public void donate(Integer money, Project aProject) throws UserException{
 		Integer accumulatedPoints = this.points;
 		Calendar currentDate = Calendar.getInstance();
 		Integer population = aProject.getLocationProject().getPopulation();
 		
-		//Donacion no puede ser menor igual a 0 -- Exception
+		if((money <= 0)){
+			throw new UserException("The donation cannot be less than 0");
+	    }
 		if(money > 1000){
 			accumulatedPoints = money;
 		}	
 		if(population < 2000){
 			accumulatedPoints += money*2;
 		}	
-		if(this.lastDonationDate != null && 
-		   currentDate.get(Calendar.MONTH) == lastDonationDate.get(Calendar.MONTH)){
+		if(this.lastDonationDate != null && currentDate.get(Calendar.MONTH) == lastDonationDate.get(Calendar.MONTH)){
 			accumulatedPoints += 500;
 		}	
 		this.lastDonationDate = currentDate;
 		this.points += accumulatedPoints;
 		Donation donation = new Donation(this, aProject, currentDate, money);
 		this.addDonation(donation);
-		aProject.addDonor(this);
+		aProject.addDonotion(donation);
+		if(!aProject.getDonors().contains(this)){
+			aProject.addDonor(this);
+		}
 	}	
 	
 	public Integer totalDonation() {
@@ -118,6 +122,7 @@ public class User {
             this.name = name;
             return this;
         }
+        
         public UserBuilder withMail(String mail) {
             this.mail = mail;
             return this;
@@ -153,5 +158,4 @@ public class User {
             return user;
         }        
     }
-
 }

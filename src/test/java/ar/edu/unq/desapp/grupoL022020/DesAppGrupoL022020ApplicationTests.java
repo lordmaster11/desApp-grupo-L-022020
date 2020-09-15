@@ -5,11 +5,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 class DesAppGrupoL022020ApplicationTests {
-
 	@Test
 	void contextLoads() {
-		String [] args = new String[1];
-	    args[0] = "test";
-	    DesAppGrupoL022020Application.main(args);
-	}		
+		DesAppGrupoL022020Application.main(new String[] {});
+	}  
 }

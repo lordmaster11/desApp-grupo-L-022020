@@ -1,8 +1,7 @@
 package ar.edu.unq.desapp.grupoL022020;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -14,11 +13,10 @@ import org.junit.jupiter.api.Test;
 import ar.edu.unq.desapp.grupoL022020.model.Administrator;
 import ar.edu.unq.desapp.grupoL022020.model.Donation;
 import ar.edu.unq.desapp.grupoL022020.model.Project;
-import ar.edu.unq.desapp.grupoL022020.model.ProjetException;
+import ar.edu.unq.desapp.grupoL022020.model.ProjetcException;
 import ar.edu.unq.desapp.grupoL022020.model.User;
 
 public class AdministratorTest {
-
 	@Test
 	public void calculateTop10DonorThreeUsersTest() {
 		User cesar = mock(User.class);
@@ -93,6 +91,7 @@ public class AdministratorTest {
 		assertEquals(myAdministrador.top10DonorUsers().get(8), luciana);	
 		assertEquals(myAdministrador.top10DonorUsers().get(9), ramiro);
 	}
+	
 	@Test
 	public void calculateBest10DonationsOn12DonationsTest() {
 		Donation donation1 = mock(Donation.class);
@@ -164,6 +163,7 @@ public class AdministratorTest {
 		assertEquals(bestDonations.get(8), donation3);
 		assertEquals(bestDonations.get(9), donation2);		
 	}
+	
 	@Test
 	public void calculateBest10DonationsOn2DonationsTest() {
 		Donation donation1 = mock(Donation.class);
@@ -175,7 +175,6 @@ public class AdministratorTest {
 		donations1.add(donation1);
 		donations1.add(donation2);
 		List<Donation> donations2 = new ArrayList<Donation>();
-	
 		
 		User cristian = mock(User.class);
 		when(cristian.myTop10Donation()).thenReturn(donations1);
@@ -193,8 +192,9 @@ public class AdministratorTest {
 		assertEquals(bestDonations.get(0), donation2);
 		assertEquals(bestDonations.get(1), donation1);	
 	}
+	
 	@Test
-	public void calculateDonationFreeLocationsForLongerTest3Projects() throws ProjetException {	
+	public void calculateDonationFreeLocationsForLongerTest3Projects() throws ProjetcException {	
 		Project project1 = mock(Project.class);
 		when(project1.getLastDonation()).thenReturn(new GregorianCalendar(2020, Calendar.JULY,1));
 		Project project2 = mock(Project.class);
@@ -216,8 +216,9 @@ public class AdministratorTest {
 		assertEquals(myProjects.get(1), project3);
 		assertEquals(myProjects.get(2), project1);
 	}
+	
 	@Test
-	public void calculateDonationFreeLocationsForLongerTest12Projects() throws ProjetException {	
+	public void calculateDonationFreeLocationsForLongerTest12Projects() throws ProjetcException {	
 		Project project1 = mock(Project.class);
 		when(project1.getLastDonation()).thenReturn(new GregorianCalendar(2020, Calendar.JANUARY,1));
 		Project project2 = mock(Project.class);

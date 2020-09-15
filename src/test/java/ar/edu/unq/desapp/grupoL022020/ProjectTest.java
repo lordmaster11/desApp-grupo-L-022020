@@ -13,20 +13,21 @@ import org.junit.jupiter.api.Test;
 import ar.edu.unq.desapp.grupoL022020.model.Donation;
 import ar.edu.unq.desapp.grupoL022020.model.Location;
 import ar.edu.unq.desapp.grupoL022020.model.Project;
-import ar.edu.unq.desapp.grupoL022020.model.ProjetException;
+import ar.edu.unq.desapp.grupoL022020.model.ProjetcException;
 import ar.edu.unq.desapp.grupoL022020.model.User;
 
 public class ProjectTest {
 	@Test
-	public void createProjectWithDefaultFactor() throws ProjetException {
+	public void createProjectWithDefaultFactor() throws ProjetcException {
 		Location location=mock(Location.class);
 		when(location.getPopulation()).thenReturn(300);
 
 		Project myProject = new Project.ProjectBuilder(location).build();
 		assertEquals(myProject.calculateMoneyNeeded(), 300000);
 	}
+	
 	@Test
-	public void createProjectWithFactor200() throws ProjetException {
+	public void createProjectWithFactor200() throws ProjetcException {
 		Location location=mock(Location.class);
 		when(location.getPopulation()).thenReturn(300);
 
@@ -35,8 +36,9 @@ public class ProjectTest {
 										.build();
 		assertEquals(myProject.calculateMoneyNeeded(), 60000);
 	}
+	
 	@Test
-	public void createProjectWCompleteWithFactor10() throws ProjetException {
+	public void createProjectWCompleteWithFactor10() throws ProjetcException {
 		Location location=mock(Location.class);
 		when(location.getPopulation()).thenReturn(300);
 
@@ -52,7 +54,7 @@ public class ProjectTest {
 	}
 		
 	@Test
-	public void newProject() throws ProjetException{ 	
+	public void newProject() throws ProjetcException{ 	
 		User aUser = mock(User.class);
 		Location location = mock(Location.class);
 		when(location.getPopulation()).thenReturn(300);
@@ -75,11 +77,11 @@ public class ProjectTest {
 		assertEquals(project.getProjectStart(), dateStart);
 		assertEquals(project.getEndOfProject(), dateEnd);
 		assertEquals(project.getPercentageRequiredForClosing(), 75);
-		assertEquals(project.getDonations().size(), 0);
-		
+		assertEquals(project.getDonations().size(), 0);		
 	}
+	
 	@Test
-	public void addNewDonation() throws ProjetException{ 	
+	public void addNewDonation() throws ProjetcException{ 	
 		Calendar dateDonation= new GregorianCalendar(2020, Calendar.SEPTEMBER,1);
 		Location location = mock(Location.class);
 		Donation aDonation = mock(Donation.class);
@@ -91,24 +93,52 @@ public class ProjectTest {
 		assertTrue(project.getDonations().contains(aDonation));		
 		assertEquals(project.getLastDonation(), dateDonation);		
 	}
+	
 	@Test
-	public void addNewProjectwithPercentageRequiredForClosingIs10() throws ProjetException{
+	public void projetcExceptionWhenPercentageRequiredForClosingHiglerA100() throws ProjetcException{
 		Location location = mock(Location.class);
 							
-		Assertions.assertThrows(ProjetException.class, () -> {
+		ProjetcException exception = Assertions.assertThrows(ProjetcException.class, () -> {
+			new Project.ProjectBuilder(location)
+						.withPercentageRequiredForClosing(200)
+						.build();
+		  });	
+		assertEquals("The percentage required to close the project must be between 50 and 100 percent", exception.getMessage());
+	}
+	
+	@Test
+	public void projetcExceptionWhenPercentageRequiredForClosingLessA50() throws ProjetcException{
+		Location location = mock(Location.class);
+							
+		ProjetcException exception = Assertions.assertThrows(ProjetcException.class, () -> {
 			new Project.ProjectBuilder(location)
 						.withPercentageRequiredForClosing(10)
 						.build();
 		  });	
+		assertEquals("The percentage required to close the project must be between 50 and 100 percent", exception.getMessage());
 	}
+	
 	@Test
-	public void addNewProjectwithfactoris2000000() throws ProjetException{
+	public void projetcExceptionWhenTheFactorLessA0() throws ProjetcException{
 		Location location = mock(Location.class);
 							
-		Assertions.assertThrows(ProjetException.class, () -> {
+		ProjetcException exception = Assertions.assertThrows(ProjetcException.class, () -> {
+			new Project.ProjectBuilder(location)
+						.withFactor(-10)
+						.build();
+		  });	
+		assertEquals("The project factor must be between 0 and 100000", exception.getMessage());
+	}
+	
+	@Test
+	public void projetcExceptionWhenTheFactorHiglerA100000() throws ProjetcException{
+		Location location = mock(Location.class);
+							
+		ProjetcException exception = Assertions.assertThrows(ProjetcException.class, () -> {
 			new Project.ProjectBuilder(location)
 						.withFactor(2000000)
 						.build();
 		  });	
+		assertEquals("The project factor must be between 0 and 100000", exception.getMessage());
 	}
 }

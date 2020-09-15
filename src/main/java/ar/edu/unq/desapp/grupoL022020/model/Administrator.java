@@ -21,7 +21,7 @@ public class Administrator {
 	}
 	
 	//Tarea de Usuario con rol gestor de Proyectos // User abstracto?
-	public void createNewProject(Location location) throws ProjetException {
+	public void createNewProject(Location location) throws ProjetcException {
 		Project newProject = new Project.ProjectBuilder(location).build();
 		projects.add(newProject);
 	}
@@ -42,7 +42,6 @@ public class Administrator {
 							.sorted(Comparator.comparing(Donation::getAmount).reversed())
 							.limit(10)
 							.collect(Collectors.toList());
-
 	}
 	
 	public List<Project> donationFreeLocationsForLonger() {
