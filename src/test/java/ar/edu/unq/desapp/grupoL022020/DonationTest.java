@@ -1,6 +1,6 @@
 package ar.edu.unq.desapp.grupoL022020;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 import java.util.Calendar;
@@ -14,7 +14,7 @@ import ar.edu.unq.desapp.grupoL022020.model.User;
 
 class DonationTest {	
 	@Test
-	public void donateInAProjectWhithLessThan$1000(){ 	
+	public void donateInAProjectWhithLessThan1000(){ 	
 		User aUser = mock(User.class);
 		Project project = mock(Project.class);
 		Location location = mock(Location.class);
