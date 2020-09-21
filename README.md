@@ -12,17 +12,17 @@ Se nos encarga realizar una aplicación para ayudar al programa mediante crowdfu
 La aplicación debe consumir una API provista por [ARSAT][3] para obtener la lista de localidades que aún no tienen internet.
 
 ### UML
-+ [UML][1]
++   [ UML ][1]
 
 ### Integrantes
-+ Cesar Perez
-+ Marcelo Di Costanzo
++   Cesar Perez
++   Marcelo Di Costanzo
 
 ### Grupo
-+ Grupo L
++   Grupo L
 
 ### Sitio de la materia
-+ [Sitio][2]
++   [ Sitio ][ 2 ]
 
 [1]: https://app.diagrams.net/#G1j2TAmVBOf_zdL3FtXsd22SlahJvriyNk
 [2]: https://sites.google.com/view/unq-desarrollo-de-aplicaciones/p%C3%A1gina-principal
