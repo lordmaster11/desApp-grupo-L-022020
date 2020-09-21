@@ -5,7 +5,6 @@ import java.util.Calendar;
 import java.util.List;
 
 public abstract class User{
-	
 	private String name;
 	private String mail;
 	private String password;
@@ -27,13 +26,11 @@ public abstract class User{
     		this.system = aSystem;
 	    }
 	   
-	abstract public void createProject(Location location, String fantasyName,
-									   Calendar endOfProject
-									  ) throws UserException, ProjetcException;
+	abstract public void createProject(Location location, String fantasyName, Calendar endOfProject) 
+			throws UserException, ProjetcException;
 	abstract public void setFactorInProjet(Project aProject, Integer factor) throws UserException, ProjetcException;
-	abstract public void setPercentageRequiredForClosingInProjet
-							(Project aProject, Integer percentageRequiredForClosing) 
-							throws UserException, ProjetcException ;
+	abstract public void setPercentageRequiredForClosingInProjet(Project aProject, Integer percentageRequiredForClosing) 
+			throws UserException, ProjetcException ;
 	
 	public void donate(Integer money, Project aProject) throws UserException{
 		Integer accumulatedPoints = this.points;
@@ -41,7 +38,7 @@ public abstract class User{
 		Integer population = aProject.getLocationProject().getPopulation();
 		
 		if((money <= 0)){
-			throw new UserException("The donation cannot be less than 0");
+			throw new UserException("El monto de la donación no puede ser menor o igual a 0");
 	    }
 		if(money > 1000){
 			accumulatedPoints = money;
@@ -68,7 +65,6 @@ public abstract class User{
 		return totalDonated;
 	}
 
-	
 	public Integer getPoints() {
 		return points;
 	}
@@ -84,7 +80,6 @@ public abstract class User{
 			this.lastDonationDate = lastDonationDate;
 	}
 
-
 	public void setProfile(String profile) {
 		this.profile = profile;
 	}
@@ -92,5 +87,4 @@ public abstract class User{
 	public System getSystem() {
 		return system;
 	}
- 
 }

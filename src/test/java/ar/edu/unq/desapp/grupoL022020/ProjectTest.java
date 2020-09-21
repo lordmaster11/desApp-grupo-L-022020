@@ -32,8 +32,8 @@ public class ProjectTest {
 		when(location.getPopulation()).thenReturn(300);
 
 		Project myProject = new Project.ProjectBuilder(location)
-										.withFactor(200)
-										.build();
+									   .withFactor(200)
+									   .build();
 		assertEquals(myProject.calculateMoneyNeeded(), 60000);
 	}
 	
@@ -43,12 +43,12 @@ public class ProjectTest {
 		when(location.getPopulation()).thenReturn(300);
 
 		Project myProject = new Project.ProjectBuilder(location)
-										.withFactor(10)
-										.withFantasyName("Project Chaco")
-										.withEndOfProject(Calendar.getInstance())
-										.withPercentageRequiredForClosing(75)
-										.withProjectStart(Calendar.getInstance())
-										.build();
+									   .withFactor(10)
+									   .withFantasyName("Project Chaco")
+									   .withEndOfProject(Calendar.getInstance())
+									   .withPercentageRequiredForClosing(75)
+									   .withProjectStart(Calendar.getInstance())
+									   .build();
 		
 		assertEquals(myProject.calculateMoneyNeeded(), 3000);
 	}
@@ -62,12 +62,12 @@ public class ProjectTest {
 		Calendar dateEnd = new GregorianCalendar(2020, Calendar.SEPTEMBER,30); 
 		
 		Project project = new Project.ProjectBuilder(location)
-										.withFactor(10)
-										.withFantasyName("Conectarme")
-										.withProjectStart(dateStart)
-										.withEndOfProject(dateEnd)
-										.withPercentageRequiredForClosing(75)
-										.build();		
+									 .withFactor(10)
+									 .withFantasyName("Conectarme")
+									 .withProjectStart(dateStart)
+									 .withEndOfProject(dateEnd)
+									 .withPercentageRequiredForClosing(75)
+									 .build();		
 		project.addDonor(aUser);
 				
 		assertTrue(project.getDonors().contains(aUser));
@@ -116,10 +116,10 @@ public class ProjectTest {
 							
 		ProjetcException exception = Assertions.assertThrows(ProjetcException.class, () -> {
 			new Project.ProjectBuilder(location)
-						.withPercentageRequiredForClosing(200)
-						.build();
+					   .withPercentageRequiredForClosing(200)
+					   .build();
 		  });	
-		assertEquals("The percentage required to close the project must be between 50 and 100 percent", exception.getMessage());
+		assertEquals("El porcentaje requerido para cerrar el proyecto debe estar entre el 50 y el 100 porciento", exception.getMessage());
 	}
 	
 	@Test
@@ -128,10 +128,10 @@ public class ProjectTest {
 							
 		ProjetcException exception = Assertions.assertThrows(ProjetcException.class, () -> {
 			new Project.ProjectBuilder(location)
-						.withPercentageRequiredForClosing(10)
-						.build();
+					   .withPercentageRequiredForClosing(10)
+					   .build();
 		  });	
-		assertEquals("The percentage required to close the project must be between 50 and 100 percent", exception.getMessage());
+		assertEquals("El porcentaje requerido para cerrar el proyecto debe estar entre el 50 y el 100 porciento", exception.getMessage());
 	}
 	
 	@Test
@@ -140,10 +140,10 @@ public class ProjectTest {
 							
 		ProjetcException exception = Assertions.assertThrows(ProjetcException.class, () -> {
 			new Project.ProjectBuilder(location)
-						.withFactor(-10)
-						.build();
+					   .withFactor(-10)
+					   .build();
 		  });	
-		assertEquals("The project factor must be between 0 and 100000", exception.getMessage());
+		assertEquals("El factor del proyecto debe estar entre 0 y 100000", exception.getMessage());
 	}
 	
 	@Test
@@ -152,21 +152,22 @@ public class ProjectTest {
 							
 		ProjetcException exception = Assertions.assertThrows(ProjetcException.class, () -> {
 			new Project.ProjectBuilder(location)
-						.withFactor(2000000)
-						.build();
+					   .withFactor(2000000)
+					   .build();
 		  });	
-		assertEquals("The project factor must be between 0 and 100000", exception.getMessage());
+		assertEquals("El factor del proyecto debe estar entre 0 y 100000", exception.getMessage());
 	}
+	
 	@Test
 	public void projetcExceptionWhenPercentageRequiredForClosingHiglerA100InSetter() throws ProjetcException{
 		Location location = mock(Location.class);
 							
 		ProjetcException exception = Assertions.assertThrows(ProjetcException.class, () -> {
 			new Project.ProjectBuilder(location)
-						.build()
-						.setPercentageRequiredForClosing(200);
+					   .build()
+					   .setPercentageRequiredForClosing(200);
 		  });	
-		assertEquals("The percentage required to close the project must be between 50 and 100 percent", exception.getMessage());
+		assertEquals("El porcentaje requerido para cerrar el proyecto debe estar entre el 50 y el 100 porciento", exception.getMessage());
 	}
 	
 	@Test
@@ -175,10 +176,10 @@ public class ProjectTest {
 							
 		ProjetcException exception = Assertions.assertThrows(ProjetcException.class, () -> {
 			new Project.ProjectBuilder(location)
-						.build()
-						.setPercentageRequiredForClosing(10);
+					   .build()
+					   .setPercentageRequiredForClosing(10);
 		  });	
-		assertEquals("The percentage required to close the project must be between 50 and 100 percent", exception.getMessage());
+		assertEquals("El porcentaje requerido para cerrar el proyecto debe estar entre el 50 y el 100 porciento", exception.getMessage());
 	}
 	
 	@Test
@@ -187,10 +188,10 @@ public class ProjectTest {
 							
 		ProjetcException exception = Assertions.assertThrows(ProjetcException.class, () -> {
 			new Project.ProjectBuilder(location)
-						.build()
-						.setFactor(-10);
+					   .build()
+					   .setFactor(-10);
 		  });	
-		assertEquals("The project factor must be between 0 and 100000", exception.getMessage());
+		assertEquals("El factor del proyecto debe estar entre 0 y 100000", exception.getMessage());
 	}
 	
 	@Test
@@ -199,10 +200,10 @@ public class ProjectTest {
 							
 		ProjetcException exception = Assertions.assertThrows(ProjetcException.class, () -> {
 			new Project.ProjectBuilder(location)
-						.build()
-						.setFactor(2000000);
+					   .build()
+					   .setFactor(2000000);
 		  });	
 		
-		assertEquals("The project factor must be between 0 and 100000", exception.getMessage());
+		assertEquals("El factor del proyecto debe estar entre 0 y 100000", exception.getMessage());
 	}
 }

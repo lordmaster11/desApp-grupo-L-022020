@@ -39,10 +39,9 @@ public class System {
 	}
 	
 	public List<User> top10DonorUsers() {
-		return users.stream()
-				.sorted(Comparator.comparing(User::totalDonation).reversed())
-				.limit(10)
-				.collect(Collectors.toList());
+		return users.stream().sorted(Comparator.comparing(User::totalDonation).reversed())
+							 .limit(10)
+							 .collect(Collectors.toList());
 	}
 	
 	public List<Donation> best10Donations() {
@@ -51,16 +50,16 @@ public class System {
 			allDonations.addAll(user.getDonations());
 		}
 		return allDonations.stream()
-							.sorted(Comparator.comparing(Donation::getAmount).reversed())
-							.limit(10)
-							.collect(Collectors.toList());
+						   .sorted(Comparator.comparing(Donation::getAmount).reversed())
+						   .limit(10)
+						   .collect(Collectors.toList());
 	}
 	
 	public List<Project> donationFreeLocationsForLonger() {
 		return projects.stream()
-						.sorted(Comparator.comparing(Project::getLastDonation))
-						.limit(10)
-						.collect(Collectors.toList());
+				       .sorted(Comparator.comparing(Project::getLastDonation))
+				       .limit(10)
+					   .collect(Collectors.toList());
 	}
 	
 	public void addUser(User user) {
