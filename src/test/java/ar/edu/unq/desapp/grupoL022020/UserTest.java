@@ -38,7 +38,6 @@ public class UserTest {
 		assertEquals(aUser.totalDonation(), 500);
 	}
 
-	
 	@Test
 	public void newUserDonorDonateInAProjectWhithLessThan1000() throws UserException{ 	
 		System aSystem = mock(System.class);
@@ -135,8 +134,7 @@ public class UserTest {
 		System aSystem = mock(System.class);
 		User aUser = new UserDonor("Fede", "fede@gmail.com", "1234", "facha",aSystem);
 		
-		aUser.setLastDonationDate(new GregorianCalendar
-								(2020, Calendar.APRIL,11));
+		aUser.setLastDonationDate(new GregorianCalendar(2020, Calendar.APRIL,11));
 		
 		Project project2 = mock(Project.class);
 		Location location2 = mock(Location.class);
@@ -182,9 +180,9 @@ public class UserTest {
 		
 		UserException exception = Assertions.assertThrows(UserException.class, () -> {
 			aUser.donate(0, project);
-		});	
+			});	
 	    
-		assertEquals("The donation cannot be less than 0", exception.getMessage());
+		assertEquals("El monto de la donación no puede ser menor o igual a 0", exception.getMessage());
 	}
 	
 	@Test
@@ -197,9 +195,9 @@ public class UserTest {
 		
 		UserException exception = Assertions.assertThrows(UserException.class, () -> {			
 			aUser.createProject(location, "Lonzo", endOfProject);
-		  });	
+			});	
 		
-		assertEquals("Your profile does not allow you to create projects", exception.getMessage());
+		assertEquals("Tu perfil no te permite crear proyectos", exception.getMessage());
 	}
 	
 	@Test
@@ -211,7 +209,6 @@ public class UserTest {
 		User aUser = new UserAdmin("Fede", "fede@gmail.com", "1234", "facha",aSystem);
 		
 		aUser.createProject(location, "Lonzo", endOfProject);
-		
 		
 		verify(aSystem).createNewProject(location, "Lonzo", endOfProject);
 	}
@@ -246,9 +243,9 @@ public class UserTest {
 		User aUser = new UserDonor("Fede", "fede@gmail.com", "1234", "facha", aSystem);
 		UserException exception = Assertions.assertThrows(UserException.class, () -> {			
 			aUser.setFactorInProjet(aProject, 1000);
-		  });	
+			});	
 		
-		assertEquals("Your profile does not allow you to modified projects", exception.getMessage());		
+		assertEquals("Tu perfil no te permite modificar proyectos", exception.getMessage());		
 	}
 	
 	@Test
@@ -259,8 +256,8 @@ public class UserTest {
 		User aUser = new UserDonor("Fede", "fede@gmail.com", "1234", "facha", aSystem);
 		UserException exception = Assertions.assertThrows(UserException.class, () -> {			
 			aUser.setPercentageRequiredForClosingInProjet(aProject, 60);
-		  });	
+			});	
 		
-		assertEquals("Your profile does not allow you to modified projects", exception.getMessage());		
+		assertEquals("Tu perfil no te permite modificar proyectos", exception.getMessage());		
 	}
 }

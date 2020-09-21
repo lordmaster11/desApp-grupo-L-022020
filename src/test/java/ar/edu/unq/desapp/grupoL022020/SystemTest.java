@@ -183,7 +183,6 @@ public class SystemTest {
 		User luciana = mock(User.class);
 		when(luciana.getDonations()).thenReturn(donations2);
 
-	
 		System myAdministrador = new System();
 		myAdministrador.addUser(cristian);
 		myAdministrador.addUser(luciana);
@@ -276,9 +275,9 @@ public class SystemTest {
 		assertEquals(myProjects.get(8), project9);
 		assertEquals(myProjects.get(9), project10);
 	}
+	
 	@Test
 	public void createNewProject() throws ProjetcException {	
-		
 		Location location = mock(Location.class);
 		Calendar endOfProject = new GregorianCalendar(2020, Calendar.SEPTEMBER,1); 
 		
