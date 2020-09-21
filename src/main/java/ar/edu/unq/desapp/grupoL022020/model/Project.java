@@ -11,6 +11,7 @@ public class Project {
 	private String fantasyName;
 	private Calendar projectStart;
 	private Calendar endOfProject;
+
 	private List<Donation> donations;
 	private List<User> donors;
 	private Calendar lastDonation;
@@ -78,6 +79,24 @@ public class Project {
 
     public List<Donation> getDonations() {
 		return donations;
+	}
+    
+	public void setFactor(Integer factor) throws ProjetcException {
+		if(factor < 0 || factor > 100000) {
+            throw new ProjetcException(
+                    "The project factor must be between 0 and 100000");
+        }else {
+        	this.factor = factor;
+		}
+	}
+
+	public void setPercentageRequiredForClosing(Integer percentageRequiredForClosing) throws ProjetcException {
+		if(percentageRequiredForClosing > 100 ||percentageRequiredForClosing  < 50 ){
+            throw new ProjetcException(
+                    "The percentage required to close the project must be between 50 and 100 percent");
+        }else {
+        	this.percentageRequiredForClosing = percentageRequiredForClosing;
+        }	
 	}
 
 public static class ProjectBuilder {

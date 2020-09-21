@@ -14,7 +14,7 @@ public class Donation {
 		this.dateDonation = aDate;
 		this.amount = anAmount;
 	}	
-			
+
 	public User getUser() {
 		return user;
 	}

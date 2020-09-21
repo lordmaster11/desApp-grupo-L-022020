@@ -1,6 +1,7 @@
 package ar.edu.unq.desapp.grupoL022020;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
@@ -10,13 +11,14 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import ar.edu.unq.desapp.grupoL022020.model.Administrator;
+import ar.edu.unq.desapp.grupoL022020.model.System;
 import ar.edu.unq.desapp.grupoL022020.model.Donation;
+import ar.edu.unq.desapp.grupoL022020.model.Location;
 import ar.edu.unq.desapp.grupoL022020.model.Project;
 import ar.edu.unq.desapp.grupoL022020.model.ProjetcException;
 import ar.edu.unq.desapp.grupoL022020.model.User;
 
-public class AdministratorTest {
+public class SystemTest {
 	@Test
 	public void calculateTop10DonorThreeUsersTest() {
 		User cesar = mock(User.class);
@@ -26,7 +28,7 @@ public class AdministratorTest {
 		User juan = mock(User.class);
 		when(juan.totalDonation()).thenReturn(500);
 		
-		Administrator myAdministrador = new Administrator();
+		System myAdministrador = new System();
 		myAdministrador.addUser(cesar);
 		myAdministrador.addUser(marcelo);
 		myAdministrador.addUser(juan);
@@ -65,7 +67,7 @@ public class AdministratorTest {
 		when(pablo.totalDonation()).thenReturn(0);
 		when(maria.totalDonation()).thenReturn(3000);
 		
-		Administrator myAdministrador = new Administrator();
+		System myAdministrador = new System();
 		myAdministrador.addUser(cesar);
 		myAdministrador.addUser(marcelo);
 		myAdministrador.addUser(juan);
@@ -138,13 +140,13 @@ public class AdministratorTest {
 		donations3.add(donation12);
 		
 		User cristian = mock(User.class);
-		when(cristian.myTop10Donation()).thenReturn(donations1);
+		when(cristian.getDonations()).thenReturn(donations1);
 		User luciana = mock(User.class);
-		when(luciana.myTop10Donation()).thenReturn(donations2);
+		when(luciana.getDonations()).thenReturn(donations2);
 		User ramiro = mock(User.class);
-		when(ramiro.myTop10Donation()).thenReturn(donations3);
+		when(ramiro.getDonations()).thenReturn(donations3);
 	
-		Administrator myAdministrador = new Administrator();
+		System myAdministrador = new System();
 		myAdministrador.addUser(cristian);
 		myAdministrador.addUser(luciana);
 		myAdministrador.addUser(ramiro);
@@ -177,12 +179,12 @@ public class AdministratorTest {
 		List<Donation> donations2 = new ArrayList<Donation>();
 		
 		User cristian = mock(User.class);
-		when(cristian.myTop10Donation()).thenReturn(donations1);
+		when(cristian.getDonations()).thenReturn(donations1);
 		User luciana = mock(User.class);
-		when(luciana.myTop10Donation()).thenReturn(donations2);
+		when(luciana.getDonations()).thenReturn(donations2);
 
 	
-		Administrator myAdministrador = new Administrator();
+		System myAdministrador = new System();
 		myAdministrador.addUser(cristian);
 		myAdministrador.addUser(luciana);
 		
@@ -207,7 +209,7 @@ public class AdministratorTest {
 		projects.add(project2);
 		projects.add(project3);
 
-		Administrator myAdministrador = new Administrator();
+		System myAdministrador = new System();
 		myAdministrador.setProjects(projects);
 		
 		List<Project> myProjects = myAdministrador.donationFreeLocationsForLonger();
@@ -258,7 +260,7 @@ public class AdministratorTest {
 		projects.add(project11);
 		projects.add(project12);
 		
-		Administrator myAdministrador = new Administrator();
+		System myAdministrador = new System();
 		myAdministrador.setProjects(projects);
 		
 		List<Project> myProjects = myAdministrador.donationFreeLocationsForLonger();
@@ -273,5 +275,32 @@ public class AdministratorTest {
 		assertEquals(myProjects.get(7), project8);
 		assertEquals(myProjects.get(8), project9);
 		assertEquals(myProjects.get(9), project10);
+	}
+	@Test
+	public void createNewProject() throws ProjetcException {	
+		
+		Location location = mock(Location.class);
+		Calendar endOfProject = new GregorianCalendar(2020, Calendar.SEPTEMBER,1); 
+		
+		System myAdministrador = new System();
+		Project myProject = myAdministrador.createNewProject(location, "Efola", endOfProject);
+		
+		assertTrue(myAdministrador.getProjects().contains(myProject));
+	}
+	
+	@Test
+	public void createUserDonor() {	
+		System myAdministrador = new System();
+		User myUser = myAdministrador.createUserDonor("Juan", "juan@gmail.com", "1234", "Master", myAdministrador);
+		
+		assertTrue(myAdministrador.getUser().contains(myUser));
+	}
+	
+	@Test
+	public void createUserAdmin() {	
+		System myAdministrador = new System();
+		User myUser = myAdministrador.createUserAdmin("Juan", "juan@gmail.com", "1234", "Master", myAdministrador);
+		
+		assertTrue(myAdministrador.getUser().contains(myUser));
 	}
 }

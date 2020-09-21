@@ -70,7 +70,7 @@ public class ProjectTest {
 										.build();		
 		project.addDonor(aUser);
 				
-		assertTrue(project.getDonors().contains(aUser));		
+		assertTrue(project.getDonors().contains(aUser));
 		assertEquals(project.getLocationProject(), location);
 		assertEquals(project.getFactor(), 10);
 		assertEquals(project.getFantasyName(), "Conectarme");
@@ -92,6 +92,22 @@ public class ProjectTest {
 				
 		assertTrue(project.getDonations().contains(aDonation));		
 		assertEquals(project.getLastDonation(), dateDonation);		
+	}
+	@Test
+	public void setFactorPermitted() throws ProjetcException{ 	
+		Location location = mock(Location.class);
+		Project project = new Project.ProjectBuilder(location).build();								
+		project.setFactor(1000);
+				
+		assertEquals(project.getFactor(), 1000);		
+	}
+	@Test
+	public void setPercentageRequiredForClosingPermitted() throws ProjetcException{ 
+		Location location = mock(Location.class);
+		Project project = new Project.ProjectBuilder(location).build();								
+		project.setPercentageRequiredForClosing(60);
+				
+		assertEquals(project.getPercentageRequiredForClosing(), 60);		
 	}
 	
 	@Test
@@ -139,6 +155,54 @@ public class ProjectTest {
 						.withFactor(2000000)
 						.build();
 		  });	
+		assertEquals("The project factor must be between 0 and 100000", exception.getMessage());
+	}
+	@Test
+	public void projetcExceptionWhenPercentageRequiredForClosingHiglerA100InSetter() throws ProjetcException{
+		Location location = mock(Location.class);
+							
+		ProjetcException exception = Assertions.assertThrows(ProjetcException.class, () -> {
+			new Project.ProjectBuilder(location)
+						.build()
+						.setPercentageRequiredForClosing(200);
+		  });	
+		assertEquals("The percentage required to close the project must be between 50 and 100 percent", exception.getMessage());
+	}
+	
+	@Test
+	public void projetcExceptionWhenPercentageRequiredForClosingLessA50InSetter() throws ProjetcException{
+		Location location = mock(Location.class);
+							
+		ProjetcException exception = Assertions.assertThrows(ProjetcException.class, () -> {
+			new Project.ProjectBuilder(location)
+						.build()
+						.setPercentageRequiredForClosing(10);
+		  });	
+		assertEquals("The percentage required to close the project must be between 50 and 100 percent", exception.getMessage());
+	}
+	
+	@Test
+	public void projetcExceptionWhenTheFactorLessA0inSetter() throws ProjetcException{
+		Location location = mock(Location.class);
+							
+		ProjetcException exception = Assertions.assertThrows(ProjetcException.class, () -> {
+			new Project.ProjectBuilder(location)
+						.build()
+						.setFactor(-10);
+		  });	
+		assertEquals("The project factor must be between 0 and 100000", exception.getMessage());
+	}
+	
+	@Test
+	public void projetcExceptionWhenTheFactorHiglerA100000inSetter() throws ProjetcException{
+		Location location = mock(Location.class);
+							
+		ProjetcException exception = Assertions.assertThrows(ProjetcException.class, () -> {
+			new Project.ProjectBuilder(location)
+						.build()
+						.setFactor(2000000);
+		  });	
+		
 		assertEquals("The project factor must be between 0 and 100000", exception.getMessage());
 	}
 }
