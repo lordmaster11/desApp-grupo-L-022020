@@ -26,14 +26,14 @@ public class System {
 		return newProject;
 	}
 	
-	public User createUserDonor(String aName, String aMail, String aPassword, String aNick, System aSystem) {
-		User newUser = new UserDonor(aName, aMail, aPassword, aNick, aSystem);
+	public User createUserDonor(String aName, String aMail, String aPassword, String aNick) {
+		User newUser = new UserDonor(aName, aMail, aPassword, aNick, this);
 		this.addUser(newUser);
 		return newUser;
 	}
 	
-	public User createUserAdmin(String aName, String aMail, String aPassword, String aNick, System aSystem) {
-		User newUser = new UserAdmin(aName, aMail, aPassword, aNick, aSystem);
+	public User createUserAdmin(String aName, String aMail, String aPassword, String aNick) {
+		User newUser = new UserAdmin(aName, aMail, aPassword, aNick, this);
 		this.addUser(newUser);
 		return newUser;
 	}

@@ -206,4 +206,39 @@ public class ProjectTest {
 		
 		assertEquals("The project factor must be between 0 and 100000", exception.getMessage());
 	}
+	
+	@Test
+	public void donateInprojectWithMoneyNeededIs60000() throws ProjetcException {
+		Location location=mock(Location.class);
+		when(location.getPopulation()).thenReturn(300);
+
+		Project myProject = new Project.ProjectBuilder(location)
+									   .withFactor(200)
+									   .build();
+		Donation donation1 = mock(Donation.class);
+		when(donation1.getAmount()).thenReturn(5999);
+		myProject.donate(donation1);
+
+		assertEquals(myProject.calculateMoneyNeeded(), 60000);
+		assertEquals(myProject.getDonatedAmount(), 5999);
+	}
+	
+	@Test
+	public void donateInprojectWithMoneyNeededIs60000Exception() throws ProjetcException{
+		Location location = mock(Location.class);
+		when(location.getPopulation()).thenReturn(300);
+
+		Project myProject = new Project.ProjectBuilder(location)
+									   .withFactor(200)
+									   .build();
+		Donation donation1 = mock(Donation.class);
+		when(donation1.getAmount()).thenReturn(10000000);
+		
+		ProjetcException exception = Assertions.assertThrows(ProjetcException.class, () -> {
+				myProject.donate(donation1);
+		  });	
+		
+		assertEquals("It is not possible to make a donation", exception.getMessage());
+	}
+	
 }

@@ -13,10 +13,10 @@ public class Project {
 	private String fantasyName;
 	private Calendar projectStart;
 	private Calendar endOfProject;
-
 	private List<Donation> donations;
 	private Set<User> donors;
 	private Calendar lastDonation;
+	private Integer donatedAmount;
 
 	public Project(ProjectBuilder builder) {
 		this.locationProject = builder.locationProject;
@@ -28,6 +28,22 @@ public class Project {
 		this.donations = builder.donations;
 		this.donors = builder.donors;
 		this.lastDonation = builder.lastDonation;
+		this.donatedAmount = 0;
+	}
+	
+	public void donate(Donation donation) throws ProjetcException {
+		if(isDonationPossible(donation.getAmount())) {
+				this.addDonotion(donation);
+				this.addDonor(donation.getUser());
+				this.donatedAmount += donation.getAmount();
+		}else {
+			throw new ProjetcException(
+						"It is not possible to make a donation");
+		}
+	}
+	
+	private boolean isDonationPossible(Integer amount) {
+		return this.calculateMoneyNeeded() > donatedAmount + amount;
 	}
 
 	public Integer calculateMoneyNeeded() {
@@ -73,6 +89,10 @@ public class Project {
 
 	public Calendar getLastDonation() {
 		return lastDonation;
+	}
+
+	public Integer getDonatedAmount() {
+		return donatedAmount;
 	}
 	
 	public void setLastDonation(Calendar lastDonation) {
