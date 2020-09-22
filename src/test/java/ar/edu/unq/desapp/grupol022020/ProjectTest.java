@@ -209,11 +209,14 @@ public class ProjectTest {
 	
 	@Test
 	public void donateInprojectWithMoneyNeededIs60000() throws ProjetcException {
+		Calendar todayPlusAMonth = Calendar.getInstance();
+		todayPlusAMonth.add(Calendar.MONTH, -2);
 		Location location=mock(Location.class);
 		when(location.getPopulation()).thenReturn(300);
 
 		Project myProject = new Project.ProjectBuilder(location)
 									   .withFactor(200)
+									   .withEndOfProject(todayPlusAMonth)
 									   .build();
 		Donation donation1 = mock(Donation.class);
 		when(donation1.getAmount()).thenReturn(5999);
@@ -225,6 +228,7 @@ public class ProjectTest {
 	
 	@Test
 	public void donateInprojectWithMoneyNeededIs60000Exception() throws ProjetcException{
+
 		Location location = mock(Location.class);
 		when(location.getPopulation()).thenReturn(300);
 
@@ -240,5 +244,55 @@ public class ProjectTest {
 		
 		assertEquals("It is not possible to make a donation", exception.getMessage());
 	}
-	
+	@Test
+	public void donateInprojectwithExpiredDate() throws ProjetcException {
+		Calendar endOfProject= new GregorianCalendar(1, Calendar.SEPTEMBER,1);
+		Location location=mock(Location.class);
+		when(location.getPopulation()).thenReturn(300);
+
+		Project myProject = new Project.ProjectBuilder(location)
+									   .withFactor(200)
+									   .withEndOfProject(endOfProject)
+									   .build();
+		Donation donation1 = mock(Donation.class);
+		when(donation1.getAmount()).thenReturn(5999);
+		myProject.donate(donation1);
+		Calendar todayPlusAMonth = Calendar.getInstance();
+		todayPlusAMonth.add(Calendar.MONTH, 2);
+		
+		assertEquals(myProject.getEndOfProject().get(Calendar.YEAR),todayPlusAMonth.get(Calendar.YEAR));
+		assertEquals(myProject.getEndOfProject().get(Calendar.MONTH),todayPlusAMonth.get(Calendar.MONTH));
+		assertEquals(myProject.getEndOfProject().get(Calendar.DATE),todayPlusAMonth.get(Calendar.DATE));
+	}
+	@Test
+	public void donateInprojectwithEndOfProjectIsNull() throws ProjetcException {
+		Calendar endOfProject= new GregorianCalendar(2020, Calendar.SEPTEMBER,1);
+		Location location=mock(Location.class);
+		when(location.getPopulation()).thenReturn(300);
+
+		Project myProject = new Project.ProjectBuilder(location)
+									   .withFactor(200)
+									   .build();
+		Donation donation1 = mock(Donation.class);
+		when(donation1.getAmount()).thenReturn(100);
+
+		
+		assertEquals(myProject.getEndOfProject(),null);	
+	}
+	@Test
+	public void donateInprojectwithEndOfProjectnotIsExireted() throws ProjetcException {
+		Calendar endOfProject= new GregorianCalendar(2030, Calendar.SEPTEMBER,1);
+		Location location=mock(Location.class);
+		when(location.getPopulation()).thenReturn(300);
+
+		Project myProject = new Project.ProjectBuilder(location)
+									   .withFactor(200)
+									   .withEndOfProject(endOfProject)
+									   .build();
+		Donation donation1 = mock(Donation.class);
+		when(donation1.getAmount()).thenReturn(100);
+
+		
+		assertEquals(myProject.getEndOfProject(),endOfProject);	
+	}
 }

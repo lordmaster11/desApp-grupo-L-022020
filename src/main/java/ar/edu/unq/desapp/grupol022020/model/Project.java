@@ -33,6 +33,7 @@ public class Project {
 	
 	public void donate(Donation donation) throws ProjetcException {
 		if(isDonationPossible(donation.getAmount())) {
+				this.addTimeIfMissing();
 				this.addDonotion(donation);
 				this.addDonor(donation.getUser());
 				this.donatedAmount += donation.getAmount();
@@ -42,6 +43,14 @@ public class Project {
 		}
 	}
 	
+	private void addTimeIfMissing() {
+		Calendar today = Calendar.getInstance();
+		if(endOfProject.compareTo(today)<0) {
+			today.add(Calendar.MONTH, 2);
+			endOfProject = today;
+		}
+	}
+
 	private boolean isDonationPossible(Integer amount) {
 		return this.calculateMoneyNeeded() > donatedAmount + amount;
 	}
