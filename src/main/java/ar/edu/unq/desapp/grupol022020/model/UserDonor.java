@@ -5,7 +5,7 @@ import java.util.Calendar;
 public class UserDonor extends User{
 	public UserDonor (String aName, String aMail, String aPassword, String aNick, System aSystem) {
 		 super(aName, aMail, aPassword, aNick, aSystem); 
-		 super.setProfile("Donor");
+		 super.setRole("Donor");
 	}
 
 	public void createProject(Location location, String fantasyName, Calendar endOfProject) 
@@ -20,5 +20,5 @@ public class UserDonor extends User{
 	public void setPercentageRequiredForClosingInProjet(Project aProject, Integer percentageRequiredForClosing)
 			throws UserException, ProjetcException{
 		throw new UserException("Tu perfil no te permite modificar proyectos");
-	}	
+	}
 }

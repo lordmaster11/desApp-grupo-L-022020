@@ -5,7 +5,7 @@ import java.util.Calendar;
 public class UserAdmin  extends User{
 	public UserAdmin (String aName, String aMail, String aPassword, String aNick,  System aSystem) {
 		 super(aName, aMail, aPassword, aNick, aSystem);
-		 super.setProfile("Administrator");
+		 super.setRole("Administrator");
 	}
 	
 	public void createProject(Location location, String fantasyName, Calendar endOfProject) 
@@ -22,4 +22,5 @@ public class UserAdmin  extends User{
 			throws ProjetcException {
 		aProject.setPercentageRequiredForClosing(percentageRequiredForClosing);
 	}
+
 }

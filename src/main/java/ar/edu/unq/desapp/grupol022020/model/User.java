@@ -12,7 +12,7 @@ public abstract class User{
 	private Integer points;
 	private List<Donation> donations;
 	private Calendar lastDonationDate;
-	private String profile;
+	private String role;
 	private System system;
 
 	protected User(String aName, String aMail, String aPassword, String aNick, System aSystem) {
@@ -28,12 +28,14 @@ public abstract class User{
 	   
 	abstract public void createProject(Location location, String fantasyName, Calendar endOfProject) 
 			throws UserException, ProjetcException;
+	
 	abstract public void setFactorInProjet(Project aProject, Integer factor) throws UserException, ProjetcException;
+	
 	abstract public void setPercentageRequiredForClosingInProjet(Project aProject, Integer percentageRequiredForClosing) 
 			throws UserException, ProjetcException ;
 	
 	public void donate(Integer money, Project aProject) throws UserException{
-		Integer accumulatedPoints = this.points;
+		Integer accumulatedPoints = 0;
 		Calendar currentDate = Calendar.getInstance();
 		Integer population = aProject.getLocationProject().getPopulation();
 		
@@ -41,7 +43,7 @@ public abstract class User{
 			throw new UserException("The amount of the donation cannot be less than or equal to 0");
 	    }
 		if(money > 1000){
-			accumulatedPoints = money;
+			accumulatedPoints +=  money;
 		}	
 		if(population < 2000){
 			accumulatedPoints += money*2;
@@ -49,8 +51,8 @@ public abstract class User{
 		if(this.lastDonationDate != null && currentDate.get(Calendar.MONTH) == lastDonationDate.get(Calendar.MONTH)){
 			accumulatedPoints += 500;
 		}	
-		this.lastDonationDate = currentDate;
-		this.points += accumulatedPoints;
+		this.setLastDonationDate(currentDate);
+		this.sumPoints(accumulatedPoints);
 		Donation donation = new Donation(this, aProject, currentDate, money);
 		this.addDonation(donation);
 		aProject.addDonotion(donation);
@@ -59,6 +61,10 @@ public abstract class User{
 		}
 	}			
 		
+	private void sumPoints(Integer accumulatedPoints) {
+		this.points += accumulatedPoints;
+	}
+
 	public Integer totalDonation() {
 		Integer totalDonated = donations.stream()
 							.mapToInt(Donation::getAmount).sum();
@@ -80,8 +86,8 @@ public abstract class User{
 			this.lastDonationDate = lastDonationDate;
 	}
 
-	public void setProfile(String profile) {
-		this.profile = profile;
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 	public System getSystem() {
