@@ -215,7 +215,7 @@ public class SystemTest {
 	@Test
 	public void createUserDonor() {	
 		System myAdministrador = new System();
-		User myUser = myAdministrador.createUserDonor("Juan", "juan@gmail.com", "1234", "Master", myAdministrador);
+		User myUser = myAdministrador.createUserDonor("Juan", "juan@gmail.com", "1234", "Master");
 		
 		assertTrue(myAdministrador.getUser().contains(myUser));
 	}
@@ -223,7 +223,7 @@ public class SystemTest {
 	@Test
 	public void createUserAdmin() {	
 		System myAdministrador = new System();
-		User myUser = myAdministrador.createUserAdmin("Juan", "juan@gmail.com", "1234", "Master", myAdministrador);
+		User myUser = myAdministrador.createUserAdmin("Juan", "juan@gmail.com", "1234", "Master");
 		
 		assertTrue(myAdministrador.getUser().contains(myUser));
 	}
