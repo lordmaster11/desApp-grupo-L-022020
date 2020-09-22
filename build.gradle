@@ -47,19 +47,6 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 }
 
-task stage(type: Copy, dependsOn: [clean, build]) {
-    from jar.archivePath
-    into project.rootDir 
-    rename {
-        'app.jar'
-    }
-}
-stage.mustRunAfter(clean)
-
-clean << {
-    project.file('app.jar').delete()
-}
-
 jacocoTestReport {
     reports {
         xml.enabled = true
