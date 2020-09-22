@@ -1,4 +1,4 @@
-package ar.edu.unq.desapp.grupoL022020.model;
+package ar.edu.unq.desapp.grupol022020.model;
 
 import java.util.ArrayList;
 import java.util.Calendar;

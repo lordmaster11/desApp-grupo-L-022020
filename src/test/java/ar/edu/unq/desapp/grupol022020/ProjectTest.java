@@ -1,4 +1,4 @@
-package ar.edu.unq.desapp.grupoL022020;
+package ar.edu.unq.desapp.grupol022020;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -10,11 +10,11 @@ import java.util.GregorianCalendar;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import ar.edu.unq.desapp.grupoL022020.model.Donation;
-import ar.edu.unq.desapp.grupoL022020.model.Location;
-import ar.edu.unq.desapp.grupoL022020.model.Project;
-import ar.edu.unq.desapp.grupoL022020.model.ProjetcException;
-import ar.edu.unq.desapp.grupoL022020.model.User;
+import ar.edu.unq.desapp.grupol022020.model.Donation;
+import ar.edu.unq.desapp.grupol022020.model.Location;
+import ar.edu.unq.desapp.grupol022020.model.Project;
+import ar.edu.unq.desapp.grupol022020.model.ProjetcException;
+import ar.edu.unq.desapp.grupol022020.model.User;
 
 public class ProjectTest {
 	@Test
@@ -119,7 +119,7 @@ public class ProjectTest {
 					   .withPercentageRequiredForClosing(200)
 					   .build();
 		  });	
-		assertEquals("El porcentaje requerido para cerrar el proyecto debe estar entre el 50 y el 100 porciento", exception.getMessage());
+		assertEquals("The percentage required to close the project must be between 50 and 100 percent", exception.getMessage());
 	}
 	
 	@Test
@@ -131,7 +131,7 @@ public class ProjectTest {
 					   .withPercentageRequiredForClosing(10)
 					   .build();
 		  });	
-		assertEquals("El porcentaje requerido para cerrar el proyecto debe estar entre el 50 y el 100 porciento", exception.getMessage());
+		assertEquals("The percentage required to close the project must be between 50 and 100 percent", exception.getMessage());
 	}
 	
 	@Test
@@ -143,7 +143,7 @@ public class ProjectTest {
 					   .withFactor(-10)
 					   .build();
 		  });	
-		assertEquals("El factor del proyecto debe estar entre 0 y 100000", exception.getMessage());
+		assertEquals("The project factor must be between 0 and 100000", exception.getMessage());
 	}
 	
 	@Test
@@ -155,7 +155,7 @@ public class ProjectTest {
 					   .withFactor(2000000)
 					   .build();
 		  });	
-		assertEquals("El factor del proyecto debe estar entre 0 y 100000", exception.getMessage());
+		assertEquals("The project factor must be between 0 and 100000", exception.getMessage());
 	}
 	
 	@Test
@@ -167,7 +167,7 @@ public class ProjectTest {
 					   .build()
 					   .setPercentageRequiredForClosing(200);
 		  });	
-		assertEquals("El porcentaje requerido para cerrar el proyecto debe estar entre el 50 y el 100 porciento", exception.getMessage());
+		assertEquals("The percentage required to close the project must be between 50 and 100 percent", exception.getMessage());
 	}
 	
 	@Test
@@ -179,7 +179,7 @@ public class ProjectTest {
 					   .build()
 					   .setPercentageRequiredForClosing(10);
 		  });	
-		assertEquals("El porcentaje requerido para cerrar el proyecto debe estar entre el 50 y el 100 porciento", exception.getMessage());
+		assertEquals("The percentage required to close the project must be between 50 and 100 percent", exception.getMessage());
 	}
 	
 	@Test
@@ -191,7 +191,7 @@ public class ProjectTest {
 					   .build()
 					   .setFactor(-10);
 		  });	
-		assertEquals("El factor del proyecto debe estar entre 0 y 100000", exception.getMessage());
+		assertEquals("The project factor must be between 0 and 100000", exception.getMessage());
 	}
 	
 	@Test
@@ -204,6 +204,6 @@ public class ProjectTest {
 					   .setFactor(2000000);
 		  });	
 		
-		assertEquals("El factor del proyecto debe estar entre 0 y 100000", exception.getMessage());
+		assertEquals("The project factor must be between 0 and 100000", exception.getMessage());
 	}
 }

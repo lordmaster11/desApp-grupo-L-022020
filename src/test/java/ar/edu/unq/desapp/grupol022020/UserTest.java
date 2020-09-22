@@ -1,4 +1,4 @@
-package ar.edu.unq.desapp.grupoL022020;
+package ar.edu.unq.desapp.grupol022020;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
@@ -10,14 +10,14 @@ import java.util.GregorianCalendar;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import ar.edu.unq.desapp.grupoL022020.model.Location;
-import ar.edu.unq.desapp.grupoL022020.model.Project;
-import ar.edu.unq.desapp.grupoL022020.model.ProjetcException;
-import ar.edu.unq.desapp.grupoL022020.model.System;
-import ar.edu.unq.desapp.grupoL022020.model.User;
-import ar.edu.unq.desapp.grupoL022020.model.UserAdmin;
-import ar.edu.unq.desapp.grupoL022020.model.UserDonor;
-import ar.edu.unq.desapp.grupoL022020.model.UserException;
+import ar.edu.unq.desapp.grupol022020.model.Location;
+import ar.edu.unq.desapp.grupol022020.model.Project;
+import ar.edu.unq.desapp.grupol022020.model.ProjetcException;
+import ar.edu.unq.desapp.grupol022020.model.System;
+import ar.edu.unq.desapp.grupol022020.model.User;
+import ar.edu.unq.desapp.grupol022020.model.UserAdmin;
+import ar.edu.unq.desapp.grupol022020.model.UserDonor;
+import ar.edu.unq.desapp.grupol022020.model.UserException;
 
 public class UserTest {
 	//abstract User createUser(String aName, String aMail, String aPassword, String aNick, System aSystem);
@@ -182,7 +182,7 @@ public class UserTest {
 			aUser.donate(0, project);
 			});	
 	    
-		assertEquals("El monto de la donación no puede ser menor o igual a 0", exception.getMessage());
+		assertEquals("The amount of the donation cannot be less than or equal to 0", exception.getMessage());
 	}
 	
 	@Test

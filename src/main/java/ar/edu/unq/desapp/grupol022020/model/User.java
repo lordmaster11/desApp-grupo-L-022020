@@ -1,4 +1,4 @@
-package ar.edu.unq.desapp.grupoL022020.model;
+package ar.edu.unq.desapp.grupol022020.model;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -38,7 +38,7 @@ public abstract class User{
 		Integer population = aProject.getLocationProject().getPopulation();
 		
 		if((money <= 0)){
-			throw new UserException("El monto de la donación no puede ser menor o igual a 0");
+			throw new UserException("The amount of the donation cannot be less than or equal to 0");
 	    }
 		if(money > 1000){
 			accumulatedPoints = money;

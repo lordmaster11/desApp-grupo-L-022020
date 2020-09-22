@@ -1,10 +1,13 @@
-package ar.edu.unq.desapp.grupoL022020;
+package ar.edu.unq.desapp.grupol022020;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+
+import ar.edu.unq.desapp.grupol022020.DesAppGrupoL022020Application;
+import ar.edu.unq.desapp.grupol022020.ServletInitializer;
 
 class ServletInitializerTest {
 	  @Test
