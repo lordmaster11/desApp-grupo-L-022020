@@ -2,7 +2,9 @@ package ar.edu.unq.desapp.grupol022020.model;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Project {
 	private Location locationProject;
@@ -13,7 +15,7 @@ public class Project {
 	private Calendar endOfProject;
 
 	private List<Donation> donations;
-	private List<User> donors;
+	private Set<User> donors;
 	private Calendar lastDonation;
 
 	public Project(ProjectBuilder builder) {
@@ -45,7 +47,7 @@ public class Project {
 		return locationProject;
 	}
 	
-	public List<User> getDonors() {
+	public Set<User> getDonors() {
 		return donors;
 	}
 
@@ -107,13 +109,13 @@ public static class ProjectBuilder {
 	private Calendar projectStart;
 	private Calendar endOfProject;
 	private List<Donation> donations;
-	private List<User> donors;
+	private Set<User> donors;
 	private Calendar lastDonation;
 	
 	public ProjectBuilder(Location location) {
 		this.locationProject = location;	
 		this.donations = new ArrayList<Donation>();
-		this.donors = new ArrayList<User>();
+		this.donors = new HashSet<User>();
 		this.factor = 1000;
 		this.percentageRequiredForClosing = 100;
 		this.projectStart = Calendar.getInstance();

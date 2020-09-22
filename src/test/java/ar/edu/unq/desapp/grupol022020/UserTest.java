@@ -3,9 +3,10 @@ package ar.edu.unq.desapp.grupol022020;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -130,11 +131,29 @@ public class UserTest {
     }
 
 	@Test
-	public void donateInTwoAProjectsIndifferentMonth() throws UserException{ 	
+	public void donateInTwoAProjectsInDifferentMonth() throws UserException{ 	
 		System aSystem = mock(System.class);
 		User aUser = new UserDonor("Fede", "fede@gmail.com", "1234", "facha",aSystem);
 		
 		aUser.setLastDonationDate(new GregorianCalendar(2020, Calendar.APRIL,11));
+		
+		Project project2 = mock(Project.class);
+		Location location2 = mock(Location.class);
+		when(project2.getLocationProject()).thenReturn(location2);
+		when(location2.getPopulation()).thenReturn(30000);
+								
+		aUser.donate(1500, project2);
+
+		assertEquals(aUser.getPoints(), 1500);
+		assertEquals(aUser.totalDonation(), 1500);
+	}
+	
+	@Test
+	public void donateInTwoAProjectsInDifferentYear() throws UserException{ 	
+		System aSystem = mock(System.class);
+		User aUser = new UserDonor("Fede", "fede@gmail.com", "1234", "facha",aSystem);
+		
+		aUser.setLastDonationDate(new GregorianCalendar(2019, Calendar.SEPTEMBER,11));
 		
 		Project project2 = mock(Project.class);
 		Location location2 = mock(Location.class);
@@ -157,7 +176,7 @@ public class UserTest {
 		when(project.getLocationProject()).thenReturn(location);
 		when(location.getPopulation()).thenReturn(100000);
 		
-	    ArrayList<User> donors = new ArrayList<User>();    
+	    Set<User> donors = new HashSet<User>();    
 	    donors.add(aUser);
 
 		when(project.getDonors()).thenReturn(donors);
