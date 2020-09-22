@@ -38,12 +38,6 @@ public class System {
 		return newUser;
 	}
 	
-	public List<User> top10DonorUsers() {
-		return users.stream().sorted(Comparator.comparing(User::totalDonation).reversed())
-							 .limit(10)
-							 .collect(Collectors.toList());
-	}
-	
 	public List<Donation> best10Donations() {
 		List<Donation> allDonations= new ArrayList<Donation>();
 		for(User user:users) {

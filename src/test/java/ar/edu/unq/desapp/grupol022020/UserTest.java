@@ -260,4 +260,21 @@ public class UserTest {
 		
 		assertEquals("Tu perfil no te permite modificar proyectos", exception.getMessage());		
 	}
+	
+	@Test
+	public void donateIn3Project() throws UserException{ 	
+		System aSystem = mock(System.class);
+		User aUser = new UserDonor("Pepe", "pepe@gmail.com", "1234", "Argento", aSystem);
+
+		Project project = mock(Project.class);
+		Location location = mock(Location.class);
+		when(project.getLocationProject()).thenReturn(location);
+		when(location.getPopulation()).thenReturn(30000);
+				
+		aUser.donate(1500, project);
+		aUser.donate(10, project);
+		aUser.donate(1, project);
+				
+		assertEquals(aUser.getPoints(), 2500);		
+	}
 }
