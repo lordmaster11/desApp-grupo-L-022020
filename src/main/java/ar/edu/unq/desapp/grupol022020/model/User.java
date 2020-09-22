@@ -34,7 +34,7 @@ public abstract class User{
 	abstract public void setPercentageRequiredForClosingInProjet(Project aProject, Integer percentageRequiredForClosing) 
 			throws UserException, ProjetcException ;
 	
-	public void donate(Integer money, Project aProject) throws UserException{
+	public void donate(Integer money, Project aProject) throws UserException {
 		Integer accumulatedPoints = 0;
 		Calendar currentDate = Calendar.getInstance();
 		Integer population = aProject.getLocationProject().getPopulation();
@@ -48,7 +48,8 @@ public abstract class User{
 		if(population < 2000){
 			accumulatedPoints += money*2;
 		}	
-		if(this.lastDonationDate != null && currentDate.get(Calendar.MONTH) == lastDonationDate.get(Calendar.MONTH)){
+		if(this.lastDonationDate != null && currentDate.get(Calendar.MONTH) == lastDonationDate.get(Calendar.MONTH) 
+				&& currentDate.get(Calendar.YEAR) == lastDonationDate.get(Calendar.YEAR)){
 			accumulatedPoints += 500;
 		}	
 		this.setLastDonationDate(currentDate);
@@ -56,9 +57,7 @@ public abstract class User{
 		Donation donation = new Donation(this, aProject, currentDate, money);
 		this.addDonation(donation);
 		aProject.addDonotion(donation);
-		if(!aProject.getDonors().contains(this)){
-			aProject.addDonor(this);
-		}
+		aProject.addDonor(this);
 	}			
 		
 	private void sumPoints(Integer accumulatedPoints) {
