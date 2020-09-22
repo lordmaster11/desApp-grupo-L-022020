@@ -1,4 +1,4 @@
-package ar.edu.unq.desapp.grupoL022020;
+package ar.edu.unq.desapp.grupol022020;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;

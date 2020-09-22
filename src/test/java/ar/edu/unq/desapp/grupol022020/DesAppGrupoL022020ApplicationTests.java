@@ -1,7 +1,9 @@
-package ar.edu.unq.desapp.grupoL022020;
+package ar.edu.unq.desapp.grupol022020;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import ar.edu.unq.desapp.grupol022020.DesAppGrupoL022020Application;
 
 @SpringBootTest
 class DesAppGrupoL022020ApplicationTests {

@@ -1,4 +1,4 @@
-package ar.edu.unq.desapp.grupoL022020;
+package ar.edu.unq.desapp.grupol022020;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -11,12 +11,12 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import ar.edu.unq.desapp.grupoL022020.model.System;
-import ar.edu.unq.desapp.grupoL022020.model.Donation;
-import ar.edu.unq.desapp.grupoL022020.model.Location;
-import ar.edu.unq.desapp.grupoL022020.model.Project;
-import ar.edu.unq.desapp.grupoL022020.model.ProjetcException;
-import ar.edu.unq.desapp.grupoL022020.model.User;
+import ar.edu.unq.desapp.grupol022020.model.Donation;
+import ar.edu.unq.desapp.grupol022020.model.Location;
+import ar.edu.unq.desapp.grupol022020.model.Project;
+import ar.edu.unq.desapp.grupol022020.model.ProjetcException;
+import ar.edu.unq.desapp.grupol022020.model.System;
+import ar.edu.unq.desapp.grupol022020.model.User;
 
 public class SystemTest {
 	@Test

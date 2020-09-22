@@ -1,4 +1,4 @@
-package ar.edu.unq.desapp.grupoL022020.model;
+package ar.edu.unq.desapp.grupol022020.model;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -84,7 +84,7 @@ public class Project {
 	public void setFactor(Integer factor) throws ProjetcException {
 		if(factor < 0 || factor > 100000) {
             throw new ProjetcException(
-                    "El factor del proyecto debe estar entre 0 y 100000");
+                    "The project factor must be between 0 and 100000");
         }else {
         	this.factor = factor;
 		}
@@ -93,7 +93,7 @@ public class Project {
 	public void setPercentageRequiredForClosing(Integer percentageRequiredForClosing) throws ProjetcException {
 		if(percentageRequiredForClosing > 100 ||percentageRequiredForClosing  < 50 ){
             throw new ProjetcException(
-            		"El porcentaje requerido para cerrar el proyecto debe estar entre el 50 y el 100 porciento");
+            		"The percentage required to close the project must be between 50 and 100 percent");
         }else {
         	this.percentageRequiredForClosing = percentageRequiredForClosing;
         }	
@@ -154,11 +154,11 @@ public static class ProjectBuilder {
 	private void validateProjectObject(Project project) throws ProjetcException {
 		if(project.percentageRequiredForClosing > 100 ||project.percentageRequiredForClosing  < 50 ){
             throw new ProjetcException(
-                    "El porcentaje requerido para cerrar el proyecto debe estar entre el 50 y el 100 porciento");
+                    "The percentage required to close the project must be between 50 and 100 percent");
             }
 		if(project.factor < 0 || project.factor > 100000) {
             throw new ProjetcException(
-                    "El factor del proyecto debe estar entre 0 y 100000");
+                    "The project factor must be between 0 and 100000");
             }
 	} 
 	}	
