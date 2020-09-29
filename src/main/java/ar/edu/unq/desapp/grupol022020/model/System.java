@@ -9,12 +9,12 @@ import java.util.stream.Collectors;
 public class System {
 	private List<Project> projects;
 	private List<Location> locations;
-	private List<User> users;
+	private List<UserDonor> users;
 	
 	public System() {
 		this.projects = new ArrayList<Project>();
 		this.locations = new ArrayList<Location>();
-		this.users = new ArrayList<User>();
+		this.users = new ArrayList<UserDonor>();
 	}
 
 	public Project createNewProject(Location location, String nameFantasy, Calendar endOfProject) throws ProjetcException {
@@ -27,20 +27,20 @@ public class System {
 	}
 	
 	public User createUserDonor(String aName, String aMail, String aPassword, String aNick) {
-		User newUser = new UserDonor(aName, aMail, aPassword, aNick, this);
+		UserDonor newUser = new UserDonor(aName, aMail, aPassword, aNick, this);
 		this.addUser(newUser);
 		return newUser;
 	}
 	
 	public User createUserAdmin(String aName, String aMail, String aPassword, String aNick) {
 		User newUser = new UserAdmin(aName, aMail, aPassword, aNick, this);
-		this.addUser(newUser);
+		//this.addUser(newUser);
 		return newUser;
 	}
 	
 	public List<Donation> best10Donations() {
 		List<Donation> allDonations= new ArrayList<Donation>();
-		for(User user:users) {
+		for(UserDonor user:users) {
 			allDonations.addAll(user.getDonations());
 		}
 		return allDonations.stream()
@@ -56,7 +56,7 @@ public class System {
 					   .collect(Collectors.toList());
 	}
 	
-	public void addUser(User user) {
+	public void addUser(UserDonor user) {
 		users.add(user);
 	}
 
@@ -68,7 +68,7 @@ public class System {
 		return projects;
 	}
 	
-	public List<User> getUser() {
+	public List<UserDonor> getUser() {
 		return users;
 	}
 }

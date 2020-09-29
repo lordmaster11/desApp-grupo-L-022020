@@ -7,12 +7,14 @@ public class Donation {
 	private Project project;
 	private Calendar dateDonation;
 	private Integer amount;
+	private String comment;
 
-	public Donation(User aUser, Project aProject, Calendar aDate, Integer anAmount) {
+	public Donation(User aUser, Project aProject, Calendar aDate, Integer anAmount, String aComment) {
 		this.user = aUser;
 		this.project = aProject;
 		this.dateDonation = aDate;
 		this.amount = anAmount;
+		this.comment = aComment;
 	}	
 
 	public User getUser() {
@@ -29,5 +31,36 @@ public class Donation {
 
 	public Integer getAmount() {
 		return amount;
+	}
+	
+	public String getComment() {
+		return comment;
+	}
+
+	public Integer bonus() {
+		return 500;
+	}
+	
+	public Integer calculatePoints(UserDonor user, Project aProject) throws UserException {
+		Integer accumulatedPoints = 0;
+		Calendar currentDate = Calendar.getInstance();
+		Calendar lastDonationDateUser = user.getLastDonationDate();
+		Integer population = aProject.getLocationProject().getPopulation();
+		
+		if((amount <= 0)){
+			throw new UserException("The amount of the donation cannot be less than or equal to 0");
+	    }
+		if(amount > 1000){
+			accumulatedPoints +=  amount;
+		}	
+		if(population < 2000){
+			accumulatedPoints += amount*2;
+		}	
+		if(lastDonationDateUser != null && currentDate.get(Calendar.MONTH) == lastDonationDateUser.get(Calendar.MONTH) 
+				&& currentDate.get(Calendar.YEAR) == lastDonationDateUser.get(Calendar.YEAR)){
+			accumulatedPoints += bonus();
+		}	
+		
+		return accumulatedPoints;
 	}
 }

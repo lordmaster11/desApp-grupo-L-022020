@@ -21,18 +21,47 @@ import ar.edu.unq.desapp.grupol022020.model.UserDonor;
 import ar.edu.unq.desapp.grupol022020.model.UserException;
 
 public class UserTest {
-	//abstract User createUser(String aName, String aMail, String aPassword, String aNick, System aSystem);
 	@Test
-	public void newUserAdminDonateInAProjectWhithLessThan1000() throws UserException{ 
+	public void newUser(){ 
 		System aSystem = mock(System.class);
-		User aUser = new UserAdmin("Juan", "juan@gmail.com", "1234", "Master", aSystem);
 		
+		UserDonor aUser = new UserDonor ("Juan", "juan@gmail.com", "1234", "Master", aSystem);
+		assertEquals(aUser.getName(), "Juan");		
+		assertEquals(aUser.getMail(), "juan@gmail.com");
+		assertEquals(aUser.getPassword(), "1234");
+		assertEquals(aUser.getNick(), "Master");
+		assertEquals(aUser.getRole(), "Donor");
+	}
+	
+	@Test
+	public void settersUser(){ 
+		System aSystem = mock(System.class);
+		UserAdmin aUser = new UserAdmin ("Juan", "juan@gmail.com", "1234", "Master", aSystem);
+
+		aUser.setName("Juan Carlos");
+		aUser.setMail("juanca@gmail.com");
+		aUser.setPassword("12345");
+		aUser.setNick("Juanca");
+		aUser.setSystem(aSystem);
+
+		assertEquals(aUser.getName(), "Juan Carlos");		
+		assertEquals(aUser.getMail(), "juanca@gmail.com");
+		assertEquals(aUser.getPassword(), "12345");
+		assertEquals(aUser.getNick(), "Juanca");
+		assertEquals(aUser.getRole(), "Administrator");
+	}		
+
+	@Test
+	public void newUserDonorDonateInAProjectWhithLessThan1000() throws UserException, ProjetcException{ 	
+		System aSystem = mock(System.class);
+		UserDonor aUser = new UserDonor("Pepe", "pepe@gmail.com", "1234", "Argento", aSystem);
+
 		Project project = mock(Project.class);
 		Location location = mock(Location.class);
 		when(project.getLocationProject()).thenReturn(location);
 		when(location.getPopulation()).thenReturn(30000);
 				
-		aUser.donate(500, project);
+		aUser.donate(500, project, "First donation");
 				
 		assertEquals(aUser.getPoints(), 0);		
 		assertEquals(aUser.getDonations().size(), 1);
@@ -40,33 +69,16 @@ public class UserTest {
 	}
 
 	@Test
-	public void newUserDonorDonateInAProjectWhithLessThan1000() throws UserException{ 	
+	public void donateInAProjectWhithMoreThan1000() throws UserException, ProjetcException{ 	
 		System aSystem = mock(System.class);
-		User aUser = new UserDonor("Pepe", "pepe@gmail.com", "1234", "Argento", aSystem);
+		UserDonor aUser = new UserDonor("Pepe", "pepe@gmail.com", "1234", "Argento", aSystem);
 
 		Project project = mock(Project.class);
 		Location location = mock(Location.class);
 		when(project.getLocationProject()).thenReturn(location);
 		when(location.getPopulation()).thenReturn(30000);
 				
-		aUser.donate(500, project);
-				
-		assertEquals(aUser.getPoints(), 0);		
-		assertEquals(aUser.getDonations().size(), 1);
-		assertEquals(aUser.totalDonation(), 500);
-	}
-
-	@Test
-	public void donateInAProjectWhithMoreThan1000() throws UserException{ 	
-		System aSystem = mock(System.class);
-		User aUser = new UserDonor("Pepe", "pepe@gmail.com", "1234", "Argento", aSystem);
-
-		Project project = mock(Project.class);
-		Location location = mock(Location.class);
-		when(project.getLocationProject()).thenReturn(location);
-		when(location.getPopulation()).thenReturn(30000);
-				
-		aUser.donate(1500, project);
+		aUser.donate(1500, project, "First donation");
 				
 		assertEquals(aUser.getPoints(), 1500);		
 		assertEquals(aUser.getDonations().size(), 1);
@@ -74,16 +86,16 @@ public class UserTest {
 	}
 		
 	@Test
-	public void donateInAProjectInATownWhithLessThan2000Populations() throws UserException{ 
+	public void donateInAProjectInATownWhithLessThan2000Populations() throws UserException, ProjetcException{ 
 		System aSystem = mock(System.class);
-		User aUser = new UserDonor("Esteban", "esteban@gmail.com", "1234", "Kito", aSystem);
+		UserDonor aUser = new UserDonor("Esteban", "esteban@gmail.com", "1234", "Kito", aSystem);
 
 		Project project = mock(Project.class);
 		Location location = mock(Location.class);
 		when(project.getLocationProject()).thenReturn(location);
 		when(location.getPopulation()).thenReturn(1000);
 				
-		aUser.donate(500, project);
+		aUser.donate(500, project, "First donation");
 				
 		assertEquals(aUser.getPoints(), 1000);		
 		assertEquals(aUser.getDonations().size(), 1);
@@ -91,16 +103,16 @@ public class UserTest {
 	}
 
 	@Test
-	public void donateInAProjectInATownWhithLessThan2000PopulationsAndMoreThan1000() throws UserException{ 	
+	public void donateInAProjectInATownWhithLessThan2000PopulationsAndMoreThan1000() throws UserException, ProjetcException{ 	
 		System aSystem = mock(System.class);
-		User aUser = new UserDonor("Francisco", "fran@gmail.com", "1234", "pancho", aSystem);
+		UserDonor aUser = new UserDonor("Francisco", "fran@gmail.com", "1234", "pancho", aSystem);
 
 		Project project = mock(Project.class);
 		Location location = mock(Location.class);
 		when(project.getLocationProject()).thenReturn(location);
 		when(location.getPopulation()).thenReturn(1000);
 				
-		aUser.donate(2000, project);
+		aUser.donate(2000, project, "First donation");
 		
 		assertEquals(aUser.getPoints(), 6000);
 		assertEquals(aUser.getDonations().size(), 1);		
@@ -108,9 +120,9 @@ public class UserTest {
 	}
 
 	@Test
-	public void donateInTwoAProjectsInTheSameMonth() throws UserException{ 	
+	public void donateInTwoAProjectsInTheSameMonth() throws UserException, ProjetcException{ 	
 		System aSystem = mock(System.class);
-		User aUser = new UserDonor("Fede", "fede@gmail.com", "12345", "facha", aSystem);
+		UserDonor aUser = new UserDonor("Fede", "fede@gmail.com", "12345", "facha", aSystem);
 
 		Project project = mock(Project.class);
 		Location location = mock(Location.class);
@@ -122,8 +134,8 @@ public class UserTest {
 		when(project2.getLocationProject()).thenReturn(location2);
 		when(location2.getPopulation()).thenReturn(30000);
 								
-		aUser.donate(3000, project);
-		aUser.donate(1500, project2);
+		aUser.donate(3000, project, "First donation");
+		aUser.donate(1500, project2, "Second donation");
 
 		assertEquals(aUser.getPoints(), 11000);		
 		assertEquals(aUser.getDonations().size(), 2);
@@ -131,9 +143,9 @@ public class UserTest {
     }
 
 	@Test
-	public void donateInTwoAProjectsInDifferentMonth() throws UserException{ 	
+	public void donateInTwoAProjectsInDifferentMonth() throws UserException, ProjetcException{ 	
 		System aSystem = mock(System.class);
-		User aUser = new UserDonor("Fede", "fede@gmail.com", "1234", "facha",aSystem);
+		UserDonor aUser = new UserDonor("Fede", "fede@gmail.com", "1234", "facha",aSystem);
 		
 		aUser.setLastDonationDate(new GregorianCalendar(2020, Calendar.APRIL,11));
 		
@@ -142,16 +154,16 @@ public class UserTest {
 		when(project2.getLocationProject()).thenReturn(location2);
 		when(location2.getPopulation()).thenReturn(30000);
 								
-		aUser.donate(1500, project2);
+		aUser.donate(1500, project2, "First donation");
 
 		assertEquals(aUser.getPoints(), 1500);
 		assertEquals(aUser.totalDonation(), 1500);
 	}
 	
 	@Test
-	public void donateInTwoAProjectsInDifferentYear() throws UserException{ 	
+	public void donateInTwoAProjectsInDifferentYear() throws UserException, ProjetcException{ 	
 		System aSystem = mock(System.class);
-		User aUser = new UserDonor("Fede", "fede@gmail.com", "1234", "facha",aSystem);
+		UserDonor aUser = new UserDonor("Fede", "fede@gmail.com", "1234", "facha",aSystem);
 		
 		aUser.setLastDonationDate(new GregorianCalendar(2019, Calendar.SEPTEMBER,11));
 		
@@ -160,16 +172,16 @@ public class UserTest {
 		when(project2.getLocationProject()).thenReturn(location2);
 		when(location2.getPopulation()).thenReturn(30000);
 								
-		aUser.donate(1500, project2);
+		aUser.donate(1500, project2, "First donation");
 
 		assertEquals(aUser.getPoints(), 1500);
 		assertEquals(aUser.totalDonation(), 1500);
 	}
 	
 	@Test
-	public void theUserIsNotAddedToTheDonorList() throws UserException{
+	public void theUserIsNotAddedToTheDonorList() throws UserException, ProjetcException{
 		System aSystem = mock(System.class);
-		User aUser = new UserDonor("Oscar", "oscar@gmail.com", "12345", "Oscar", aSystem);
+		UserDonor aUser = new UserDonor("Oscar", "oscar@gmail.com", "12345", "Oscar", aSystem);
 
 		Project project = mock(Project.class);
 		Location location = mock(Location.class);
@@ -181,8 +193,8 @@ public class UserTest {
 
 		when(project.getDonors()).thenReturn(donors);
 		
-		aUser.donate(1000, project);
-		aUser.donate(5000, project);
+		aUser.donate(1000, project, "First donation");
+		aUser.donate(5000, project, "Second donation");
 
 	    assertEquals(project.getDonors().size(), 1);
 	}
@@ -190,7 +202,7 @@ public class UserTest {
 	@Test
 	public void userException() throws UserException{
 		System aSystem = mock(System.class);
-		User aUser = new UserDonor("Felipe", "felipe@gmail.com", "12345", "Felix", aSystem);
+		UserDonor aUser = new UserDonor("Felipe", "felipe@gmail.com", "12345", "Felix", aSystem);
 
 		Project project = mock(Project.class);
 		Location location = mock(Location.class);
@@ -198,7 +210,7 @@ public class UserTest {
 		when(location.getPopulation()).thenReturn(100000);
 		
 		UserException exception = Assertions.assertThrows(UserException.class, () -> {
-			aUser.donate(0, project);
+			aUser.donate(0, project, "First donation");
 			});	
 	    
 		assertEquals("The amount of the donation cannot be less than or equal to 0", exception.getMessage());
@@ -210,7 +222,7 @@ public class UserTest {
 		Location location = mock(Location.class);
 		Calendar endOfProject= new GregorianCalendar(2020, Calendar.SEPTEMBER,1);
 				
-		User aUser = new UserDonor("Fede", "fede@gmail.com", "1234", "facha",aSystem);
+		UserDonor aUser = new UserDonor("Fede", "fede@gmail.com", "1234", "facha",aSystem);
 		
 		UserException exception = Assertions.assertThrows(UserException.class, () -> {			
 			aUser.createProject(location, "Lonzo", endOfProject);
@@ -281,18 +293,18 @@ public class UserTest {
 	}
 	
 	@Test
-	public void donateIn3Project() throws UserException{ 	
+	public void donateIn3Project() throws UserException, ProjetcException{ 	
 		System aSystem = mock(System.class);
-		User aUser = new UserDonor("Pepe", "pepe@gmail.com", "1234", "Argento", aSystem);
+		UserDonor aUser = new UserDonor("Pepe", "pepe@gmail.com", "1234", "Argento", aSystem);
 
 		Project project = mock(Project.class);
 		Location location = mock(Location.class);
 		when(project.getLocationProject()).thenReturn(location);
 		when(location.getPopulation()).thenReturn(30000);
 				
-		aUser.donate(1500, project);
-		aUser.donate(10, project);
-		aUser.donate(1, project);
+		aUser.donate(1500, project, "First donation");
+		aUser.donate(10, project, "Second donation");
+		aUser.donate(1, project, "Third donation");
 				
 		assertEquals(aUser.getPoints(), 2500);		
 	}
