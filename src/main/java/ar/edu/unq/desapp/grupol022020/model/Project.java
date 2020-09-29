@@ -31,18 +31,18 @@ public class Project {
 		this.donatedAmount = 0;
 	}
 	
-	public void donate(Donation donation) throws ProjetcException {
+	public void receiveDonation(Donation donation) throws ProjetcException {
 		if(isDonationPossible(donation.getAmount())) {
-				this.addTimeIfMissing();
-				this.addDonotion(donation);
-				this.addDonor(donation.getUser());
-				this.donatedAmount += donation.getAmount();
+				addTimeIfMissing();
+				addDonation(donation);
+				addDonor(donation.getUser());
+				donatedAmount += donation.getAmount();
 		}else {
 			throw new ProjetcException(
 						"It is not possible to make a donation");
 		}
 	}
-	
+
 	private void addTimeIfMissing() {
 		Calendar today = Calendar.getInstance();
 		if(endOfProject.compareTo(today)<0) {
@@ -63,7 +63,7 @@ public class Project {
 		this.donors.add(aUser);
 	}
 	
-	public void addDonotion(Donation aDonation) {
+	public void addDonation(Donation aDonation) {
 		this.setLastDonation(aDonation.getDateDonation());
 		this.donations.add(aDonation);
 	}

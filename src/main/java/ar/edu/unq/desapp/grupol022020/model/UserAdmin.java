@@ -22,5 +22,4 @@ public class UserAdmin  extends User{
 			throws ProjetcException {
 		aProject.setPercentageRequiredForClosing(percentageRequiredForClosing);
 	}
-
 }
