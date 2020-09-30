@@ -1,11 +1,40 @@
 package ar.edu.unq.desapp.grupol022020.model;
 
-public class Location {
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "location")
+@SequenceGenerator(name = "SEQ_LOCATION", initialValue = 1, allocationSize = 1, sequenceName = "SEQ_LOCATION")
+public class Location implements Serializable {
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_LOCATION")
+	private Integer id;
+	@Column
 	private String name;
+	@Column
 	private String province;
+	@Column
 	private Integer population;
+	@Column
 	private Boolean hasConnectivity;
+	
+	public Location() { }
 		
+	public Location(String name, String province, Integer population, Boolean hasConnectivity) {
+		this.name = name;
+		this.province = province;
+		this.population = population;
+		this.hasConnectivity = hasConnectivity;
+	}
+	
 	public Integer getPopulation() {
 		return population;
 	}
@@ -36,5 +65,13 @@ public class Location {
 
 	public void setHasConnectivity(Boolean hasConnectivity) {
 		this.hasConnectivity = hasConnectivity;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 }

@@ -9,6 +9,6 @@ import ar.edu.unq.desapp.grupol022020.DesAppGrupoL022020Application;
 class DesAppGrupoL022020ApplicationTests {
 	@Test
 	void contextLoads() {
-		DesAppGrupoL022020Application.main(new String[] {});
+//		DesAppGrupoL022020Application.main(new String[] {});
 	}  
 }
