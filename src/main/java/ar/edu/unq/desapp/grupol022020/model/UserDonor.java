@@ -4,10 +4,36 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
+
+//@Entity
+//@SequenceGenerator(name = "SEQ_USER_DONOR", initialValue = 1, allocationSize = 1, sequenceName = "SEQ_USER_DONOR")
 public class UserDonor extends User{
+//	@Id
+//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_USER_DONOR")
+	private Integer id;
+//	@Column
 	private Integer points;
+//	@OneToMany(mappedBy = "donation", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//  @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL, mappedBy = "user")
+//	@JoinColumn(name= "donationId", referencedColumnName = "id")
+//  @OneToMany(cascade = CascadeType.ALL, mappedBy = "userDonorId")
 	private List<Donation> donations;
+//	@Column
 	private Calendar lastDonationDate;
+	
+	public UserDonor() { }
 	
 	public UserDonor (String aName, String aMail, String aPassword, String aNick, System aSystem) {
 		super(aName, aMail, aPassword, aNick, aSystem); 
