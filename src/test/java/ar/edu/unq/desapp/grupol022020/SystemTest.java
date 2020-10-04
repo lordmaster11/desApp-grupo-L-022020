@@ -1,5 +1,5 @@
 package ar.edu.unq.desapp.grupol022020;
-
+/*
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
@@ -228,4 +228,4 @@ public class SystemTest {
 		
 //		assertTrue(myAdministrador.getUser().contains(myUser));
 	}
-}
+}*/

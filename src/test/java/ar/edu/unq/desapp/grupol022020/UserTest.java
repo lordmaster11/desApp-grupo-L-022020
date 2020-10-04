@@ -23,9 +23,7 @@ import ar.edu.unq.desapp.grupol022020.model.UserException;
 public class UserTest {
 	@Test
 	public void newUser(){ 
-		System aSystem = mock(System.class);
-		
-		UserDonor aUser = new UserDonor ("Juan", "juan@gmail.com", "1234", "Master", aSystem);
+		UserDonor aUser = new UserDonor ("Juan", "juan@gmail.com", "1234", "Master");
 		assertEquals(aUser.getName(), "Juan");		
 		assertEquals(aUser.getMail(), "juan@gmail.com");
 		assertEquals(aUser.getPassword(), "1234");
@@ -35,14 +33,12 @@ public class UserTest {
 	
 	@Test
 	public void settersUser(){ 
-		System aSystem = mock(System.class);
-		UserAdmin aUser = new UserAdmin ("Juan", "juan@gmail.com", "1234", "Master", aSystem);
+		UserAdmin aUser = new UserAdmin ("Juan", "juan@gmail.com", "1234", "Master");
 
 		aUser.setName("Juan Carlos");
 		aUser.setMail("juanca@gmail.com");
 		aUser.setPassword("12345");
 		aUser.setNick("Juanca");
-		aUser.setSystem(aSystem);
 
 		assertEquals(aUser.getName(), "Juan Carlos");		
 		assertEquals(aUser.getMail(), "juanca@gmail.com");
@@ -53,8 +49,7 @@ public class UserTest {
 
 	@Test
 	public void newUserDonorDonateInAProjectWhithLessThan1000() throws UserException, ProjetcException{ 	
-		System aSystem = mock(System.class);
-		UserDonor aUser = new UserDonor("Pepe", "pepe@gmail.com", "1234", "Argento", aSystem);
+		UserDonor aUser = new UserDonor("Pepe", "pepe@gmail.com", "1234", "Argento");
 
 		Project project = mock(Project.class);
 		Location location = mock(Location.class);
@@ -70,8 +65,7 @@ public class UserTest {
 
 	@Test
 	public void donateInAProjectWhithMoreThan1000() throws UserException, ProjetcException{ 	
-		System aSystem = mock(System.class);
-		UserDonor aUser = new UserDonor("Pepe", "pepe@gmail.com", "1234", "Argento", aSystem);
+		UserDonor aUser = new UserDonor("Pepe", "pepe@gmail.com", "1234", "Argento");
 
 		Project project = mock(Project.class);
 		Location location = mock(Location.class);
@@ -87,8 +81,7 @@ public class UserTest {
 		
 	@Test
 	public void donateInAProjectInATownWhithLessThan2000Populations() throws UserException, ProjetcException{ 
-		System aSystem = mock(System.class);
-		UserDonor aUser = new UserDonor("Esteban", "esteban@gmail.com", "1234", "Kito", aSystem);
+		UserDonor aUser = new UserDonor("Esteban", "esteban@gmail.com", "1234", "Kito");
 
 		Project project = mock(Project.class);
 		Location location = mock(Location.class);
@@ -104,8 +97,7 @@ public class UserTest {
 
 	@Test
 	public void donateInAProjectInATownWhithLessThan2000PopulationsAndMoreThan1000() throws UserException, ProjetcException{ 	
-		System aSystem = mock(System.class);
-		UserDonor aUser = new UserDonor("Francisco", "fran@gmail.com", "1234", "pancho", aSystem);
+		UserDonor aUser = new UserDonor("Francisco", "fran@gmail.com", "1234", "pancho");
 
 		Project project = mock(Project.class);
 		Location location = mock(Location.class);
@@ -121,8 +113,7 @@ public class UserTest {
 
 	@Test
 	public void donateInTwoAProjectsInTheSameMonth() throws UserException, ProjetcException{ 	
-		System aSystem = mock(System.class);
-		UserDonor aUser = new UserDonor("Fede", "fede@gmail.com", "12345", "facha", aSystem);
+		UserDonor aUser = new UserDonor("Fede", "fede@gmail.com", "12345", "facha");
 
 		Project project = mock(Project.class);
 		Location location = mock(Location.class);
@@ -144,8 +135,7 @@ public class UserTest {
 
 	@Test
 	public void donateInTwoAProjectsInDifferentMonth() throws UserException, ProjetcException{ 	
-		System aSystem = mock(System.class);
-		UserDonor aUser = new UserDonor("Fede", "fede@gmail.com", "1234", "facha",aSystem);
+		UserDonor aUser = new UserDonor("Fede", "fede@gmail.com", "1234", "facha");
 		
 		aUser.setLastDonationDate(new GregorianCalendar(2020, Calendar.APRIL,11));
 		
@@ -162,8 +152,7 @@ public class UserTest {
 	
 	@Test
 	public void donateInTwoAProjectsInDifferentYear() throws UserException, ProjetcException{ 	
-		System aSystem = mock(System.class);
-		UserDonor aUser = new UserDonor("Fede", "fede@gmail.com", "1234", "facha",aSystem);
+		UserDonor aUser = new UserDonor("Fede", "fede@gmail.com", "1234", "facha");
 		
 		aUser.setLastDonationDate(new GregorianCalendar(2019, Calendar.SEPTEMBER,11));
 		
@@ -180,8 +169,7 @@ public class UserTest {
 	
 	@Test
 	public void theUserIsNotAddedToTheDonorList() throws UserException, ProjetcException{
-		System aSystem = mock(System.class);
-		UserDonor aUser = new UserDonor("Oscar", "oscar@gmail.com", "12345", "Oscar", aSystem);
+		UserDonor aUser = new UserDonor("Oscar", "oscar@gmail.com", "12345", "Oscar");
 
 		Project project = mock(Project.class);
 		Location location = mock(Location.class);
@@ -191,18 +179,17 @@ public class UserTest {
 	    Set<User> donors = new HashSet<User>();    
 	    donors.add(aUser);
 
-//		when(project.getDonors()).thenReturn(donors);
+		when(project.getDonors()).thenReturn(donors);
 		
 		aUser.donate(1000, project, "First donation");
 		aUser.donate(5000, project, "Second donation");
 
-//	    assertEquals(project.getDonors().size(), 1);
+	    assertEquals(project.getDonors().size(), 1);
 	}
 	
 	@Test
 	public void userException() throws UserException{
-		System aSystem = mock(System.class);
-		UserDonor aUser = new UserDonor("Felipe", "felipe@gmail.com", "12345", "Felix", aSystem);
+		UserDonor aUser = new UserDonor("Felipe", "felipe@gmail.com", "12345", "Felix");
 
 		Project project = mock(Project.class);
 		Location location = mock(Location.class);
@@ -218,11 +205,10 @@ public class UserTest {
 	
 	@Test
 	public void createProjectUserDonor() throws UserException, ProjetcException{ 	
-		System aSystem = mock(System.class);
 		Location location = mock(Location.class);
 		Calendar endOfProject= new GregorianCalendar(2020, Calendar.SEPTEMBER,1);
 				
-		UserDonor aUser = new UserDonor("Fede", "fede@gmail.com", "1234", "facha",aSystem);
+		UserDonor aUser = new UserDonor("Fede", "fede@gmail.com", "1234", "facha");
 		
 		UserException exception = Assertions.assertThrows(UserException.class, () -> {			
 			aUser.createProject(location, "Lonzo", endOfProject);
@@ -230,26 +216,25 @@ public class UserTest {
 		
 		assertEquals("Tu perfil no te permite crear proyectos", exception.getMessage());
 	}
-	
+/*	
 	@Test
 	public void createProjectUserAdmin() throws UserException, ProjetcException{ 	
 		System aSystem = mock(System.class);
 		Location location = mock(Location.class);
 		Calendar endOfProject= new GregorianCalendar(2020, Calendar.SEPTEMBER,1);
 				
-		User aUser = new UserAdmin("Fede", "fede@gmail.com", "1234", "facha",aSystem);
+		User aUser = new UserAdmin("Fede", "fede@gmail.com", "1234", "facha");
 		
 		aUser.createProject(location, "Lonzo", endOfProject);
 		
 		verify(aSystem).createNewProject(location, "Lonzo", endOfProject);
 	}
-	
+*/	
 	@Test
 	public void setFactorInProjetInAdmin() throws UserException, ProjetcException{ 	
-		System aSystem = mock(System.class);
 		Project aProject = mock(Project.class);
 				
-		User aUser = new UserAdmin("Fede", "fede@gmail.com", "1234", "facha", aSystem);	
+		User aUser = new UserAdmin("Fede", "fede@gmail.com", "1234", "facha");	
 		aUser.setFactorInProjet(aProject, 1000);
 		
 		verify(aProject).setFactor(1000);
@@ -257,10 +242,9 @@ public class UserTest {
 	
 	@Test
 	public void setPercentageRequiredForClosingInProjetInAdmin() throws UserException, ProjetcException{ 	
-		System aSystem = mock(System.class);
 		Project aProject = mock(Project.class);
 				
-		User aUser = new UserAdmin("Fede", "fede@gmail.com", "1234", "facha", aSystem);	
+		User aUser = new UserAdmin("Fede", "fede@gmail.com", "1234", "facha");	
 		aUser.setPercentageRequiredForClosingInProjet(aProject, 60);
 		
 		verify(aProject).setPercentageRequiredForClosing(60);
@@ -268,10 +252,9 @@ public class UserTest {
 	
 	@Test
 	public void setFactorInProjetInDonor() throws UserException, ProjetcException{ 	
-		System aSystem = mock(System.class);
 		Project aProject = mock(Project.class);
 				
-		User aUser = new UserDonor("Fede", "fede@gmail.com", "1234", "facha", aSystem);
+		User aUser = new UserDonor("Fede", "fede@gmail.com", "1234", "facha");
 		UserException exception = Assertions.assertThrows(UserException.class, () -> {			
 			aUser.setFactorInProjet(aProject, 1000);
 			});	
@@ -281,10 +264,9 @@ public class UserTest {
 	
 	@Test
 	public void setPercentageRequiredForClosingInProjetInDonor() throws UserException, ProjetcException{ 	
-		System aSystem = mock(System.class);
 		Project aProject = mock(Project.class);
 		
-		User aUser = new UserDonor("Fede", "fede@gmail.com", "1234", "facha", aSystem);
+		User aUser = new UserDonor("Fede", "fede@gmail.com", "1234", "facha");
 		UserException exception = Assertions.assertThrows(UserException.class, () -> {			
 			aUser.setPercentageRequiredForClosingInProjet(aProject, 60);
 			});	
@@ -294,8 +276,7 @@ public class UserTest {
 	
 	@Test
 	public void donateIn3Project() throws UserException, ProjetcException{ 	
-		System aSystem = mock(System.class);
-		UserDonor aUser = new UserDonor("Pepe", "pepe@gmail.com", "1234", "Argento", aSystem);
+		UserDonor aUser = new UserDonor("Pepe", "pepe@gmail.com", "1234", "Argento");
 
 		Project project = mock(Project.class);
 		Location location = mock(Location.class);

@@ -7,36 +7,23 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.PrimaryKeyJoinColumn;
 
-//@Entity
-//@SequenceGenerator(name = "SEQ_USER_DONOR", initialValue = 1, allocationSize = 1, sequenceName = "SEQ_USER_DONOR")
+@Entity
+@PrimaryKeyJoinColumn(name = "id")
 public class UserDonor extends User{
-//	@Id
-//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_USER_DONOR")
-	private Integer id;
-//	@Column
+	@Column
 	private Integer points;
-//	@OneToMany(mappedBy = "donation", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//  @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL, mappedBy = "user")
-//	@JoinColumn(name= "donationId", referencedColumnName = "id")
-//  @OneToMany(cascade = CascadeType.ALL, mappedBy = "userDonorId")
+    @OneToMany(cascade = CascadeType.ALL)
 	private List<Donation> donations;
-//	@Column
+	@Column
 	private Calendar lastDonationDate;
 	
 	public UserDonor() { }
 	
-	public UserDonor (String aName, String aMail, String aPassword, String aNick, System aSystem) {
-		super(aName, aMail, aPassword, aNick, aSystem); 
+	public UserDonor (String aName, String aMail, String aPassword, String aNick) {
+		super(aName, aMail, aPassword, aNick); 
 		super.setRole("Donor");
 		this.points = 0;
  		this.donations = new ArrayList<Donation>();
@@ -59,11 +46,11 @@ public class UserDonor extends User{
 	
 	public void donate(Integer money, Project project, String comment) throws UserException, ProjetcException {		
 		Donation donation = new Donation(this, project, Calendar.getInstance(), money, comment);	
+		addDonation(donation);
 		makeDonation(donation, project);
 	}	
 	
 	public void makeDonation(Donation donation, Project project) throws UserException, ProjetcException {
-		addDonation(donation);
 		sumPoints(donation.calculatePoints(this, project));
 		setLastDonationDate(donation.getDateDonation());
 		project.receiveDonation(donation);
@@ -82,7 +69,7 @@ public class UserDonor extends User{
 	public Integer getPoints() {
 		return points;
 	}
-	
+
 	public List<Donation> getDonations() {
 		return donations;
 	}

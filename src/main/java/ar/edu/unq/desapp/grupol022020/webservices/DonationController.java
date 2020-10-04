@@ -8,18 +8,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import ar.edu.unq.desapp.grupol022020.model.Project;
-import ar.edu.unq.desapp.grupol022020.services.ProjectService;
+import ar.edu.unq.desapp.grupol022020.model.Donation;
+import ar.edu.unq.desapp.grupol022020.services.DonationService;
 
 @RestController
 @EnableAutoConfiguration
-public class ProjectController {
+public class DonationController {    
     @Autowired
-    private ProjectService projectService;
-
-    @GetMapping("/api/projects")
-    public ResponseEntity<?> allLocations() {
-        List<Project> list = projectService.findAll();
+    private DonationService donationService;
+ 
+    @GetMapping("/api/donations")
+    public ResponseEntity<?> allUsers() {
+        List<Donation> list = donationService.findAll();
         return ResponseEntity.ok().body(list);
     }
 }

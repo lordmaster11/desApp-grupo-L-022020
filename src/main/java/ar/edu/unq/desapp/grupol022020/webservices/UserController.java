@@ -8,18 +8,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import ar.edu.unq.desapp.grupol022020.model.Project;
-import ar.edu.unq.desapp.grupol022020.services.ProjectService;
+import ar.edu.unq.desapp.grupol022020.model.User;
+import ar.edu.unq.desapp.grupol022020.services.UserService;
 
 @RestController
 @EnableAutoConfiguration
-public class ProjectController {
+public class UserController {    
     @Autowired
-    private ProjectService projectService;
-
-    @GetMapping("/api/projects")
-    public ResponseEntity<?> allLocations() {
-        List<Project> list = projectService.findAll();
+    private UserService userService;
+ 
+    @GetMapping("/api/users")
+    public ResponseEntity<?> allUsers() {
+        List<User> list = userService.findAll();
         return ResponseEntity.ok().body(list);
     }
 }

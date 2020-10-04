@@ -6,24 +6,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ar.edu.unq.desapp.grupol022020.model.User;
-import ar.edu.unq.desapp.grupol022020.repositories.UserRepository;
+import ar.edu.unq.desapp.grupol022020.model.Donation;
+import ar.edu.unq.desapp.grupol022020.repositories.DonationRepository;
 
 @Service
-public class UserService {
+public class DonationService {
 	@Autowired
-	private UserRepository  repository;
+	private DonationRepository  repository;
 	
 	@Transactional
-	public User save(User model) {
+	public Donation save(Donation model) {
 		return this.repository.save(model);
 	}
 
-	public User findByID(Integer id) {
+	public Donation findByID(Integer id) {
 		return this.repository.findById(id).get();
 	}
 
-	public List<User> findAll() {
+	public List<Donation> findAll() {
 		return this.repository.findAll();
 	}
 }

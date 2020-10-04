@@ -8,7 +8,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import ar.edu.unq.desapp.grupol022020.model.Donation;
-/*
+
 @Configuration
 @Repository
 public interface DonationRepository extends CrudRepository<Donation, Integer> {
@@ -16,4 +16,3 @@ public interface DonationRepository extends CrudRepository<Donation, Integer> {
 	
 	List<Donation> findAll();
 }
-*/

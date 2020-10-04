@@ -1,5 +1,5 @@
 package ar.edu.unq.desapp.grupol022020.repositories;
-/*
+
 import java.util.List;
 import java.util.Optional;
 
@@ -16,4 +16,3 @@ public interface UserRepository extends CrudRepository<User, Integer> {
 	
 	List<User> findAll();
 }
-*/
