@@ -3,37 +3,40 @@ package ar.edu.unq.desapp.grupol022020.model;
 import java.util.Calendar;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.Inheritance;
 import javax.persistence.Table;
 
-//@MappedSuperclass
-//@Table(name = "user")
+@Entity
+@Inheritance
+@Table(name = "user")
 public abstract class User{
-//	@Column
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id")
+	private Integer id;
+	@Column
 	private String name;
-//	@Column
+	@Column
 	private String mail;
-//	@Column
+	@Column
 	private String password;
-//	@Column
+	@Column
 	private String nick;
-//	@Column
+	@Column
 	private String role;
-//	@Column
-	private System system;
 	
 	public User() { }
 
-	public User(String aName, String aMail, String aPassword, String aNick, System aSystem) {
+	public User(String aName, String aMail, String aPassword, String aNick) {
 	    	this.name = aName;
 	    	this.mail = aMail;
 	    	this.password = aPassword;
 	    	this.nick = aNick;
-    		this.system = aSystem;
-	    }
+	}
 	   
 	abstract public void createProject(Location location, String fantasyName, Calendar endOfProject) 
 			throws UserException, ProjetcException;
@@ -81,13 +84,5 @@ public abstract class User{
 
 	public void setRole(String role) {
 		this.role = role;
-	}
-	
-	public System getSystem() {
-		return system;
-	}
-
-	public void setSystem(System system) {
-		this.system = system;
 	}
 }

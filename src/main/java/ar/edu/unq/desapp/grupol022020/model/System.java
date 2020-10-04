@@ -27,17 +27,17 @@ public class System {
 	}
 	
 	public User createUserDonor(String aName, String aMail, String aPassword, String aNick) {
-		UserDonor newUser = new UserDonor(aName, aMail, aPassword, aNick, this);
+		UserDonor newUser = new UserDonor(aName, aMail, aPassword, aNick);
 		this.addUser(newUser);
 		return newUser;
 	}
 	
 	public User createUserAdmin(String aName, String aMail, String aPassword, String aNick) {
-		User newUser = new UserAdmin(aName, aMail, aPassword, aNick, this);
+		User newUser = new UserAdmin(aName, aMail, aPassword, aNick);
 		//this.addUser(newUser);
 		return newUser;
 	}
-	
+/*	
 	public List<Donation> best10Donations() {
 		List<Donation> allDonations= new ArrayList<Donation>();
 		for(UserDonor user:users) {
@@ -48,7 +48,7 @@ public class System {
 						   .limit(10)
 						   .collect(Collectors.toList());
 	}
-	
+*/	
 	public List<Project> donationFreeLocationsForLonger() {
 		return projects.stream()
 				       .sorted(Comparator.comparing(Project::getLastDonation))

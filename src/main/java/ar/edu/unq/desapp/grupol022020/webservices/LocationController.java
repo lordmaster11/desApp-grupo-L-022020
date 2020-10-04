@@ -19,7 +19,6 @@ import ar.edu.unq.desapp.grupol022020.services.LocationService;
 @RestController
 @EnableAutoConfiguration
 public class LocationController {
-
     @Autowired
     private LocationService locationService;
 

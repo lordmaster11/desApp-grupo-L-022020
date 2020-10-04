@@ -10,32 +10,30 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-//@Entity
-//@Table(name = "donation")
-//@SequenceGenerator(name = "SEQ_DONATION", initialValue = 1, allocationSize = 1, sequenceName = "SEQ_DONATION")
+@Entity
+@Table(name = "donation")
 public class Donation {
-//	@Id
-//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_DONATION")
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id")
 	private Integer id;
-//	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//	@JoinColumn(name= "userDonorId", referencedColumnName = "id")
-//  @ManyToOne(optional = false, cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name= "userDonorId", referencedColumnName = "id")
 	private User user;
-//	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//	@JoinColumn(name= "projectId", referencedColumnName = "id")
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name= "projectId", referencedColumnName = "id")
 	private Project project;
-//	@Column
+	@Column
 	private Calendar dateDonation;
-//	@Column
+	@Column
 	private Integer amount;
-//	@Column
+	@Column
 	private String comment;
+	
+	public Donation() { }
 
 	public Donation(User aUser, Project aProject, Calendar aDate, Integer anAmount, String aComment) {
 		this.user = aUser;

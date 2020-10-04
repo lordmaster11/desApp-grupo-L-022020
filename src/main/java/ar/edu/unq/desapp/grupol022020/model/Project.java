@@ -15,18 +15,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "project")
-@SequenceGenerator(name = "SEQ_PROJECT", initialValue = 1, allocationSize = 1, sequenceName = "SEQ_PROJECT")
 public class Project implements Serializable {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_PROJECT")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id")
 	private Integer id;
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name= "locationId", referencedColumnName = "id")
@@ -41,14 +39,10 @@ public class Project implements Serializable {
 	private Calendar projectStart;
 	@Column
 	private Calendar endOfProject;
-//	@OneToMany(mappedBy = "donation", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//  @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL, mappedBy = "project")
-//	@JoinColumn(name= "donationId", referencedColumnName = "id")
-//	private List<Donation> donations;
-//	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//  @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL, mappedBy = "project")
-//	@JoinColumn(name= "userDonorId", referencedColumnName = "id")
-//	private Set<User> donors;
+    @OneToMany(cascade = CascadeType.ALL)
+	private List<Donation> donations;
+    @OneToMany(cascade = CascadeType.ALL)
+	private Set<User> donors;
 	@Column
 	private Calendar lastDonation;
 	@Column
@@ -63,8 +57,8 @@ public class Project implements Serializable {
 		this.fantasyName = builder.fantasyName;
 		this.projectStart = builder.projectStart;
 		this.endOfProject = builder.endOfProject;
-//		this.donations = builder.donations;
-//		this.donors = builder.donors;
+		this.donations = builder.donations;
+		this.donors = builder.donors;
 		this.lastDonation = builder.lastDonation;
 		this.donatedAmount = 0;
 	}
@@ -73,7 +67,7 @@ public class Project implements Serializable {
 		if(isDonationPossible(donation.getAmount())) {
 				addTimeIfMissing();
 				addDonation(donation);
-//				addDonor(donation.getUser());
+				addDonor(donation.getUser());
 				donatedAmount += donation.getAmount();
 		}else {
 			throw new ProjetcException(
@@ -97,22 +91,22 @@ public class Project implements Serializable {
 		return factor * locationProject.getPopulation();
 	}
 	
-//	public void addDonor(User aUser) {
-//		this.donors.add(aUser);
-//	}
+	public void addDonor(User aUser) {
+		this.donors.add(aUser);
+	}
 	
 	public void addDonation(Donation aDonation) {
 		this.setLastDonation(aDonation.getDateDonation());
-//		this.donations.add(aDonation);
+		this.donations.add(aDonation);
 	}
 	
 	public Location getLocationProject() {
 		return locationProject;
 	}
 	
-//	public Set<User> getDonors() {
-//		return donors;
-//	}
+	public Set<User> getDonors() {
+		return donors;
+	}
 
 	public Integer getFactor() {
 		return factor;
@@ -146,9 +140,9 @@ public class Project implements Serializable {
 		this.lastDonation = lastDonation;
 	}
 
- //   public List<Donation> getDonations() {
-//		return donations;
-//	}
+    public List<Donation> getDonations() {
+		return donations;
+	}
     
 	public Integer getId() {
 		return id;
@@ -174,13 +168,13 @@ public class Project implements Serializable {
 		this.endOfProject = endOfProject;
 	}
 
-//	public void setDonations(List<Donation> donations) {
-//		this.donations = donations;
-//	}
+	public void setDonations(List<Donation> donations) {
+		this.donations = donations;
+	}
 
-//	public void setDonors(Set<User> donors) {
-//		this.donors = donors;
-//	}
+	public void setDonors(Set<User> donors) {
+		this.donors = donors;
+	}
 
 	public void setDonatedAmount(Integer donatedAmount) {
 		this.donatedAmount = donatedAmount;
@@ -211,14 +205,14 @@ public static class ProjectBuilder {
 	private String fantasyName;
 	private Calendar projectStart;
 	private Calendar endOfProject;
-//	private List<Donation> donations;
-//	private Set<User> donors;
+	private List<Donation> donations;
+	private Set<User> donors;
 	private Calendar lastDonation;
 	
 	public ProjectBuilder(Location location) {
 		this.locationProject = location;	
-//		this.donations = new ArrayList<Donation>();
-//		this.donors = new HashSet<User>();
+		this.donations = new ArrayList<Donation>();
+		this.donors = new HashSet<User>();
 		this.factor = 1000;
 		this.percentageRequiredForClosing = 100;
 		this.projectStart = Calendar.getInstance();
