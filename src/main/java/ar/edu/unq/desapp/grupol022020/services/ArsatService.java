@@ -9,6 +9,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class ArsatService {
+	/*
    public static void main(String[] args) {
        try {
            URL url = new URL("http://prod.arsat.apim.junar.com/plan-federal-de-internet/v1/puntos/futuros.json/?auth_key=NzAxkj6q2uag6CX0pr9DrQxxlEDN1PBclAosN9Jn");
@@ -37,5 +38,5 @@ public class ArsatService {
 	    } catch (IOException e) {
 		    e.printStackTrace();
 	    }
-   }
+   }*/
 }
