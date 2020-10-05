@@ -4,8 +4,7 @@ install: skip
 
 before_install:
 - sudo apt-get install jq
-- wget -O ~/codacy-coverage-reporter-assembly-latest.jar $(curl https://api.github.com/repos/codacy/codacy-coverage-reporter/releases/latest
-  | jq -r .assets[0].browser_download_url)
+- wget -O ~ / codacy -cover-reporter-assembly-latest.jar https://github.com/codacy/codacy-coverage-reporter/releases/ download / 2.0.2 / codacy -cover-reporter-2.0.2 -montaje.jar
 after_success:
 - java -jar ~/codacy-coverage-reporter-assembly-latest.jar report -l Java -r build/reports/jacoco/test/jacocoTestReport.xml
 
