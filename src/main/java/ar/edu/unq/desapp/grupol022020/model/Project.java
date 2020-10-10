@@ -1,5 +1,6 @@
 package ar.edu.unq.desapp.grupol022020.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -16,12 +17,17 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import ar.edu.unq.desapp.grupol022020.services.DonationService;
 
 @Entity
 @Table(name = "project")
-public class Project {
+public class Project implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id")
