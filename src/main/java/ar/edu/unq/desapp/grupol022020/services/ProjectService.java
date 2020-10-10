@@ -26,4 +26,8 @@ public class ProjectService {
 	public List<Project> findAll() {
 		return this.repository.findAll();
 	}
+
+	public void deleteById(Integer id) {
+		this.repository.deleteById(id);;		
+	}
 }

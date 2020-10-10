@@ -1,6 +1,7 @@
 package ar.edu.unq.desapp.grupol022020.webservices;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ar.edu.unq.desapp.grupol022020.model.Donation;
 import ar.edu.unq.desapp.grupol022020.services.DonationService;
+import ar.edu.unq.desapp.grupol022020.webservices.exceptions.ResourceNotFoundException;
 
 @RestController
 @EnableAutoConfiguration
@@ -25,8 +27,14 @@ public class DonationController {
     }
     
     @GetMapping("/api/donations/{id}")
-    public ResponseEntity<?> getDonation(@PathVariable("id") Integer id) {
-        Donation donation = donationService.findByID(id);
-        return ResponseEntity.ok().body(donation);
+    public ResponseEntity<?> getDonationById(@PathVariable("id") Integer id) {
+    	try {
+    		Donation donation = donationService.findByID(id);
+        
+    		return ResponseEntity.ok().body(donation);
+        
+    	} catch (NoSuchElementException e){
+    		throw new ResourceNotFoundException("Donation with ID:"+id+" Not Found!");
+    	}    	   
     }
 }

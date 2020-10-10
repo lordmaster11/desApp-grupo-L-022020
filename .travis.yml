@@ -4,10 +4,10 @@ install: skip
 
 before_install:
 - sudo apt-get install jq
-  - wget -O ~ / codacy -cover-reporter-assembly-latest.jar https://github.com/codacy/codacy-coverage-reporter/releases/ download / 2.0.2 / codacy -cover-reporter-2.0.2 -montaje.jar
+  - wget -O ~ / codacy -cover-reporter-assembly-latest.jar $ (curl https://api.github.com/repos/codacy/codacy-coverage-reporter/releases/latest
+  | jq -r .assets [0] .browser_download_url)
 
-  # Instalar golang / dep (https://github.com/golang/dep/blob/master/docs/FAQ.md#how-do-i-use-dep-in-ci)  
-  - curl -L -s https://github.com/golang/dep/releases/download/v${DEP_VERSION}/dep-linux-amd64 -o $ GOPATH / bin / dep
+
 after_success:
 - java -jar ~/codacy-coverage-reporter-assembly-latest.jar report -l Java -r build/reports/jacoco/test/jacocoTestReport.xml
 
