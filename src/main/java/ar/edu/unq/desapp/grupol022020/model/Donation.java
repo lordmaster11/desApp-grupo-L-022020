@@ -30,17 +30,17 @@ public class Donation {
 	private String comment;	
 	
 	@JsonBackReference
-	@ManyToOne(optional = false, cascade = CascadeType.ALL)
+	@ManyToOne(optional = false, cascade = CascadeType.PERSIST)
 	@JoinColumn(name= "projectId", referencedColumnName = "id")
 	private Project project;
 	
 	@JsonBackReference
-	@ManyToOne(optional = false, cascade = CascadeType.ALL)
+	@ManyToOne(optional = false, cascade = CascadeType.PERSIST)
 	@JoinColumn(name= "userId", referencedColumnName = "id")
 	private User user;
 	
-	
 	public Donation () {}
+	
 	public Donation(User aUser, Project aProject, Calendar aDate, Integer anAmount, String aComment) {
 		this.user = aUser;
 		this.project = aProject;
@@ -96,5 +96,3 @@ public class Donation {
 		return accumulatedPoints;
 	}
 }
-
-

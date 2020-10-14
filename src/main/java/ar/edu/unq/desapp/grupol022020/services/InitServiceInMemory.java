@@ -35,9 +35,6 @@ public class InitServiceInMemory {
 	private LocationService locationService;
 	@Autowired
 	private ProjectService projectService;
-	@Autowired
-	private DonationService donationService;
-
 	
 	@PostConstruct
 	public void initialize() throws ProjetcException, UserException {
@@ -51,12 +48,19 @@ public class InitServiceInMemory {
 		Calendar dateEnd = new GregorianCalendar(2020, Calendar.SEPTEMBER,30); 
 		Location location = new Location("Quilmes", "Buenos Aires", 500000, true);
 		Location location2 = new Location("Purmamarca", "Jujuy", 100000, false);
-		Project project = new Project.ProjectBuilder(location).withFantasyName("Conectar").build();
-		Project project2 = new Project.ProjectBuilder(location2).withFantasyName("Conectarse").build();
-		User userDonor = new UserDonor("Marcelo", "jm@gmail.com", "1234", "Master");
-		User userAdmin = new UserAdmin("Cesar", "cesar@gmail.com", "1234", "Cesare");
+		Location location3 = new Location("Ezpeleta City", "Buenos Aires", 300000, true);
+		Location location4 = new Location("Cafayate", "Salta", 200000, false);
 
 		
+		Project project = new Project.ProjectBuilder(location).withFantasyName("Conectar").build();
+		Project project2 = new Project.ProjectBuilder(location2).withFantasyName("Conectarse").build();
+		Project project3 = new Project.ProjectBuilder(location3).withFantasyName("Cone").build();
+		
+		User userDonor = new UserDonor("Marcelo", "jm@gmail.com", "1234", "Master");
+		User userAdmin = new UserAdmin("Cesar", "cesar@gmail.com", "1234", "Cesare");
+		User userDonor2 = new UserDonor("Esteban", "ban@gmail.com", "1234", "Kito");
+
+
 		userDonor.donate(1000, project, "Donacion de 1000 pesos");
 		userDonor.donate(2000, project, "Donacion de 2000 pesos");
 		userDonor.donate(3000, project2, "Donacion de 3000 pesos");
@@ -64,12 +68,15 @@ public class InitServiceInMemory {
 
 		userService.save(userAdmin);
 		userService.save(userDonor);
-		
+		userService.save(userDonor2);
+
 		projectService.save(project);
 		projectService.save(project2);
-		
+		projectService.save(project3);
+
 		locationService.save(location);
 		locationService.save(location2);
-		
+		locationService.save(location3);	
+		locationService.save(location4);	
 	}
 }

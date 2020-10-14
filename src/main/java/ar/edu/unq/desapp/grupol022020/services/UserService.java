@@ -26,4 +26,8 @@ public class UserService {
 	public List<User> findAll() {
 		return this.repository.findAll();
 	}
+	
+	public void deleteById(Integer id) {
+		this.repository.deleteById(id);;		
+	}
 }

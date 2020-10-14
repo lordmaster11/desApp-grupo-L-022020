@@ -8,11 +8,11 @@ import javax.persistence.PrimaryKeyJoinColumn;
 @Entity
 @PrimaryKeyJoinColumn(name = "id")
 public class UserAdmin  extends User{
-
 	public UserAdmin () {}
+	
 	public UserAdmin (String aName, String aMail, String aPassword, String aNick) {
 		 super(aName, aMail, aPassword, aNick);
-		 super.setRole("Administrator");
+		 super.setRole("ROLE_ADMIN");
 	}
 
 	public void createProject(Location location, String fantasyName, Calendar endOfProject) 
@@ -38,6 +38,6 @@ public class UserAdmin  extends User{
 	}
 	
 	public void donate(Integer money, Project project, String comment) throws UserException, ProjetcException {	
-		throw new UserException("Admin users cannot donate");
+		throw new UserException("Admin user cannot donate");
 	}
 }

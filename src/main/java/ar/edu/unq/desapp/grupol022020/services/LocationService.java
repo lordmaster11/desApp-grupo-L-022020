@@ -26,4 +26,8 @@ public class LocationService {
 	public List<Location> findAll() {
 		return this.repository.findAll();
 	}
+	
+	public void deleteById(Integer id) {
+		this.repository.deleteById(id);;		
+	}
 }

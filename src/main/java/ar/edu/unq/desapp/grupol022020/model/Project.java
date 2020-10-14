@@ -17,11 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-
-import ar.edu.unq.desapp.grupol022020.services.DonationService;
 
 @Entity
 @Table(name = "project")
@@ -33,14 +29,14 @@ public class Project implements Serializable {
 	@Column(name="id")
 	private Integer id;
 	
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@JoinColumn(name= "locationId", referencedColumnName = "id")
 	private Location locationProject;
 	
 	@JsonManagedReference
 	@OneToMany(cascade= CascadeType.ALL, orphanRemoval = true)
 	private List<Donation> donations = new ArrayList<>();
-	
+		
 	@Column
 	private Integer factor;
 	@Column
