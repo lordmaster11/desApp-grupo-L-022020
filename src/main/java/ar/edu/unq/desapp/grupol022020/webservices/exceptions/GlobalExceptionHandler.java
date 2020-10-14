@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.validation.ConstraintViolationException;
-
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -107,8 +105,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 	
 	// handleConstraintViolationException : triggers when @Validated fails
-	@ExceptionHandler(ConstraintViolationException.class)
-	public ResponseEntity<?> handleConstraintViolationException(Exception ex, WebRequest request) {
+	@ExceptionHandler(ResourceBadRequestException.class)
+	public ResponseEntity<?> handleConstraintViolationException(ResourceBadRequestException ex, WebRequest request) {
 		
 		List<String> details = new ArrayList<String>();
 		details.add(ex.getMessage());

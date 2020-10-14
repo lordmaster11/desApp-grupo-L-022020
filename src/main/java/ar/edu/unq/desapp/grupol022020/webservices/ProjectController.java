@@ -5,6 +5,7 @@ import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,8 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.DeleteMapping;
 
 import ar.edu.unq.desapp.grupol022020.model.Project;
-import ar.edu.unq.desapp.grupol022020.repositories.ProjectRepository;
 import ar.edu.unq.desapp.grupol022020.services.ProjectService;
+import ar.edu.unq.desapp.grupol022020.webservices.exceptions.ResourceBadRequestException;
 import ar.edu.unq.desapp.grupol022020.webservices.exceptions.ResourceNotFoundException;
 
 @RestController
@@ -24,8 +25,6 @@ import ar.edu.unq.desapp.grupol022020.webservices.exceptions.ResourceNotFoundExc
 public class ProjectController {
     @Autowired
     private ProjectService projectService;
-    @Autowired
-    private ProjectRepository projectRepository;
 
     @GetMapping("/api/projects")
     public ResponseEntity<?> allLocations() {
@@ -44,16 +43,6 @@ public class ProjectController {
     		throw new ResourceNotFoundException("Project with ID:"+id+" Not Found!");
     	}    	   
     }
-   
-    /*
-	@GetMapping("/api/projects/{id}")
-	ResponseEntity<Project> getById(@PathVariable("id") Integer id) {
-		
-		Project project = projectRepository.findById(id)
-				           .orElseThrow(()->new ResourceNotFoundException("Project with ID:"+id+" Not Found!"));
-		
-		return ResponseEntity.ok().body(project);
-	}*/
     
 	@DeleteMapping(value="/api/projects/{id}")
     public ResponseEntity<?> deleteProjectById(@PathVariable("id") Integer id) {
@@ -65,16 +54,8 @@ public class ProjectController {
         
     	} catch (NoSuchElementException e){
     		throw new ResourceNotFoundException("Project with ID:"+id+" Not Found!");
-    	}    	   
+    	} catch (DataIntegrityViolationException e){
+    		throw new ResourceBadRequestException("Project with ID:"+id+", cannot be deleted because it has donations!");
+    	}
     }
-    
-	/*
-	@DeleteMapping(value="/api/projects/{id}")
-	ResponseEntity<String> deleteProject(@PathVariable("id") Integer id) {
-		Project project = projectRepository.findById(id)
-							.orElseThrow(()->new ResourceNotFoundException("Project with ID:"+id+" Not Found!"));
-		
-		projectRepository.deleteById(project.getId());
-		return ResponseEntity.ok().body("Project deleted with success!");	
-	}*/
 }

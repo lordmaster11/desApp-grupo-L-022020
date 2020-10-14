@@ -27,7 +27,7 @@ public class UserTest {
 		assertEquals(aUser.getMail(), "juan@gmail.com");
 		assertEquals(aUser.getPassword(), "1234");
 		assertEquals(aUser.getNick(), "Master");
-		assertEquals(aUser.getRole(), "Donor");
+		assertEquals(aUser.getRole(), "ROLE_USER");
 	}
 	
 	@Test
@@ -43,7 +43,7 @@ public class UserTest {
 		assertEquals(aUser.getMail(), "juanca@gmail.com");
 		assertEquals(aUser.getPassword(), "12345");
 		assertEquals(aUser.getNick(), "Juanca");
-		assertEquals(aUser.getRole(), "Administrator");
+		assertEquals(aUser.getRole(), "ROLE_ADMIN");
 	}		
 
 	@Test
@@ -213,7 +213,7 @@ public class UserTest {
 			aUser.createProject(location, "Lonzo", endOfProject);
 			});	
 		
-		assertEquals("Tu perfil no te permite crear proyectos", exception.getMessage());
+		assertEquals("User cannot create projects", exception.getMessage());
 	}
 	
 	@Test
@@ -245,7 +245,7 @@ public class UserTest {
 			aUser.setFactorInProjet(aProject, 1000);
 			});	
 		
-		assertEquals("Tu perfil no te permite modificar proyectos", exception.getMessage());		
+		assertEquals("User cannot update projects", exception.getMessage());		
 	}
 	
 	@Test
@@ -257,7 +257,7 @@ public class UserTest {
 			aUser.setPercentageRequiredForClosingInProjet(aProject, 60);
 			});	
 		
-		assertEquals("Tu perfil no te permite modificar proyectos", exception.getMessage());		
+		assertEquals("User cannot update projects", exception.getMessage());		
 	}
 	
 	@Test
