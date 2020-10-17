@@ -10,8 +10,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import org.springframework.web.bind.annotation.DeleteMapping;
 
 import ar.edu.unq.desapp.grupol022020.model.Project;
@@ -32,7 +34,7 @@ public class ProjectController {
         return ResponseEntity.ok().body(list);
     } 
     
-    @GetMapping("/api/projects/{id}")
+    @GetMapping("/api/project/{id}")
     public ResponseEntity<?> getProjectById(@PathVariable("id") Integer id) {
     	try {
     		Project project = projectService.findByID(id);
@@ -43,8 +45,27 @@ public class ProjectController {
     		throw new ResourceNotFoundException("Project with ID:"+id+" Not Found!");
     	}    	   
     }
-    
-	@DeleteMapping(value="/api/projects/{id}")
+
+	@PostMapping(path = "/api/project")
+    public ResponseEntity<Project> createProject(@Validated @RequestBody Project project) {
+    		Project newProject = projectService.save(project);
+        
+    		return ResponseEntity.ok().body(newProject);	
+    }
+	
+	@PutMapping(path = "/api/project/{id}")
+    public ResponseEntity<Project> updateProjectById(@PathVariable("id") Integer id, @Validated @RequestBody Project project) {
+    	try {
+    		Project projectUpdate = projectService.update(id, project);
+        
+    		return ResponseEntity.ok().body(projectUpdate);	
+        
+    	} catch (NoSuchElementException e){
+    		throw new ResourceNotFoundException("Project with ID:"+id+" Not Found!");
+    	}
+    }
+	
+	@DeleteMapping(value="/api/project/{id}")
     public ResponseEntity<?> deleteProjectById(@PathVariable("id") Integer id) {
     	try {
     		Project project = projectService.findByID(id);

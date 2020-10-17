@@ -30,4 +30,12 @@ public class LocationService {
 	public void deleteById(Integer id) {
 		this.repository.deleteById(id);;		
 	}
+
+	public Location update(Integer id, Location data) {
+		Location location = findByID(id);
+		location = data;
+		location.setId(id);
+		
+		return this.repository.save(location);
+	}	
 }

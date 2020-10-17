@@ -26,4 +26,12 @@ public class DonationService {
 	public List<Donation> findAll() {
 		return this.repository.findAll();
 	}
+
+	public Donation update(Integer id, Donation data) {
+		Donation donation = findByID(id);
+		donation = data;
+		donation.setId(id);
+		
+		return this.repository.save(donation);
+	}
 }

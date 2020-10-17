@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import ar.edu.unq.desapp.grupol022020.model.Location;
 import ar.edu.unq.desapp.grupol022020.model.Project;
 import ar.edu.unq.desapp.grupol022020.model.ProjetcException;
-import ar.edu.unq.desapp.grupol022020.model.User;
 import ar.edu.unq.desapp.grupol022020.model.UserAdmin;
 import ar.edu.unq.desapp.grupol022020.model.UserDonor;
 import ar.edu.unq.desapp.grupol022020.model.UserException;
@@ -56,17 +55,17 @@ public class InitServiceInMemory {
 		Project project2 = new Project.ProjectBuilder(location2).withFantasyName("Conectarse").build();
 		Project project3 = new Project.ProjectBuilder(location3).withFantasyName("Cone").build();
 		
-		User userDonor = new UserDonor("Marcelo", "jm@gmail.com", "1234", "Master");
-		User userAdmin = new UserAdmin("Cesar", "cesar@gmail.com", "1234", "Cesare");
-		User userDonor2 = new UserDonor("Esteban", "ban@gmail.com", "1234", "Kito");
+		UserDonor userDonor = new UserDonor("Marcelo", "jm@gmail.com", "1234", "Master");
+		UserAdmin userAdmin = new UserAdmin("Cesar", "cesar@gmail.com", "1234", "Cesare");
+		UserDonor userDonor2 = new UserDonor("Esteban", "ban@gmail.com", "1234", "Kito");
 
 
-		userDonor.donate(1000, project, "Donacion de 1000 pesos");
-		userDonor.donate(2000, project, "Donacion de 2000 pesos");
-		userDonor.donate(3000, project2, "Donacion de 3000 pesos");
-		userAdmin.createProject(location2, "Si se puede", dateEnd);
+//		userDonor.donate(1000, project, "Donacion de 1000 pesos");
+//		userDonor.donate(2000, project, "Donacion de 2000 pesos");
+//		userDonor.donate(3000, project2, "Donacion de 3000 pesos");
+//		userAdmin.createProject(location2, "Si se puede", dateEnd);
 
-		userService.save(userAdmin);
+//		userService.save(userAdmin);
 		userService.save(userDonor);
 		userService.save(userDonor2);
 

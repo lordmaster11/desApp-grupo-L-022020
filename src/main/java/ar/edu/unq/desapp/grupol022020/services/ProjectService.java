@@ -30,4 +30,13 @@ public class ProjectService {
 	public void deleteById(Integer id) {
 		this.repository.deleteById(id);;		
 	}
+	
+	@Transactional
+	public Project update(Integer id, Project data) {
+		Project project = findByID(id);
+		project = data;
+		project.setId(id);
+		
+		return this.repository.save(project);
+	}	
 }
