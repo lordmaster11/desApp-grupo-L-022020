@@ -1,6 +1,5 @@
 package ar.edu.unq.desapp.grupol022020.model;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -17,12 +16,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 @Entity
 @Table(name = "project")
-public class Project implements Serializable {
-	private static final long serialVersionUID = 1L;
+public class Project {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -33,8 +29,9 @@ public class Project implements Serializable {
 	@JoinColumn(name= "locationId", referencedColumnName = "id")
 	private Location locationProject;
 	
-	@JsonManagedReference
+//	@JsonManagedReference
 	@OneToMany(cascade= CascadeType.ALL, orphanRemoval = true)
+//	@OneToMany(cascade= {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, orphanRemoval = true)
 	private List<Donation> donations = new ArrayList<>();
 		
 	@Column
@@ -150,6 +147,10 @@ public class Project implements Serializable {
     
 	public Integer getId() {
 		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public void setLocationProject(Location locationProject) {

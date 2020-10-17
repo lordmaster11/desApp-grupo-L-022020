@@ -3,17 +3,17 @@ package ar.edu.unq.desapp.grupol022020.model;
 import java.util.Calendar;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
+import javax.persistence.MappedSuperclass;
 import javax.persistence.Table;
 
-@Entity
-@Inheritance
+//@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 @Table(name = "user")
-public abstract class User{
+@MappedSuperclass
+public abstract class User {
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id")
@@ -81,15 +81,11 @@ public abstract class User{
 		this.nick = nick;
 	}
 
-	public String getRole() {
-		return role;
-	}
-
-	public void setRole(String role) {
-		this.role = role;
-	}
-
 	public Integer getId() {
 		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 }

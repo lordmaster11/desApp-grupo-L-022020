@@ -12,8 +12,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 @Entity
 @Table(name = "donation")
 public class Donation {
@@ -29,19 +27,19 @@ public class Donation {
 	@Column
 	private String comment;	
 	
-	@JsonBackReference
-	@ManyToOne(optional = false, cascade = CascadeType.PERSIST)
+//	@JsonBackReference
+	@ManyToOne(optional = true, cascade = CascadeType.PERSIST)
 	@JoinColumn(name= "projectId", referencedColumnName = "id")
 	private Project project;
 	
-	@JsonBackReference
-	@ManyToOne(optional = false, cascade = CascadeType.PERSIST)
+//	@JsonBackReference
+	@ManyToOne(optional = true, cascade = CascadeType.PERSIST)
 	@JoinColumn(name= "userId", referencedColumnName = "id")
-	private User user;
+	private UserDonor user;
 	
 	public Donation () {}
 	
-	public Donation(User aUser, Project aProject, Calendar aDate, Integer anAmount, String aComment) {
+	public Donation(UserDonor aUser, Project aProject, Calendar aDate, Integer anAmount, String aComment) {
 		this.user = aUser;
 		this.project = aProject;
 		this.dateDonation = aDate;
@@ -49,7 +47,7 @@ public class Donation {
 		this.comment = aComment;
 	}	
 
-	public User getUser() {
+	public UserDonor getUser() {
 		return user;
 	}
 
@@ -73,6 +71,10 @@ public class Donation {
 		return id;
 	}
 	
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
 	public Integer calculatePoints(UserDonor user, Project aProject) throws UserException {
 		Integer accumulatedPoints = 0;
 		Calendar currentDate = Calendar.getInstance();

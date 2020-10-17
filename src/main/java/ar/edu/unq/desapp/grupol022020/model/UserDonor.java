@@ -8,18 +8,17 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
-import javax.persistence.PrimaryKeyJoinColumn;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-@PrimaryKeyJoinColumn(name = "id")
+//@PrimaryKeyJoinColumn(name = "id")
 public class UserDonor extends User {
+	@Column
+	private String role;
 	@Column
 	private Calendar lastDonationDate;
 	@Column
 	private Integer points;
-	@JsonManagedReference
+//	@JsonManagedReference
 	@OneToMany(cascade= CascadeType.ALL, orphanRemoval = true)
 	private List<Donation> donations = new ArrayList<>();
 
@@ -27,9 +26,9 @@ public class UserDonor extends User {
 	
 	public UserDonor (String aName, String aMail, String aPassword, String aNick) {
 		super(aName, aMail, aPassword, aNick); 
-		super.setRole("ROLE_USER");
 		this.setLastDonationDate(null);
-    	this.points = 0;   
+		setRole("ROLE_USER");
+    	setPoints(0);   
     	this.donations = new ArrayList<Donation>();
 	}
 
@@ -95,5 +94,13 @@ public class UserDonor extends User {
 	
 	public void setLastDonationDate(Calendar lastDonationDate) {
 		this.lastDonationDate = lastDonationDate;
+	}
+	
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
 	}
 }

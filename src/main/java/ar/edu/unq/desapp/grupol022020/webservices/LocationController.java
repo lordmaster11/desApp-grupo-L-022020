@@ -7,13 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import ar.edu.unq.desapp.grupol022020.model.Location;
-import ar.edu.unq.desapp.grupol022020.model.Project;
 import ar.edu.unq.desapp.grupol022020.services.LocationService;
 import ar.edu.unq.desapp.grupol022020.webservices.exceptions.ResourceBadRequestException;
 import ar.edu.unq.desapp.grupol022020.webservices.exceptions.ResourceNotFoundException;
@@ -42,7 +45,26 @@ public class LocationController {
     	}    	   
     }
     
-	@DeleteMapping(value="/api/locations/{id}")
+	@PostMapping("/api/location")
+    public ResponseEntity<Location> createLocation(@Validated @RequestBody Location location) {
+    		Location newlocation = locationService.save(location);
+        
+    		return ResponseEntity.ok().body(newlocation);	
+    }
+	
+	@PutMapping("/api/location/{id}")
+    public ResponseEntity<Location> updateLocationById(@PathVariable("id") Integer id, @Validated @RequestBody Location location) {
+    	try {
+    		Location locationUpdate = locationService.update(id, location);
+        
+    		return ResponseEntity.ok().body(locationUpdate);	
+        
+    	} catch (NoSuchElementException e){
+    		throw new ResourceNotFoundException("Location with ID:"+id+" Not Found!");
+    	}
+    }
+	
+	@DeleteMapping(value="/api/location/{id}")
     public ResponseEntity<?> deleteLocationById(@PathVariable("id") Integer id) {
     	try {
     		Location location = locationService.findByID(id);

@@ -6,8 +6,12 @@ import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import ar.edu.unq.desapp.grupol022020.model.Donation;
@@ -36,5 +40,24 @@ public class DonationController {
     	} catch (NoSuchElementException e){
     		throw new ResourceNotFoundException("Donation with ID:"+id+" Not Found!");
     	}    	   
+    }
+    
+    @PostMapping("/api/donation")
+    public ResponseEntity<Donation> createDonation(@Validated @RequestBody Donation donation) {
+    		Donation newDonation = donationService.save(donation);
+        
+    		return ResponseEntity.ok().body(newDonation);	
+    }
+	
+	@PutMapping("/api/donation/{id}")
+    public ResponseEntity<Donation> updateDonationById(@PathVariable("id") Integer id, @Validated @RequestBody Donation donation) {
+    	try {
+    		Donation donationUpdate = donationService.update(id, donation);
+        
+    		return ResponseEntity.ok().body(donationUpdate);	
+        
+    	} catch (NoSuchElementException e){
+    		throw new ResourceNotFoundException("Donation with ID:"+id+" Not Found!");
+    	}
     }
 }
