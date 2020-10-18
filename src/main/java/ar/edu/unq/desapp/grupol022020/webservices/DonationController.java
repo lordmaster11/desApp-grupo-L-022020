@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import ar.edu.unq.desapp.grupol022020.model.Donation;
+import ar.edu.unq.desapp.grupol022020.model.ProjetcException;
+import ar.edu.unq.desapp.grupol022020.model.UserException;
 import ar.edu.unq.desapp.grupol022020.services.DonationService;
 import ar.edu.unq.desapp.grupol022020.webservices.exceptions.ResourceNotFoundException;
 
@@ -43,7 +45,7 @@ public class DonationController {
     }
     
     @PostMapping("/api/donation")
-    public ResponseEntity<Donation> createDonation(@Validated @RequestBody Donation donation) {
+    public ResponseEntity<Donation> createDonation(@Validated @RequestBody Donation donation) throws UserException, ProjetcException {
     		Donation newDonation = donationService.save(donation);
         
     		return ResponseEntity.ok().body(newDonation);	

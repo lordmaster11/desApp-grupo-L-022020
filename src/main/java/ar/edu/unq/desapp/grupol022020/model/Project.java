@@ -16,6 +16,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name = "project")
 public class Project {
@@ -30,6 +32,7 @@ public class Project {
 	private Location locationProject;
 	
 //	@JsonManagedReference
+	@JsonBackReference
 	@OneToMany(cascade= CascadeType.ALL, orphanRemoval = true)
 //	@OneToMany(cascade= {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, orphanRemoval = true)
 	private List<Donation> donations = new ArrayList<>();

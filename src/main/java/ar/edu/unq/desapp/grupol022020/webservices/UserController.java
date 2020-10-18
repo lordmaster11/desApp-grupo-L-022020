@@ -1,12 +1,14 @@
 package ar.edu.unq.desapp.grupol022020.webservices;
 
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.MultiValueMap;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,7 +34,7 @@ public class UserController {
  
     @GetMapping("/api/users")
     public ResponseEntity<?> allUsers() {
-        List<UserDonor> list = userService.findAll();
+        List<User> list = userService.findAll();
         return ResponseEntity.ok().body(list);
     }
 
@@ -63,23 +66,28 @@ public class UserController {
     }
 	
 	@PostMapping("/api/login")
-	public ResponseEntity<UserDonor> login(@RequestBody UserDonor user) throws Exception {	
-		UserDonor userLogin = userService.login(user.getMail(), user.getPassword());
+	public ResponseEntity<User> login(@RequestParam MultiValueMap user) throws Exception {	
+		User userLogin = userService.login((String) user.getFirst("mail"), 
+											(String) user.getFirst("password"));
 		
 		return ResponseEntity.ok().body(userLogin);	
 	}
 	
 	@PostMapping(path="/api/register")
-	public @ResponseBody ResponseEntity<UserDonor> register(@Validated @RequestBody UserDonor user) {
-		UserDonor newUser = userService.save(user);
-	   
-		return ResponseEntity.ok().body(newUser);	
+	public @ResponseBody ResponseEntity<User> register(@Validated @RequestParam MultiValueMap user) throws Exception {
+		User newUser = new UserDonor((String) user.getFirst("name"), 
+											(String) user.getFirst("mail"), 
+											(String) user.getFirst("password"), 
+											(String) user.getFirst("nick"));
+		
+		User userRegistrate = userService.save(newUser);
+		return ResponseEntity.ok().body(userRegistrate);	
 	}
 	
 	@PutMapping("/api/user/{id}")
-    public ResponseEntity<UserDonor> updateLocationById(@PathVariable("id") Integer id, @Validated @RequestBody UserDonor user) {
+    public ResponseEntity<User> updateLocationById(@PathVariable("id") Integer id, @Validated @RequestBody UserDonor user) {
     	try {
-    		UserDonor userUpdate = userService.update(id, user);
+    		User userUpdate = userService.update(id, user);
         
     		return ResponseEntity.ok().body(userUpdate);	
         

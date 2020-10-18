@@ -7,16 +7,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.unq.desapp.grupol022020.model.Donation;
+import ar.edu.unq.desapp.grupol022020.model.ProjetcException;
+import ar.edu.unq.desapp.grupol022020.model.UserException;
 import ar.edu.unq.desapp.grupol022020.repositories.DonationRepository;
 
 @Service
 public class DonationService {
 	@Autowired
-	private DonationRepository  repository;
+	private DonationRepository repository;
 	
 	@Transactional
-	public Donation save(Donation model) {
-		return this.repository.save(model);
+	public Donation save(Donation model) throws UserException, ProjetcException {
+		Donation donation = model.getUser().donate(model.getAmount(), model.getProject(),model.getComment());
+		return donation;
 	}
 
 	public Donation findByID(Integer id) {

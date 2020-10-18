@@ -12,9 +12,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ar.edu.unq.desapp.grupol022020.model.Donation;
 import ar.edu.unq.desapp.grupol022020.model.Location;
 import ar.edu.unq.desapp.grupol022020.model.Project;
 import ar.edu.unq.desapp.grupol022020.model.ProjetcException;
+import ar.edu.unq.desapp.grupol022020.model.User;
 import ar.edu.unq.desapp.grupol022020.model.UserAdmin;
 import ar.edu.unq.desapp.grupol022020.model.UserDonor;
 import ar.edu.unq.desapp.grupol022020.model.UserException;
@@ -34,16 +36,19 @@ public class InitServiceInMemory {
 	private LocationService locationService;
 	@Autowired
 	private ProjectService projectService;
+	@Autowired
+	private DonationService donationService ;
+	
 	
 	@PostConstruct
-	public void initialize() throws ProjetcException, UserException {
+	public void initialize() throws ProjetcException, UserException, Exception {
 		if (className.equals("org.h2.Driver")) {
 			logger.warn("Init Data Using H2 DB");
 			fireInitialData();
 		}
 	}
 
-	private void fireInitialData() throws ProjetcException, UserException {	
+	private void fireInitialData() throws ProjetcException, UserException, Exception {	
 		Calendar dateEnd = new GregorianCalendar(2020, Calendar.SEPTEMBER,30); 
 		Location location = new Location("Quilmes", "Buenos Aires", 500000, true);
 		Location location2 = new Location("Purmamarca", "Jujuy", 100000, false);
@@ -55,17 +60,18 @@ public class InitServiceInMemory {
 		Project project2 = new Project.ProjectBuilder(location2).withFantasyName("Conectarse").build();
 		Project project3 = new Project.ProjectBuilder(location3).withFantasyName("Cone").build();
 		
-		UserDonor userDonor = new UserDonor("Marcelo", "jm@gmail.com", "1234", "Master");
-		UserAdmin userAdmin = new UserAdmin("Cesar", "cesar@gmail.com", "1234", "Cesare");
-		UserDonor userDonor2 = new UserDonor("Esteban", "ban@gmail.com", "1234", "Kito");
+		User userDonor = new UserDonor("Marcelo", "jm@gmail.com", "1234", "Master");
+		User userAdmin = new UserAdmin("Cesar", "cesar@gmail.com", "1234", "Cesare");
+		User userDonor2 = new UserDonor("Esteban", "ban@gmail.com", "1234", "Kito");
+
+		Donation donation = new Donation(userDonor, project, dateEnd, 2000, "Mi gran donacion");
+		Donation donation2 = new Donation(userDonor, project, dateEnd, 30000000, "Mi segunda gran donacion");
 
 
-//		userDonor.donate(1000, project, "Donacion de 1000 pesos");
-//		userDonor.donate(2000, project, "Donacion de 2000 pesos");
-//		userDonor.donate(3000, project2, "Donacion de 3000 pesos");
-//		userAdmin.createProject(location2, "Si se puede", dateEnd);
-
-//		userService.save(userAdmin);
+		donationService.save(donation);
+		donationService.save(donation2);
+		
+		userService.save(userAdmin);
 		userService.save(userDonor);
 		userService.save(userDonor2);
 
