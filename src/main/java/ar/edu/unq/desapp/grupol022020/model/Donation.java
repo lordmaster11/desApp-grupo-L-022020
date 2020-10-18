@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "donation")
 public class Donation {
@@ -28,18 +30,19 @@ public class Donation {
 	private String comment;	
 	
 //	@JsonBackReference
+	@JsonManagedReference
 	@ManyToOne(optional = true, cascade = CascadeType.PERSIST)
 	@JoinColumn(name= "projectId", referencedColumnName = "id")
 	private Project project;
 	
-//	@JsonBackReference
+	@JsonManagedReference
 	@ManyToOne(optional = true, cascade = CascadeType.PERSIST)
 	@JoinColumn(name= "userId", referencedColumnName = "id")
-	private UserDonor user;
+	private User user;
 	
 	public Donation () {}
 	
-	public Donation(UserDonor aUser, Project aProject, Calendar aDate, Integer anAmount, String aComment) {
+	public Donation(User aUser, Project aProject, Calendar aDate, Integer anAmount, String aComment) {
 		this.user = aUser;
 		this.project = aProject;
 		this.dateDonation = aDate;
@@ -47,7 +50,7 @@ public class Donation {
 		this.comment = aComment;
 	}	
 
-	public UserDonor getUser() {
+	public User getUser() {
 		return user;
 	}
 

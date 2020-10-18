@@ -2,34 +2,20 @@ package ar.edu.unq.desapp.grupol022020.model;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
 
 @Entity
-//@PrimaryKeyJoinColumn(name = "id")
 public class UserDonor extends User {
-	@Column
-	private String role;
-	@Column
-	private Calendar lastDonationDate;
-	@Column
-	private Integer points;
-//	@JsonManagedReference
-	@OneToMany(cascade= CascadeType.ALL, orphanRemoval = true)
-	private List<Donation> donations = new ArrayList<>();
-
+	
 	public UserDonor() { }
 	
 	public UserDonor (String aName, String aMail, String aPassword, String aNick) {
 		super(aName, aMail, aPassword, aNick); 
 		this.setLastDonationDate(null);
-		setRole("ROLE_USER");
-    	setPoints(0);   
-    	this.donations = new ArrayList<Donation>();
+		super.setRole("ROLE_USER");
+		super.setPoints(0);
+		super.setDonations(new ArrayList<Donation>());
 	}
 
 	public void createProject(Location location, String fantasyName, Calendar endOfProject) 
@@ -46,9 +32,10 @@ public class UserDonor extends User {
 		throw new UserException("User cannot update projects");
 	}
 	
-	public void donate(Integer money, Project project, String comment) throws UserException, ProjetcException {		
+	public Donation donate(Integer money, Project project, String comment) throws UserException, ProjetcException {		
 		Donation donation = new Donation(this, project, Calendar.getInstance(), money, comment);	
 		makeDonation(donation, project);
+		return donation;
 	}	
 	
 	private void makeDonation(Donation donation, Project project) throws UserException, ProjetcException {
@@ -56,51 +43,5 @@ public class UserDonor extends User {
 		this.addPoint(donation.calculatePoints(this, project));
 		this.setLastDonationDate(donation.getDateDonation());
 		project.receiveDonation(donation);
-	}
-	
-	public void addPoint(Integer addPoints) {
-		this.points += addPoints;
-	}
-	
-	public void addDonation(Donation onDonation) {
-		this.donations.add(onDonation);
-	}
-
-	public Integer totalDonation() {
-		Integer totalDonated = donations.stream()
-							.mapToInt(Donation::getAmount).sum();
-		return totalDonated;
-	}
-	
-	public List<Donation> getDonations() {
-		return donations;
-	}
-	
-	public void setDonations(List<Donation> donations) {
-		this.donations = donations;
-	}
-
-	public Integer getPoints() {
-		return points;
-	}
-	
-	public void setPoints(Integer points) {
-		this.points = points;
-	}
-	
-	public Calendar getLastDonationDate() {
-		return lastDonationDate;
-	}
-	
-	public void setLastDonationDate(Calendar lastDonationDate) {
-		this.lastDonationDate = lastDonationDate;
-	}
-	
-	public String getRole() {
-		return role;
-	}
-
-	public void setRole(String role) {
-		this.role = role;
 	}
 }
