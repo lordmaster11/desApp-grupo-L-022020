@@ -38,5 +38,11 @@ public class ProjectService {
 		project.setId(id);
 		
 		return this.repository.save(project);
+	}
+
+	public Project closeProject(Integer id) {
+		Project project = findByID(id);
+		project.setIsOpen(false);
+		return this.repository.save(project);
 	}	
 }

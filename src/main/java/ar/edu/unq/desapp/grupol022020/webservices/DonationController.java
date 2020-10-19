@@ -6,18 +6,22 @@ import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.MultiValueMap;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ar.edu.unq.desapp.grupol022020.model.Donation;
+import ar.edu.unq.desapp.grupol022020.model.Project;
 import ar.edu.unq.desapp.grupol022020.model.ProjetcException;
+import ar.edu.unq.desapp.grupol022020.model.User;
 import ar.edu.unq.desapp.grupol022020.model.UserException;
 import ar.edu.unq.desapp.grupol022020.services.DonationService;
+import ar.edu.unq.desapp.grupol022020.services.ProjectService;
+import ar.edu.unq.desapp.grupol022020.services.UserService;
 import ar.edu.unq.desapp.grupol022020.webservices.exceptions.ResourceNotFoundException;
 
 @RestController
@@ -25,7 +29,11 @@ import ar.edu.unq.desapp.grupol022020.webservices.exceptions.ResourceNotFoundExc
 public class DonationController {    
     @Autowired
     private DonationService donationService;
- 
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private ProjectService projectService;
+    
     @GetMapping("/api/donations")
     public ResponseEntity<?> allUsers() {
         List<Donation> list = donationService.findAll();
@@ -45,12 +53,20 @@ public class DonationController {
     }
     
     @PostMapping("/api/donation")
-    public ResponseEntity<Donation> createDonation(@Validated @RequestBody Donation donation) throws UserException, ProjetcException {
-    		Donation newDonation = donationService.save(donation);
-        
-    		return ResponseEntity.ok().body(newDonation);	
+    public ResponseEntity<Donation> createDonation(@Validated @RequestParam MultiValueMap<String, ?> donation) throws UserException, ProjetcException {
+    	User user = this.userService.findByID(Integer.parseInt((String) 
+    														donation.getFirst("user")));
+		Project project = this.projectService.findByID(Integer.parseInt((String) 
+															donation.getFirst("project")));
+		
+		Donation newDonation = new Donation(user, project,
+											(Integer.parseInt((String) 
+													donation.getFirst("amount"))), 
+											(String) donation.getFirst("comment"));
+
+		return ResponseEntity.ok().body(donationService.save(newDonation));
     }
-	
+	/*
 	@PutMapping("/api/donation/{id}")
     public ResponseEntity<Donation> updateDonationById(@PathVariable("id") Integer id, @Validated @RequestBody Donation donation) {
     	try {
@@ -61,5 +77,5 @@ public class DonationController {
     	} catch (NoSuchElementException e){
     		throw new ResourceNotFoundException("Donation with ID:"+id+" Not Found!");
     	}
-    }
+    }*/
 }

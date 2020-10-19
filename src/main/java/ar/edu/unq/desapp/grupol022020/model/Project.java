@@ -24,17 +24,15 @@ public class Project {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id")
+	@Column(name = "id", updatable = false, nullable = false)
 	private Integer id;
 	
 	@OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@JoinColumn(name= "locationId", referencedColumnName = "id")
 	private Location locationProject;
 	
-//	@JsonManagedReference
 	@JsonBackReference
 	@OneToMany(cascade= CascadeType.ALL, orphanRemoval = true)
-//	@OneToMany(cascade= {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, orphanRemoval = true)
 	private List<Donation> donations = new ArrayList<>();
 		
 	@Column
@@ -51,6 +49,8 @@ public class Project {
 	private Calendar lastDonation;
 	@Column
 	private Integer donatedAmount;
+	@Column
+	private Boolean isOpen;
 
 	public Project() { }
 
@@ -62,20 +62,27 @@ public class Project {
 		this.projectStart = builder.projectStart;
 		this.endOfProject = builder.endOfProject;
 		this.donations = new ArrayList<Donation>();
-//			this.donors = builder.donors;
 		this.lastDonation = builder.lastDonation;
 		this.donatedAmount = 0;
+		this.isOpen = true;
 	}
 	
 	public void receiveDonation(Donation donation) throws ProjetcException {
+		if(!isOpen) {
+			throw new ProjetcException(
+					"Project close");
+		}
 		if(isDonationPossible(donation.getAmount())) {
 				addTimeIfMissing();
 				addDonation(donation);
-				//addDonor(donation.getUser());
 				donatedAmount += donation.getAmount();
 			}else {
 				throw new ProjetcException(
 						"It is not possible to make a donation");
+				//Agregar al Mensaje: maximo posible de monto a donar
+		}
+		if(donatedAmount == calculateMoneyNeeded()) {
+			this.isOpen = false;
 		}
 	}
 
@@ -154,6 +161,14 @@ public class Project {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	
+	public Boolean getIsOpen() {
+		return isOpen;
+	}
+
+	public void setIsOpen(Boolean isOpen) {
+		this.isOpen = isOpen;
 	}
 
 	public void setLocationProject(Location locationProject) {

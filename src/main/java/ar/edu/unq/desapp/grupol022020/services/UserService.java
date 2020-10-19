@@ -51,10 +51,18 @@ public class UserService {
 	}
 
 	@Transactional
-	public User update(Integer id, User newUser) {
+	public User update(Integer id, String name, String password, String nick) {
 		User user = this.repository.findById(id).get();
-		user = newUser;
-		user.setId(id);
+		if(name != null) {
+			user.setName(name);
+		}
+		if(password != null) {
+			user.setPassword(password);
+		}
+		if(nick != null) {
+			user.setNick(nick);
+		}
+		
 		return this.repository.save(user);
 	}
 	

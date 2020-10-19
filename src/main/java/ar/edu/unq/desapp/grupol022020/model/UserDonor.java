@@ -33,7 +33,7 @@ public class UserDonor extends User {
 	}
 	
 	public Donation donate(Integer money, Project project, String comment) throws UserException, ProjetcException {		
-		Donation donation = new Donation(this, project, Calendar.getInstance(), money, comment);	
+		Donation donation = new Donation(this, project, money, comment);	
 		makeDonation(donation, project);
 		return donation;
 	}	

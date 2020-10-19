@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 public class Donation {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id")
+	@Column(name = "id", updatable = false, nullable = false)
 	private Integer id;
 	
 	@Column
@@ -42,10 +42,10 @@ public class Donation {
 	
 	public Donation () {}
 	
-	public Donation(User aUser, Project aProject, Calendar aDate, Integer anAmount, String aComment) {
+	public Donation(User aUser, Project aProject, Integer anAmount, String aComment) {
 		this.user = aUser;
 		this.project = aProject;
-		this.dateDonation = aDate;
+		this.dateDonation = Calendar.getInstance();
 		this.amount = anAmount;
 		this.comment = aComment;
 	}	

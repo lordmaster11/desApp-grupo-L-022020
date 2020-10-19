@@ -1,8 +1,5 @@
 package ar.edu.unq.desapp.grupol022020.services;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-
 import javax.annotation.PostConstruct;
 
 import org.apache.commons.logging.Log;
@@ -49,7 +46,6 @@ public class InitServiceInMemory {
 	}
 
 	private void fireInitialData() throws ProjetcException, UserException, Exception {	
-		Calendar dateEnd = new GregorianCalendar(2020, Calendar.SEPTEMBER,30); 
 		Location location = new Location("Quilmes", "Buenos Aires", 500000, true);
 		Location location2 = new Location("Purmamarca", "Jujuy", 100000, false);
 		Location location3 = new Location("Ezpeleta City", "Buenos Aires", 300000, true);
@@ -64,8 +60,8 @@ public class InitServiceInMemory {
 		User userAdmin = new UserAdmin("Cesar", "cesar@gmail.com", "1234", "Cesare");
 		User userDonor2 = new UserDonor("Esteban", "ban@gmail.com", "1234", "Kito");
 
-		Donation donation = new Donation(userDonor, project, dateEnd, 2000, "Mi gran donacion");
-		Donation donation2 = new Donation(userDonor, project, dateEnd, 30000000, "Mi segunda gran donacion");
+		Donation donation = new Donation(userDonor, project, 2000, "Mi gran donacion");
+		Donation donation2 = new Donation(userDonor, project, 30000000, "Mi segunda gran donacion");
 
 
 		donationService.save(donation);
