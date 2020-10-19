@@ -24,7 +24,7 @@ public abstract class User {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id")
+	@Column(name = "id", updatable = false, nullable = false)
 	private Integer id;
 	
 	@Column

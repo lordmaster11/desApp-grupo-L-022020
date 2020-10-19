@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -52,18 +51,6 @@ public class LocationController {
     		return ResponseEntity.ok().body(newlocation);	
     }
 	
-	@PutMapping("/api/location/{id}")
-    public ResponseEntity<Location> updateLocationById(@PathVariable("id") Integer id, @Validated @RequestBody Location location) {
-    	try {
-    		Location locationUpdate = locationService.update(id, location);
-        
-    		return ResponseEntity.ok().body(locationUpdate);	
-        
-    	} catch (NoSuchElementException e){
-    		throw new ResourceNotFoundException("Location with ID:"+id+" Not Found!");
-    	}
-    }
-	
 	@DeleteMapping(value="/api/location/{id}")
     public ResponseEntity<?> deleteLocationById(@PathVariable("id") Integer id) {
     	try {
@@ -78,4 +65,18 @@ public class LocationController {
     		throw new ResourceBadRequestException("Location with ID:"+id+", cannot be deleted because it has a current project");
     	}
     }
+	/*
+	@PutMapping("/api/location/{id}")
+    public ResponseEntity<Location> updateLocationById(@PathVariable("id") Integer id, @Validated @RequestBody Location location) {
+    	try {
+    		Location locationUpdate = locationService.update(id, location);
+        
+    		return ResponseEntity.ok().body(locationUpdate);	
+        
+    	} catch (NoSuchElementException e){
+    		throw new ResourceNotFoundException("Location with ID:"+id+" Not Found!");
+    	}
+    }
+    */
+	 
 }

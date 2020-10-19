@@ -76,14 +76,41 @@ public class UserController {
 	@PostMapping(path="/api/register")
 	public @ResponseBody ResponseEntity<User> register(@Validated @RequestParam MultiValueMap user) throws Exception {
 		User newUser = new UserDonor((String) user.getFirst("name"), 
-											(String) user.getFirst("mail"), 
-											(String) user.getFirst("password"), 
-											(String) user.getFirst("nick"));
+									 (String) user.getFirst("mail"), 
+									 (String) user.getFirst("password"), 
+									 (String) user.getFirst("nick"));
 		
 		User userRegistrate = userService.save(newUser);
 		return ResponseEntity.ok().body(userRegistrate);	
 	}
 	
+	@PutMapping("/api/user/{id}")
+    public ResponseEntity<User> updateUserById(@PathVariable("id") Integer id, @Validated @RequestParam MultiValueMap user) {
+    	//try {
+    		User userUpdate = userService.update(id, (String) user.getFirst("name"),
+													 (String) user.getFirst("password"), 
+													 (String) user.getFirst("nick"));
+        
+    		return ResponseEntity.ok().body(userUpdate);	
+        
+    	//} catch (NoSuchElementException e){
+    	//	throw new ResourceNotFoundException("User with ID:"+id+" Not Found!");
+    	}
+    }
+	
+	/*
+	@PutMapping("/api/user/{id}")
+    public ResponseEntity<User> updateLocationById(@PathVariable("id") Integer id, @Validated @RequestBody UserDonor user) {
+    	try {
+    		User userUpdate = userService.update(id, user);
+        
+    		return ResponseEntity.ok().body(userUpdate);	
+        
+    	} catch (NoSuchElementException e){
+    		throw new ResourceNotFoundException("User with ID:"+id+" Not Found!");
+    	}
+    }
+
 	@PutMapping("/api/user/{id}")
     public ResponseEntity<User> updateLocationById(@PathVariable("id") Integer id, @Validated @RequestBody UserDonor user) {
     	try {
@@ -96,7 +123,7 @@ public class UserController {
     	}
     }
 	
-	/*
+	
 	@PostMapping(path="/api/register")
 	public @ResponseBody ResponseEntity<UserDonor> register(@Validated @RequestBody UserDonor user) {
 		UserDonor newUser = userService.save(user);
@@ -236,4 +263,3 @@ public class UserController {
     		throw new ResourceBadRequestException("User with ID:"+id+", cannot be update!");
     	}
     }*/
-}
