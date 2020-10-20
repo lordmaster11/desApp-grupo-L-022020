@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 
 import ar.edu.unq.desapp.grupol022020.model.Project;
@@ -21,6 +22,7 @@ import ar.edu.unq.desapp.grupol022020.services.ProjectService;
 import ar.edu.unq.desapp.grupol022020.webservices.exceptions.ResourceBadRequestException;
 import ar.edu.unq.desapp.grupol022020.webservices.exceptions.ResourceNotFoundException;
 
+@CrossOrigin(origins = "http://localhost:4200",maxAge = 3600)
 @RestController
 @EnableAutoConfiguration
 @Validated

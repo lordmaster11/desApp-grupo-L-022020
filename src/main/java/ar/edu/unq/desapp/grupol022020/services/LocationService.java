@@ -28,7 +28,7 @@ public class LocationService {
 	}
 	
 	public void deleteById(Integer id) {
-		this.repository.deleteById(id);;		
+		this.repository.deleteById(id);		
 	}
 
 	public Location update(Integer id, Location data) {

@@ -27,7 +27,7 @@ public class UserService {
     	if(user!= null) {
     		throw new Exception("Access denied: mail already exist");
     	}
-    	if(model.getRole() == "ROLE_ADMIN") {
+    	if(model.getRole().equals("ROLE_ADMIN")) {
     		return this.repository.save((UserAdmin) model);
     	}else {	
     		return this.repository.save((UserDonor) model);
@@ -47,7 +47,7 @@ public class UserService {
 	}
 	
 	public void deleteById(Integer id) {
-		this.repository.deleteById(id);;		
+		this.repository.deleteById(id);		
 	}
 
 	@Transactional
@@ -74,12 +74,10 @@ public class UserService {
     	} catch (Exception e){
     		throw new Exception("Access denied: mail not exist");
     	}
-    	if(user!= null && !user.getPassword().equals(pass)) {
+    	if(!user.getPassword().equals(pass)) {
     		throw new Exception("Access denied: incorrect password");
     	}
 	
     	return user;
     }
-    
-
 }

@@ -1,7 +1,6 @@
 package ar.edu.unq.desapp.grupol022020.webservices;
 
 import java.util.List;
-import java.util.Map;
 import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,12 +9,12 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.MultiValueMap;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,6 +25,7 @@ import ar.edu.unq.desapp.grupol022020.services.UserService;
 import ar.edu.unq.desapp.grupol022020.webservices.exceptions.ResourceBadRequestException;
 import ar.edu.unq.desapp.grupol022020.webservices.exceptions.ResourceNotFoundException;
 
+@CrossOrigin(origins = "http://localhost:4200",maxAge = 3600)
 @RestController
 @EnableAutoConfiguration
 public class UserController {    
@@ -65,15 +65,14 @@ public class UserController {
     	}
     }
 	
-	@PostMapping("/api/login")
-	public ResponseEntity<User> login(@RequestParam MultiValueMap user) throws Exception {	
-		User userLogin = userService.login((String) user.getFirst("mail"), 
-											(String) user.getFirst("password"));
+	@PostMapping("/api/users/login")
+	public ResponseEntity<User> login(@RequestParam MultiValueMap<String, String> user) throws Exception {	
+		User userLogin = userService.login(user.getFirst("mail"), user.getFirst("password"));
 		
 		return ResponseEntity.ok().body(userLogin);	
 	}
 	
-	@PostMapping(path="/api/register")
+	@PostMapping(path="/api/users/register")
 	public @ResponseBody ResponseEntity<User> register(@Validated @RequestParam MultiValueMap user) throws Exception {
 		User newUser = new UserDonor((String) user.getFirst("name"), 
 									 (String) user.getFirst("mail"), 
@@ -84,7 +83,8 @@ public class UserController {
 		return ResponseEntity.ok().body(userRegistrate);	
 	}
 	
-	@PutMapping("/api/user/{id}")
+	
+	@PutMapping("/api/users/{id}")
     public ResponseEntity<User> updateUserById(@PathVariable("id") Integer id, @Validated @RequestParam MultiValueMap user) {
     	//try {
     		User userUpdate = userService.update(id, (String) user.getFirst("name"),
@@ -145,109 +145,6 @@ public class UserController {
  	}  
 }	*/
 	
-	
-	
-	
-		/*		
-		String name = user.get("name");
-		String password = user.get("password");
-
-		
-		if(name == "" && password == "" ){
-			//model.addAttribute("error", "Ingrese Usuario y Contraseña"); 
-			//return "login";
-    		return ResponseEntity.ok().body("Ingrese Name y Password");	
-
-		}else if(name == "" && password != "") {
-			//model.addAttribute("error", "Ingrese Usuario");
-			//return "login";
-    		return ResponseEntity.ok().body("Ingrese Name");	
-
-		}else if(name != "" && password == "") {
-			//model.addAttribute("error","Ingrese Contraseña");
-			//return "login";
-    		return ResponseEntity.ok().body("Ingrese Password");	
-		}*/
-
-		/*
-    //	try {
-    		Optional<User> userRepo = userService.findByName(name);
-    		
-    		User userFinal = userRepo.get();
-    		
-    		if(password.equals(userFinal.getPassword())) {
-    			return ResponseEntity.ok().body("User login success!");
-    		} else {
-    			return ResponseEntity.ok().body("User login deneid!");
-    		}
-   // 	} catch (Exception e){
-    //		throw new Exception("User with Name:"+name+" Not Found!");
-   // 	}  
-	}*/
-		
-		/*
-		try{
-		//	User user = this.mongo.login(user.getName(), user.getPassword());
-			Optional<User> userR = Optional.ofNullable(userService.findByID(user.getId()));
-			//model.addAttribute("user",user.getName());
-			
-			//String redirectUrl = request.getScheme() + ":/home";
-			//request.setAttribute("user", user);
-			//return "redirect:" + redirectUrl;
-			
-			
-		
-    		return ResponseEntity.ok().body("User login success!");	
-
-			
-		}catch(IndexOutOfBoundsException e){
-			//model.addAttribute("error","El usuario no existe");
-	    	//return "login";
-    		return ResponseEntity.ok().body("El usuario no existe!");	
-
-		}
-	  }*/
-	/*
-	@RequestMapping(value = "/registrar", method = RequestMethod.GET)
-	public String showRegistrationForm(Model model)  {
-		model.addAttribute("msg", "Please Enter Your Login Details");
-	    return "registrar";
-	}
-	
-	@RequestMapping(value = "/registrar",method = RequestMethod.POST)
-	public String registrar(HttpServletRequest request, Model model, @ModelAttribute("loginBean") Usuario usuario) throws Exception {		
-		if(usuario.getUsuario() == "" && usuario.getPassword()== "" && usuario.getNombre() == "" && usuario.getApellido() == ""){
-			model.addAttribute("error", "Ingrese los datos"); 
-			return "registrar";
-		}else if(usuario.getUsuario() == "" && usuario.getPassword() != "" && usuario.getNombre() != "" && usuario.getApellido() != "") {
-			model.addAttribute("error", "Ingrese Usuario");
-			return "registrar";
-		}else if(usuario.getUsuario() != "" && usuario.getPassword() == "" && usuario.getNombre() != "" && usuario.getApellido() != "") {
-			model.addAttribute("error","Ingrese Contraseña");
-			return "registrar";
-		}else if(usuario.getUsuario() != "" && usuario.getPassword() != "" && usuario.getNombre() == "" && usuario.getApellido() != "") {
-			model.addAttribute("error","Ingrese Nombre");
-			return "registrar";
-		}else if(usuario.getUsuario() != "" && usuario.getPassword() != "" && usuario.getNombre() != "" && usuario.getApellido() == "") {
-			model.addAttribute("error","Ingrese Apellido");
-			return "registrar";
-		}else if(usuario.getUsuario() != "" && usuario.getPassword() == "" && usuario.getNombre() == "" && usuario.getApellido() == "") {
-			model.addAttribute("error", "Ingrese todos los datos");
-			return "registrar";
-		}	
-
-		try{
-			Usuario user = this.mongo.registrar(usuario);
-			model.addAttribute("user",user.getUsuario());
-			String redirectUrl = request.getScheme() + ":/home";
-			
-		    return "redirect:" + redirectUrl;
-			
-		}catch(Exception e){
-			model.addAttribute("error","El usuario ya existe");
-	    	return "registrar";
-		}	
-	  }*/
 	/*
 	@PutMapping(path="/api/users/{id}", consumes = "application/json", produces= "application/json")
 	@ResponseBody

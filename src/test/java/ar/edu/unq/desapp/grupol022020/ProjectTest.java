@@ -1,7 +1,6 @@
 package ar.edu.unq.desapp.grupol022020;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 import java.util.Calendar;
@@ -14,7 +13,6 @@ import ar.edu.unq.desapp.grupol022020.model.Donation;
 import ar.edu.unq.desapp.grupol022020.model.Location;
 import ar.edu.unq.desapp.grupol022020.model.Project;
 import ar.edu.unq.desapp.grupol022020.model.ProjetcException;
-import ar.edu.unq.desapp.grupol022020.model.User;
 
 public class ProjectTest {
 	@Test
@@ -55,7 +53,6 @@ public class ProjectTest {
 		
 	@Test
 	public void newProject() throws ProjetcException{ 	
-		User aUser = mock(User.class);
 		Location location = mock(Location.class);
 		when(location.getPopulation()).thenReturn(300);
 		Calendar dateStart = new GregorianCalendar(2020, Calendar.SEPTEMBER,1); 
