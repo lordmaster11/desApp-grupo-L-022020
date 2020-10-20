@@ -28,7 +28,7 @@ public class ProjectService {
 	}
 
 	public void deleteById(Integer id) {
-		this.repository.deleteById(id);;		
+		this.repository.deleteById(id);		
 	}
 	
 	@Transactional

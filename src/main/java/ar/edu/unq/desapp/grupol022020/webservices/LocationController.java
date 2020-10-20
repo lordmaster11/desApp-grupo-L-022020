@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +21,7 @@ import ar.edu.unq.desapp.grupol022020.services.LocationService;
 import ar.edu.unq.desapp.grupol022020.webservices.exceptions.ResourceBadRequestException;
 import ar.edu.unq.desapp.grupol022020.webservices.exceptions.ResourceNotFoundException;
 
+@CrossOrigin(origins = "http://localhost:4200",maxAge = 3600)
 @RestController
 @EnableAutoConfiguration
 public class LocationController {
