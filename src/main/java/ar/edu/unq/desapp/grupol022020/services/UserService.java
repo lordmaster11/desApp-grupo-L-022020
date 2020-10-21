@@ -18,7 +18,7 @@ public class UserService {
 	
 	@Transactional
 	public User save(User model) throws Exception {
-
+		
 		User user = null;
     	try {
     		user = findByMail(model.getMail());
@@ -31,7 +31,7 @@ public class UserService {
     		return this.repository.save((UserAdmin) model);
     	}else {	
     		return this.repository.save((UserDonor) model);
-    	}
+    	}		
 	}
 
 	public User findByID(Integer id) {
@@ -80,4 +80,10 @@ public class UserService {
 	
     	return user;
     }
+
+	public User register(String name, String mail, String password, String nick) throws Exception {
+		User newUser = new UserDonor(name, mail, password, nick);
+				
+		return save(newUser);
+	}
 }
