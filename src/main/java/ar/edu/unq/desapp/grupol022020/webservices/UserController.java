@@ -8,8 +8,6 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.MultiValueMap;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -65,11 +63,37 @@ public class UserController {
     }
 	
 	@PostMapping("/api/users/login")
-	public ResponseEntity<User> login(@RequestParam MultiValueMap<String, String> user) throws Exception {	
-		User userLogin = userService.login(user.getFirst("mail"), user.getFirst("password"));
+	public ResponseEntity<User> login(@RequestParam ("mail") String mail,
+									  @RequestParam ("password") String password) 
+									  throws Exception {	
+		User userLogin = userService.login(mail, password);
 		
 		return ResponseEntity.ok().body(userLogin);	
 	}
+	
+	@PostMapping(path="/api/users/register")
+	public ResponseEntity<User> register(@RequestParam ("name") String name,
+										 @RequestParam ("mail") String mail,
+										 @RequestParam ("password") String password,
+									  	 @RequestParam ("nick") String nick) 
+									  	 throws Exception {
+		
+		User userRegistrate = userService.register(name, mail, password, nick);
+
+		return new ResponseEntity<>(userRegistrate, HttpStatus.CREATED);	
+	}
+	
+	@PutMapping("/api/users/{id}")
+	public ResponseEntity<User> updateUserById(@PathVariable("id") Integer id,
+										@RequestParam (value = "name", required=false) String name,
+										@RequestParam (value = "password", required=false) String password,
+										@RequestParam (value = "nick", required=false) String nick, 
+										@RequestParam (value = "role", required=false) String role) 
+										throws Exception {
+		
+		return ResponseEntity.ok().body(userService.update(id,name,password,nick,role));	
+	}
+}
 	/*
 	@PostMapping(path="/api/users/register")
 	public @ResponseBody ResponseEntity<User> register(@Validated @RequestParam MultiValueMap user) throws Exception {
@@ -81,19 +105,7 @@ public class UserController {
 		User userRegistrate = userService.save(newUser);
 		return ResponseEntity.ok().body(userRegistrate);	
 	}*/
-	
-	@PostMapping(path="/api/users/register")
-	public ResponseEntity<User> register(@RequestParam ("name") String name,
-			@RequestParam ("mail") String mail,
-			@RequestParam ("password") String password,
-			@RequestParam ("nick") String nick) throws Exception {
-		
-		User userRegistrate = userService.register(name, mail, password, nick);
-
-		return new ResponseEntity<>(userRegistrate, HttpStatus.CREATED);	
-	}
-	
-	
+	/*
 	@PutMapping("/api/users/{id}")
     public ResponseEntity<User> updateUserById(@PathVariable("id") Integer id, @Validated @RequestParam MultiValueMap user) {
     	//try {
@@ -107,7 +119,7 @@ public class UserController {
     	//	throw new ResourceNotFoundException("User with ID:"+id+" Not Found!");
     	}
     }
-	
+	*/
 	/*
 	@PutMapping("/api/user/{id}")
     public ResponseEntity<User> updateLocationById(@PathVariable("id") Integer id, @Validated @RequestBody UserDonor user) {

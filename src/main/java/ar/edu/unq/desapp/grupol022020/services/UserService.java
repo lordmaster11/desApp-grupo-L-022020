@@ -51,7 +51,7 @@ public class UserService {
 	}
 
 	@Transactional
-	public User update(Integer id, String name, String password, String nick) {
+	public User update(Integer id, String name, String password, String nick, String role) {
 		User user = this.repository.findById(id).get();
 		if(name != null) {
 			user.setName(name);
@@ -62,7 +62,9 @@ public class UserService {
 		if(nick != null) {
 			user.setNick(nick);
 		}
-		
+		if(role != null) {
+			user.setRole(role);
+		}
 		return this.repository.save(user);
 	}
 	

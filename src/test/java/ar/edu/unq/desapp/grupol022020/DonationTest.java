@@ -21,13 +21,11 @@ class DonationTest {
 		
 		when(project.getLocationProject()).thenReturn(location);
 		when(location.getPopulation()).thenReturn(30000);
-		Calendar date = Calendar.getInstance();
 		Donation donation= new Donation(aUser, project, 500, "First donation");
 		aUser.addDonation(donation);
 				
 		assertEquals(donation.getUser(), aUser);		
 		assertEquals(donation.getProject(), project);
-		assertEquals(donation.getDateDonation(), date);
 		assertEquals(donation.getAmount(), 500);
 		assertEquals(donation.getComment(), "First donation");
 	}

@@ -6,7 +6,6 @@ import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.MultiValueMap;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,7 +45,6 @@ public class DonationController {
     public ResponseEntity<?> getDonationById(@PathVariable("id") Integer id) {
     	try {
     		Donation donation = donationService.findByID(id);
-        
     		return ResponseEntity.ok().body(donation);
         
     	} catch (NoSuchElementException e){
@@ -55,16 +53,17 @@ public class DonationController {
     }
     
     @PostMapping("/api/donation")
-    public ResponseEntity<Donation> createDonation(@Validated @RequestParam MultiValueMap<String, ?> donation) throws UserException, ProjetcException {
-    	User user = this.userService.findByID(Integer.parseInt((String) 
-    														donation.getFirst("user")));
-		Project project = this.projectService.findByID(Integer.parseInt((String) 
-															donation.getFirst("project")));
+    public ResponseEntity<Donation> createDonation(@Validated 
+    											   @RequestParam ("userId") Integer userId,
+												   @RequestParam ("projectId") Integer projectId,
+												   @RequestParam ("amount") Integer amount,
+												   @RequestParam ("comment") String comment)
+												   throws UserException, ProjetcException {
+    	
+    	User user = this.userService.findByID(userId);
+		Project project = this.projectService.findByID(projectId);
 		
-		Donation newDonation = new Donation(user, project,
-											(Integer.parseInt((String) 
-													donation.getFirst("amount"))), 
-											(String) donation.getFirst("comment"));
+		Donation newDonation = new Donation(user, project,amount,comment);
 
 		return ResponseEntity.ok().body(donationService.save(newDonation));
     }
