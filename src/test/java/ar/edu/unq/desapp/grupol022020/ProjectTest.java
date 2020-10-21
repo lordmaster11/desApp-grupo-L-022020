@@ -229,7 +229,7 @@ public class ProjectTest {
 				myProject.receiveDonation(donation1);
 		  });	
 		
-		assertEquals("It is not possible to make a donation", exception.getMessage());
+		assertEquals("It is not possible to make a donation. The maximum amount possible is 60000", exception.getMessage());
 	}
 	
 	@Test
