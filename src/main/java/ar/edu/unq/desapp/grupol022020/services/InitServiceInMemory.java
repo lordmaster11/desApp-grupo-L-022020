@@ -60,8 +60,8 @@ public class InitServiceInMemory {
 		User userAdmin = new UserAdmin("Cesar", "cesar@gmail.com", "1234", "Cesare");
 		User userDonor2 = new UserDonor("Esteban", "ban@gmail.com", "1234", "Kito");
 
-		Donation donation = new Donation(userDonor, project, 2000, "Mi gran donacion");
-		Donation donation2 = new Donation(userDonor, project, 30000000, "Mi segunda gran donacion");
+		Donation donation = new Donation(userDonor, project, 10, "Mi gran donacion");
+		Donation donation2 = new Donation(userDonor, project, 100, "Mi segunda gran donacion");
 
 
 		donationService.save(donation);

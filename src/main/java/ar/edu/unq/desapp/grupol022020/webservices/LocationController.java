@@ -38,7 +38,6 @@ public class LocationController {
     public ResponseEntity<?> getLocationById(@PathVariable("id") Integer id) {
     	try {
     		Location location = locationService.findByID(id);
-        
     		return ResponseEntity.ok().body(location);
         
     	} catch (NoSuchElementException e){
@@ -61,10 +60,11 @@ public class LocationController {
     		locationService.deleteById(location.getId());
     		return ResponseEntity.ok().body("Location deleted with success!");	
         
-    	} catch (NoSuchElementException e){
+    	}catch (NoSuchElementException e){
     		throw new ResourceNotFoundException("Location with ID:"+id+" Not Found!");
-    	} catch (DataIntegrityViolationException e){
-    		throw new ResourceBadRequestException("Location with ID:"+id+", cannot be deleted because it has a current project");
+    	}catch (DataIntegrityViolationException e){
+    		throw new ResourceBadRequestException("Location with ID:"+id+", cannot be deleted "
+    											  + "because it has a current project");
     	}
     }
 	/*

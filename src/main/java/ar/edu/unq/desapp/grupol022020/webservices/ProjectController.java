@@ -59,26 +59,13 @@ public class ProjectController {
     public ResponseEntity<Project> updateProjectById(@PathVariable("id") Integer id) {
     	try {
 			Project projectUpdate = projectService.closeProject(id);
-        
     		return ResponseEntity.ok().body(projectUpdate);	
     		
     	} catch (NoSuchElementException e){
     		throw new ResourceNotFoundException("Project with ID:"+id+" Not Found!");
     	}
     }
-	/*
-	@PutMapping(path = "/api/project/{id}")
-    public ResponseEntity<Project> updateProjectById(@PathVariable("id") Integer id, @Validated @RequestBody Project project) {
-    	try {
-    		Project projectUpdate = projectService.update(id, project);
-        
-    		return ResponseEntity.ok().body(projectUpdate);	
-        
-    	} catch (NoSuchElementException e){
-    		throw new ResourceNotFoundException("Project with ID:"+id+" Not Found!");
-    	}
-    }
-	*/
+
 	@DeleteMapping(value="/api/project/{id}")
     public ResponseEntity<?> deleteProjectById(@PathVariable("id") Integer id) {
     	try {
@@ -94,3 +81,16 @@ public class ProjectController {
     	}
     }
 }
+	/*
+	@PutMapping(path = "/api/project/{id}")
+	public ResponseEntity<Project> updateProjectById(@PathVariable("id") Integer id, @Validated @RequestBody Project project) {
+		try {
+			Project projectUpdate = projectService.update(id, project);
+	    
+			return ResponseEntity.ok().body(projectUpdate);	
+	    
+		} catch (NoSuchElementException e){
+			throw new ResourceNotFoundException("Project with ID:"+id+" Not Found!");
+		}
+	}
+	*/

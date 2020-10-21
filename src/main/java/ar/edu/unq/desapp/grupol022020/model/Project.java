@@ -51,6 +51,8 @@ public class Project {
 	private Integer donatedAmount;
 	@Column
 	private Boolean isOpen;
+	@Column
+	private Integer MoneyNeeded;
 
 	public Project() { }
 
@@ -65,24 +67,25 @@ public class Project {
 		this.lastDonation = builder.lastDonation;
 		this.donatedAmount = 0;
 		this.isOpen = true;
+		this.MoneyNeeded = factor * locationProject.getPopulation();
 	}
 	
 	public void receiveDonation(Donation donation) throws ProjetcException {
 		if(!isOpen) {
+			throw new ProjetcException("Project is close");
+		}
+		if(this.getDonatedAmount()+donation.getAmount() == this.getMoneyNeeded()) {
+			this.setIsOpen(false);
+		}
+		if(isDonationPossible(donation.getAmount())){
+			addTimeIfMissing();
+			addDonation(donation);
+			donatedAmount += donation.getAmount();
+		}else{
+			Integer amountMax = this.getMoneyNeeded() - this.getDonatedAmount();
 			throw new ProjetcException(
-					"Project close");
-		}
-		if(isDonationPossible(donation.getAmount())) {
-				addTimeIfMissing();
-				addDonation(donation);
-				donatedAmount += donation.getAmount();
-			}else {
-				throw new ProjetcException(
-						"It is not possible to make a donation");
-				//Agregar al Mensaje: maximo posible de monto a donar
-		}
-		if(donatedAmount == calculateMoneyNeeded()) {
-			this.isOpen = false;
+					"It is not possible to make a donation. The maximum amount "
+					+ "possible is " + amountMax.toString());
 		}
 	}
 
@@ -95,7 +98,7 @@ public class Project {
 	}
 
 	private boolean isDonationPossible(Integer amount) {
-		return this.calculateMoneyNeeded() > donatedAmount + amount;
+		return this.calculateMoneyNeeded() >= donatedAmount + amount;
 	}
 
 	public Integer calculateMoneyNeeded() {
@@ -172,6 +175,7 @@ public class Project {
 	}
 
 	public void setLocationProject(Location locationProject) {
+		this.setDonatedAmount(this.getFactor() * locationProject.getPopulation());
 		this.locationProject = locationProject;
 	}
 
@@ -190,12 +194,21 @@ public class Project {
 	public void setDonatedAmount(Integer donatedAmount) {
 		this.donatedAmount = donatedAmount;
 	}
+	
+	public Integer getMoneyNeeded() {
+		return MoneyNeeded;
+	}
+
+	public void setMoneyNeeded(Integer moneyNeeded) {
+		MoneyNeeded = moneyNeeded;
+	}
 
 	public void setFactor(Integer factor) throws ProjetcException {
 		if(factor < 0 || factor > 100000) {
             throw new ProjetcException(
                     "The project factor must be between 0 and 100000");
         }else {
+        	this.setDonatedAmount(factor * this.getLocationProject().getPopulation());
         	this.factor = factor;
 		}
 	}
