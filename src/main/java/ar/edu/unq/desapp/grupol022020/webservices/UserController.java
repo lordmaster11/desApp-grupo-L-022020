@@ -6,6 +6,7 @@ import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.MultiValueMap;
 import org.springframework.validation.annotation.Validated;
@@ -16,11 +17,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import ar.edu.unq.desapp.grupol022020.model.User;
-import ar.edu.unq.desapp.grupol022020.model.UserDonor;
 import ar.edu.unq.desapp.grupol022020.services.UserService;
 import ar.edu.unq.desapp.grupol022020.webservices.exceptions.ResourceBadRequestException;
 import ar.edu.unq.desapp.grupol022020.webservices.exceptions.ResourceNotFoundException;
@@ -71,7 +70,7 @@ public class UserController {
 		
 		return ResponseEntity.ok().body(userLogin);	
 	}
-	
+	/*
 	@PostMapping(path="/api/users/register")
 	public @ResponseBody ResponseEntity<User> register(@Validated @RequestParam MultiValueMap user) throws Exception {
 		User newUser = new UserDonor((String) user.getFirst("name"), 
@@ -81,6 +80,17 @@ public class UserController {
 		
 		User userRegistrate = userService.save(newUser);
 		return ResponseEntity.ok().body(userRegistrate);	
+	}*/
+	
+	@PostMapping(path="/api/users/register")
+	public ResponseEntity<User> register(@RequestParam ("name") String name,
+			@RequestParam ("mail") String mail,
+			@RequestParam ("password") String password,
+			@RequestParam ("nick") String nick) throws Exception {
+		
+		User userRegistrate = userService.register(name, mail, password, nick);
+
+		return new ResponseEntity<>(userRegistrate, HttpStatus.CREATED);	
 	}
 	
 	
