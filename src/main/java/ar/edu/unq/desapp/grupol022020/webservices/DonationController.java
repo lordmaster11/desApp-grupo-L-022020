@@ -52,6 +52,18 @@ public class DonationController {
     	}    	   
     }
     
+    @GetMapping("/api/donationsUser/{id}")
+    public ResponseEntity<?> getDonationByUserId(@PathVariable("id") Integer id) {
+       
+    	try {
+    		 List<Donation> list = donationService.findByUserID(id);
+    	     return ResponseEntity.ok().body(list);
+        
+    	} catch (NoSuchElementException e){
+    		throw new ResourceNotFoundException("User with ID:"+id+" Not Found!");
+    	}    	   
+    }
+    
     @PostMapping("/api/donation")
     public ResponseEntity<Donation> createDonation(@Validated 
     											   @RequestParam ("userId") Integer userId,

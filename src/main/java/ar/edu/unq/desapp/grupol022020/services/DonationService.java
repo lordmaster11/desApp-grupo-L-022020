@@ -37,4 +37,9 @@ public class DonationService {
 		
 		return this.repository.save(donation);
 	}
+
+	public List<Donation> findByUserID(Integer id) {
+		return this.repository.findIdByUser(id);
+	}
+
 }
