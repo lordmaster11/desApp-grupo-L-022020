@@ -53,6 +53,8 @@ public class Project {
 	private Boolean isOpen;
 	@Column
 	private Integer MoneyNeeded;
+	@Column
+	private Integer numberOfDonors;
 
 	public Project() { }
 
@@ -68,7 +70,8 @@ public class Project {
 		this.donatedAmount = 0;
 		this.isOpen = true;
 		this.MoneyNeeded = factor * locationProject.getPopulation();
-	}
+		this.numberOfDonors = 0;	
+		}
 	
 	public void receiveDonation(Donation donation) throws ProjetcException {
 		if(!isOpen) {
@@ -78,15 +81,28 @@ public class Project {
 			this.setIsOpen(false);
 		}
 		if(isDonationPossible(donation.getAmount())){
+			if(isNewDonor(donation.getUser())) {
+				numberOfDonors += 1;
+			}
 			addTimeIfMissing();
 			addDonation(donation);
 			donatedAmount += donation.getAmount();
+			
 		}else{
 			Integer amountMax = this.getMoneyNeeded() - this.getDonatedAmount();
 			throw new ProjetcException(
 					"It is not possible to make a donation. The maximum amount "
 					+ "possible is " + amountMax.toString());
-		}
+		}		
+	}
+
+	private boolean isNewDonor(User user) {
+		for(Donation donation:this.donations) {
+			if(donation.getUser() == user) {
+				return false;
+			}
+		}	
+		return true;
 	}
 
 	private void addTimeIfMissing() {
@@ -130,6 +146,14 @@ public class Project {
 		return fantasyName;
 	}
 
+	public Integer getNumberOfDonors() {
+		return numberOfDonors;
+	}
+
+	public void setNumberOfDonors(Integer numberOfDonors) {
+		this.numberOfDonors = numberOfDonors;
+	}
+	
 	public Calendar getProjectStart() {
 		return projectStart;
 	}
