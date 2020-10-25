@@ -46,17 +46,17 @@ public class InitServiceInMemory {
 	}
 
 	private void fireInitialData() throws ProjetcException, UserException, Exception {	
-		Location location = new Location("Quilmes", "Buenos Aires", 500000, false);
-		Location location2 = new Location("Purmamarca", "Jujuy", 100000, false);
-		Location location3 = new Location("Ezpeleta City", "Buenos Aires", 300000, false);
-		Location location4 = new Location("Cafayate", "Salta", 20000, false);
-		Location location5 = new Location("Necochea", "Buenos Aires", 100000, false);
+		Location location = new Location("Quilmes", "Buenos Aires", 50000, false);
+		Location location2 = new Location("Purmamarca", "Jujuy", 1000, false);
+		Location location3 = new Location("Ezpeleta City", "Buenos Aires", 30000, false);
+		Location location4 = new Location("Cafayate", "Salta", 2000, false);
+		Location location5 = new Location("Necochea", "Buenos Aires", 1000, false);
 		Location location6 = new Location("La Lucila", "Buenos Aires", 50000, false);
 		Location location7 = new Location("Bariloche", "Río Negro", 111000, false);
 
-		Project project = new Project.ProjectBuilder(location).withFantasyName("Conectar").build();
+		Project project = new Project.ProjectBuilder(location).withFantasyName("Conectar").withFactor(100).build();
 		Project project2 = new Project.ProjectBuilder(location2).withFantasyName("Conectarse").build();
-		Project project3 = new Project.ProjectBuilder(location3).withFantasyName("Internet para todos").build();
+		Project project3 = new Project.ProjectBuilder(location3).withFantasyName("Internet para todos").withFactor(500).build();
 		Project project4 = new Project.ProjectBuilder(location4).withFantasyName("Internet").build();
 		Project project5 = new Project.ProjectBuilder(location5).withFantasyName("Internet une").build();
 		Project project6 = new Project.ProjectBuilder(location6).withFantasyName("Viva Internet").build();
