@@ -26,7 +26,6 @@ public class InitServiceInMemory {
 	@Value("${spring.datasource.driverClassName:NONE}")
 	private String className;
 	
-
 	@Autowired
 	private UserService userService;
 	@Autowired
@@ -46,14 +45,26 @@ public class InitServiceInMemory {
 	}
 
 	private void fireInitialData() throws ProjetcException, UserException, Exception {	
-		Location location = new Location("Quilmes", "Buenos Aires", 50000, false);
+		Location location = new Location("Quilmes", "Buenos Aires", 25000, false);
 		Location location2 = new Location("Purmamarca", "Jujuy", 1000, false);
 		Location location3 = new Location("Ezpeleta City", "Buenos Aires", 30000, false);
 		Location location4 = new Location("Cafayate", "Salta", 2000, false);
 		Location location5 = new Location("Necochea", "Buenos Aires", 1000, false);
 		Location location6 = new Location("La Lucila", "Buenos Aires", 50000, false);
-		Location location7 = new Location("Bariloche", "Río Negro", 111000, false);
-
+		Location location7 = new Location("Las Toninas", "Buenos Aires", 500, false);
+		Location location8 = new Location("Santa Catalina", "Jujuy", 300, false);
+		Location location9 = new Location("Pumahuasi", "Jujuy", 200, false);
+		Location location10 = new Location("San Martin", "Formosa", 1000, false);
+		Location location11 = new Location("Gral. Mosconi", "Salta", 435, false);
+		Location location12 = new Location("Necochea", "Formosa", 666, false);
+		Location location13 = new Location("Guadalcaraz", "Formosa", 7890, false);
+		Location location14 = new Location("Paso de Jana", "Jujuy", 3278, false);
+		Location location15 = new Location("Valiazo", "Jujuy", 30000, false);
+		Location location16 = new Location("Garza", "Santiago del Estero", 2500, false);
+		Location location17 = new Location("Miyuyoc", "Jujuy", 100, false);
+		Location location18 = new Location("Susquez", "Jujuy", 1949, false);
+		Location location19 = new Location("Huancar", "Jujuy", 1235, false);
+		
 		Project project = new Project.ProjectBuilder(location).withFantasyName("Conectar").withFactor(100).build();
 		Project project2 = new Project.ProjectBuilder(location2).withFantasyName("Conectarse").build();
 		Project project3 = new Project.ProjectBuilder(location3).withFantasyName("Internet para todos").withFactor(500).build();
@@ -117,6 +128,17 @@ public class InitServiceInMemory {
 		locationService.save(location4);	
 		locationService.save(location5);
 		locationService.save(location6);	
-		locationService.save(location7);	
+		locationService.save(location8);	
+		locationService.save(location9);
+		locationService.save(location10);
+		locationService.save(location11);	
+		locationService.save(location12);	
+		locationService.save(location13);
+		locationService.save(location14);	
+		locationService.save(location15);	
+		locationService.save(location16);
+		locationService.save(location17);
+		locationService.save(location18);	
+		locationService.save(location19);		
 	}
 }

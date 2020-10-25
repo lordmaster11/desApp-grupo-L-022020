@@ -34,6 +34,12 @@ public class LocationController {
         return ResponseEntity.ok().body(list);
     } 
     
+    @GetMapping("/api/locationsPossible")
+    public ResponseEntity<?> locationsPossibleProject() {
+        List<Location> list = locationService.findPossibleProject();
+        return ResponseEntity.ok().body(list);
+    } 
+    
     @GetMapping("/api/locations/{id}")
     public ResponseEntity<?> getLocationById(@PathVariable("id") Integer id) {
     	try {

@@ -23,7 +23,9 @@ public class Location {
 	private Integer population;
 	@Column
 	private Boolean hasConnectivity;
-	
+	@Column
+	private Boolean projectAssociated;
+
 	public Location() { }
 		
 	public Location(String name, String province, Integer population, Boolean hasConnectivity) {
@@ -31,6 +33,7 @@ public class Location {
 		this.province = province;
 		this.population = population;
 		this.hasConnectivity = hasConnectivity;
+		this.projectAssociated = hasConnectivity;
 	}
 	
 	public Integer getPopulation() {
@@ -63,6 +66,14 @@ public class Location {
 
 	public void setHasConnectivity(Boolean hasConnectivity) {
 		this.hasConnectivity = hasConnectivity;
+	}
+	
+	public Boolean getProjectAssociated() {
+		return projectAssociated;
+	}
+
+	public void setProjectAssociated(Boolean projectAssociated) {
+		this.projectAssociated = projectAssociated;
 	}
 
 	public Integer getId() {
