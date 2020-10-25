@@ -37,5 +37,9 @@ public class LocationService {
 		location.setId(id);
 		
 		return this.repository.save(location);
+	}
+
+	public List<Location> findPossibleProject() {
+		return this.repository.findByhasntProject();
 	}	
 }

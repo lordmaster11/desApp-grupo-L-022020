@@ -13,11 +13,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 
+import ar.edu.unq.desapp.grupol022020.model.Location;
 import ar.edu.unq.desapp.grupol022020.model.Project;
+import ar.edu.unq.desapp.grupol022020.model.ProjetcException;
+import ar.edu.unq.desapp.grupol022020.services.LocationService;
 import ar.edu.unq.desapp.grupol022020.services.ProjectService;
 import ar.edu.unq.desapp.grupol022020.webservices.exceptions.ResourceBadRequestException;
 import ar.edu.unq.desapp.grupol022020.webservices.exceptions.ResourceNotFoundException;
@@ -29,6 +33,8 @@ import ar.edu.unq.desapp.grupol022020.webservices.exceptions.ResourceNotFoundExc
 public class ProjectController {
     @Autowired
     private ProjectService projectService;
+    @Autowired
+    private LocationService locationService;
 
     @GetMapping("/api/projects")
     public ResponseEntity<?> allLocations() {
@@ -80,6 +86,24 @@ public class ProjectController {
     		throw new ResourceBadRequestException("Project with ID:"+id+", cannot be deleted because it has donations!");
     	}
     }
+    @PostMapping("/api/newProject")
+    public ResponseEntity<Project> createProject(@Validated 
+												   @RequestParam ("locationProjectId") Integer locationProjectId,
+												   @RequestParam ("factor") Integer factor,
+												   @RequestParam ("percentageRequiredForClosing") 
+    																Integer percentageRequiredForClosing,
+    												@RequestParam ("fantasyName") String fantasyName) throws ProjetcException{
+    	
+		Location location = this.locationService.findByID(locationProjectId);
+		Project newProject = new Project.ProjectBuilder(location)
+														.withFactor(factor)
+														.withPercentageRequiredForClosing(percentageRequiredForClosing)
+														.withFantasyName(fantasyName)
+														.build();
+			
+		return ResponseEntity.ok().body(projectService.save(newProject));
+    }
+	
 }
 	/*
 	@PutMapping(path = "/api/project/{id}")

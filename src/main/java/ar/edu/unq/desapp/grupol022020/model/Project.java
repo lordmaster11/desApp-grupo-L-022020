@@ -70,7 +70,8 @@ public class Project {
 		this.donatedAmount = 0;
 		this.isOpen = true;
 		this.MoneyNeeded = factor * locationProject.getPopulation();
-		this.numberOfDonors = 0;	
+		this.numberOfDonors = 0;
+		this.locationProject.setProjectAssociated(true);
 		}
 	
 	public void receiveDonation(Donation donation) throws ProjetcException {
