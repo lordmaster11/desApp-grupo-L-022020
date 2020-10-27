@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 
 @Entity
 public class UserDonor extends User {
-	
 	public UserDonor() { }
 	
 	public UserDonor (String aName, String aMail, String aPassword, String aNick) {

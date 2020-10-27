@@ -6,7 +6,6 @@ import javax.persistence.Entity;
 
 @Entity
 public class UserAdmin extends User{
-	
 	public UserAdmin () {}
 	
 	public UserAdmin (String aName, String aMail, String aPassword, String aNick) {
@@ -16,15 +15,7 @@ public class UserAdmin extends User{
 
 	public void createProject(Location location, String fantasyName, Calendar endOfProject) 
 			throws UserException, ProjetcException{
-		/*SessionFactory sessionFactory = ProjectService.getSessionFactory();
-		Session session = sessionFactory.openSession();
-		
-		Project project = new Project.ProjectBuilder(location)
-									 .withFantasyName(fantasyName)
-									 .withEndOfProject(endOfProject)
-									 .build();
-		session.save(project);
-		sessionFactory.close();*/
+
 	}
 	
 	public void setFactorInProjet(Project aProject, Integer factor) throws ProjetcException {

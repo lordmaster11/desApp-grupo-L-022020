@@ -29,7 +29,6 @@ public class Donation {
 	@Column
 	private String comment;	
 	
-//	@JsonBackReference
 	@JsonManagedReference
 	@ManyToOne(optional = true, cascade = CascadeType.PERSIST)
 	@JoinColumn(name= "projectId", referencedColumnName = "id")
@@ -78,6 +77,26 @@ public class Donation {
 		this.id = id;
 	}
 
+	public void setDateDonation(Calendar dateDonation) {
+		this.dateDonation = dateDonation;
+	}
+
+	public void setAmount(Integer amount) {
+		this.amount = amount;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
+	public void setProject(Project project) {
+		this.project = project;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	public Integer calculatePoints(UserDonor user, Project aProject) throws UserException {
 		Integer accumulatedPoints = 0;
 		Calendar currentDate = Calendar.getInstance();
@@ -93,8 +112,8 @@ public class Donation {
 		if(population < 2000){
 			accumulatedPoints += amount*2;
 		}	
-		if(lastDonationDateUser != null && currentDate.get(Calendar.MONTH) == lastDonationDateUser.get(Calendar.MONTH) 
-				&& currentDate.get(Calendar.YEAR) == lastDonationDateUser.get(Calendar.YEAR)){
+		if(lastDonationDateUser != null && (currentDate.get(Calendar.MONTH) == lastDonationDateUser.get(Calendar.MONTH)) 
+				&& (currentDate.get(Calendar.YEAR) == lastDonationDateUser.get(Calendar.YEAR))){
 			accumulatedPoints += 500;
 		}	
 		

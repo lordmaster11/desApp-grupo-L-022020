@@ -41,5 +41,4 @@ public class DonationService {
 	public List<Donation> findByUserID(Integer id) {
 		return this.repository.findIdByUser(id);
 	}
-
 }

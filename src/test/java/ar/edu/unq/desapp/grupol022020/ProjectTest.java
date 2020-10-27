@@ -3,8 +3,10 @@ package ar.edu.unq.desapp.grupol022020;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -13,8 +15,36 @@ import ar.edu.unq.desapp.grupol022020.model.Donation;
 import ar.edu.unq.desapp.grupol022020.model.Location;
 import ar.edu.unq.desapp.grupol022020.model.Project;
 import ar.edu.unq.desapp.grupol022020.model.ProjetcException;
+import ar.edu.unq.desapp.grupol022020.model.User;
 
 public class ProjectTest {
+	@Test
+	public void newProject2() throws ProjetcException{ 	
+		Calendar dateStart = new GregorianCalendar(2020, Calendar.SEPTEMBER,1); 
+		Calendar dateEnd = new GregorianCalendar(2020, Calendar.SEPTEMBER,30); 
+		
+		Project project = new Project();
+		List<Donation> donations =new ArrayList<>();
+
+		project.setId(11);
+		project.setFantasyName("Conectar Argentina");
+		project.setNumberOfDonors(10);
+		project.setIsOpen(true);
+		project.setProjectStart(dateStart);
+		project.setEndOfProject(dateEnd);
+		project.setMoneyNeeded(100000);
+		project.setDonations(donations);
+
+		assertEquals(project.getId(), 11);
+		assertEquals(project.getFantasyName(), "Conectar Argentina");
+		assertEquals(project.getNumberOfDonors(), 10);
+		assertEquals(project.getIsOpen(), true);
+		assertEquals(project.getProjectStart(), dateStart);
+		assertEquals(project.getEndOfProject(), dateEnd);
+		assertEquals(project.getMoneyNeeded(), 100000);
+		assertEquals(project.getDonations().size(), 0);				
+	}
+	
 	@Test
 	public void createProjectWithDefaultFactor() throws ProjetcException {
 		Location location=mock(Location.class);
@@ -66,17 +96,15 @@ public class ProjectTest {
 									 .withEndOfProject(dateEnd)
 									 .withPercentageRequiredForClosing(75)
 									 .build();		
-//		project.addDonor(aUser);
 		project.setLastDonation(lastDonation);
 				
-//		assertTrue(project.getDonors().contains(aUser));
 		assertEquals(project.getLocationProject(), location);
 		assertEquals(project.getFactor(), 10);
 		assertEquals(project.getFantasyName(), "Conectarme");
 		assertEquals(project.getProjectStart(), dateStart);
 		assertEquals(project.getEndOfProject(), dateEnd);
 		assertEquals(project.getPercentageRequiredForClosing(), 75);
-//		assertEquals(project.getDonations().size(), 0);		
+		assertEquals(project.getDonations().size(), 0);		
 		assertEquals(project.getLastDonation(), lastDonation);
 	}
 	
@@ -281,5 +309,104 @@ public class ProjectTest {
 		when(donation1.getAmount()).thenReturn(100);
 
 		assertEquals(myProject.getEndOfProject(),endOfProject);	
+	}
+	
+	@Test
+	public void setLocationProject() throws ProjetcException {
+		Calendar endOfProject= new GregorianCalendar(2030, Calendar.SEPTEMBER,1);
+		Location location=mock(Location.class);
+		when(location.getPopulation()).thenReturn(3000);
+
+		Project project = new Project.ProjectBuilder(location)
+									   .withFactor(200)
+									   .withEndOfProject(endOfProject)
+									   .build();
+		
+		project.setLocationProject(location);
+
+		assertEquals(project.getDonatedAmount(), 600000);	
+		assertEquals(project.getLocationProject(), location);	
+	}
+	
+	@Test
+	public void donateInProjectClose() throws ProjetcException{
+		Location location = mock(Location.class);
+		when(location.getPopulation()).thenReturn(300);
+
+		Project project = new Project.ProjectBuilder(location)
+									   .withFactor(200)
+									   .build();
+		
+		Donation donation = mock(Donation.class);
+		project.setIsOpen(false);		
+		
+		ProjetcException exception = Assertions.assertThrows(ProjetcException.class, () -> {
+				project.receiveDonation(donation);
+		  });	
+		
+		assertEquals("Project is close", exception.getMessage());
+	}
+	
+	@Test
+	public void donateInprojectAndCloseProject() throws ProjetcException{
+		Location location = mock(Location.class);
+		when(location.getPopulation()).thenReturn(300);
+
+		Project project = new Project.ProjectBuilder(location)
+									   .withFactor(200)
+									   .build();
+		project.setMoneyNeeded(10000);
+		project.setDonatedAmount(9000);
+		
+		Donation donation = mock(Donation.class);
+		when(donation.getAmount()).thenReturn(1000);
+		
+		project.receiveDonation(donation);
+		
+		assertEquals(project.getIsOpen(), false);
+	}
+	
+	@Test
+	public void userNotIsNewDonor() throws ProjetcException{
+		Location location = mock(Location.class);
+		User user = mock(User.class);
+
+		when(location.getPopulation()).thenReturn(300);
+
+		Project project = new Project.ProjectBuilder(location)
+									   .withFactor(200)
+									   .build();
+		
+		
+		Donation donation = mock(Donation.class);
+		when(donation.getUser()).thenReturn(user);
+		
+		Donation donation2 = mock(Donation.class);
+		when(donation2.getUser()).thenReturn(user);
+		
+		project.receiveDonation(donation);
+		project.receiveDonation(donation2);
+		
+		assertEquals(project.getNumberOfDonors(), 1);
+		assertEquals(project.isNewDonor(user), false);
+	}
+	
+	@Test
+	public void userIsNewDonor() throws ProjetcException{
+		Location location = mock(Location.class);
+		User user = mock(User.class);
+
+		when(location.getPopulation()).thenReturn(300);
+
+		Project project = new Project.ProjectBuilder(location)
+									   .withFactor(200)
+									   .build();
+		
+		Donation donation = mock(Donation.class);
+				
+		project.receiveDonation(donation);
+
+		assertEquals(project.getNumberOfDonors(), 1);
+		assertEquals(project.isNewDonor(user), true);
 	}
 }

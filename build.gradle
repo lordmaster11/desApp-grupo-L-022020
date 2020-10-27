@@ -50,11 +50,22 @@ dependencies {
 }
 
 jacocoTestReport {
+    dependsOn test
+
     reports {
         xml.enabled = true
         html.enabled = true
     }
-    dependsOn test
+    afterEvaluate {
+    	classDirectories.setFrom(files(classDirectories.files.collect {
+    		fileTree(dir: it, exclude: ['**/repositories/*', 
+							    		'**/services/*', 
+							    		'**/webservices/*',
+							    		'**/errors/*', 
+							    		'**/exceptions/*'
+    		])
+    	}
+    }
 }
 
 check.dependsOn jacocoTestReport

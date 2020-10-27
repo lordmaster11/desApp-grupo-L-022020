@@ -9,8 +9,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
-
 import ar.edu.unq.desapp.grupol022020.model.Donation;
 
 @Configuration

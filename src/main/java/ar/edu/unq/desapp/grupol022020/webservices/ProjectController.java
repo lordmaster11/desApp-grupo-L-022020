@@ -102,19 +102,5 @@ public class ProjectController {
 														.build();
 			
 		return ResponseEntity.ok().body(projectService.save(newProject));
-    }
-	
+    }	
 }
-	/*
-	@PutMapping(path = "/api/project/{id}")
-	public ResponseEntity<Project> updateProjectById(@PathVariable("id") Integer id, @Validated @RequestBody Project project) {
-		try {
-			Project projectUpdate = projectService.update(id, project);
-	    
-			return ResponseEntity.ok().body(projectUpdate);	
-	    
-		} catch (NoSuchElementException e){
-			throw new ResourceNotFoundException("Project with ID:"+id+" Not Found!");
-		}
-	}
-	*/
