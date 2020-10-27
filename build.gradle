@@ -62,13 +62,12 @@ jacocoTestReport {
 							    		'**/services/*', 
 							    		'**/webservices/*',
 							    		'**/errors/*', 
-							    		'**/exceptions/*'
-    		])
-    	}
+							    		'**/exceptions/*'])
+    	}))
     }
 }
 
-check.dependsOn jacocoTestReport
+//check.dependsOn jacocoTestReport
 
 test {
 	useJUnitPlatform()
