@@ -21,7 +21,6 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Entity
 @Table(name = "project")
 public class Project {
-
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "id", updatable = false, nullable = false)
@@ -97,7 +96,7 @@ public class Project {
 		}		
 	}
 
-	private boolean isNewDonor(User user) {
+	public boolean isNewDonor(User user) {
 		for(Donation donation:this.donations) {
 			if(donation.getUser() == user) {
 				return false;
@@ -121,11 +120,7 @@ public class Project {
 	public Integer calculateMoneyNeeded() {
 		return factor * locationProject.getPopulation();
 	}
-/*
-	public void addDonor(User aUser) {
-		this.donors.add(aUser);
-	}
-*/	
+
 	public void addDonation(Donation aDonation) {
 	//	this.setLastDonation(aDonation.getDateDonation());
 		this.donations.add(aDonation);
@@ -304,6 +299,6 @@ public static class ProjectBuilder {
             throw new ProjetcException(
                     "The project factor must be between 0 and 100000");
             }
-	} 
+		} 
 	}	
 }

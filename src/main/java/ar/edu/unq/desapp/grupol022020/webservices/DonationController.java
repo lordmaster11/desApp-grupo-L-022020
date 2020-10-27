@@ -79,16 +79,4 @@ public class DonationController {
 
 		return ResponseEntity.ok().body(donationService.save(newDonation));
     }
-	/*
-	@PutMapping("/api/donation/{id}")
-    public ResponseEntity<Donation> updateDonationById(@PathVariable("id") Integer id, @Validated @RequestBody Donation donation) {
-    	try {
-    		Donation donationUpdate = donationService.update(id, donation);
-        
-    		return ResponseEntity.ok().body(donationUpdate);	
-        
-    	} catch (NoSuchElementException e){
-    		throw new ResourceNotFoundException("Donation with ID:"+id+" Not Found!");
-    	}
-    }*/
 }

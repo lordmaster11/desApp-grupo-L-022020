@@ -5,8 +5,6 @@ import static org.mockito.Mockito.*;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.HashSet;
-import java.util.Set;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -22,27 +20,35 @@ import ar.edu.unq.desapp.grupol022020.model.UserException;
 public class UserTest {
 	@Test
 	public void newUser(){ 		
-		UserDonor aUser = new UserDonor ("Juan", "juan@gmail.com", "1234", "Master");
+		User aUser = new UserDonor ();
+		
+		aUser.setName("Juan");
+		aUser.setMail("juan@gmail.com");
+		aUser.setPassword("1234");
+		aUser.setNick("Master");
+		
 		assertEquals(aUser.getName(), "Juan");		
 		assertEquals(aUser.getMail(), "juan@gmail.com");
 		assertEquals(aUser.getPassword(), "1234");
 		assertEquals(aUser.getNick(), "Master");
-		assertEquals(aUser.getRole(), "ROLE_USER");
 	}
 	
 	@Test
 	public void settersUser(){ 
-		UserAdmin aUser = new UserAdmin ("Juan", "juan@gmail.com", "1234", "Master");
+		User aUser = new UserAdmin ();
 
 		aUser.setName("Juan Carlos");
 		aUser.setMail("juanca@gmail.com");
 		aUser.setPassword("12345");
 		aUser.setNick("Juanca");
+		aUser.setId(11);
+		aUser.setRole("ROLE_ADMIN");
 
 		assertEquals(aUser.getName(), "Juan Carlos");		
 		assertEquals(aUser.getMail(), "juanca@gmail.com");
 		assertEquals(aUser.getPassword(), "12345");
 		assertEquals(aUser.getNick(), "Juanca");
+		assertEquals(aUser.getId(), 11);
 		assertEquals(aUser.getRole(), "ROLE_ADMIN");
 	}		
 
@@ -167,26 +173,6 @@ public class UserTest {
 	}
 	
 	@Test
-	public void theUserIsNotAddedToTheDonorList() throws UserException, ProjetcException{
-		UserDonor aUser = new UserDonor("Oscar", "oscar@gmail.com", "12345", "Oscar");
-
-		Project project = mock(Project.class);
-		Location location = mock(Location.class);
-		when(project.getLocationProject()).thenReturn(location);
-		when(location.getPopulation()).thenReturn(100000);
-		
-	    Set<User> donors = new HashSet<User>();    
-	    donors.add(aUser);
-
-//		when(project.getDonors()).thenReturn(donors);
-		
-		aUser.donate(1000, project, "First donation");
-		aUser.donate(5000, project, "Second donation");
-
-//	    assertEquals(project.getDonors().size(), 1);
-	}
-	
-	@Test
 	public void userException() throws UserException{
 		UserDonor aUser = new UserDonor("Felipe", "felipe@gmail.com", "12345", "Felix");
 
@@ -214,6 +200,22 @@ public class UserTest {
 			});	
 		
 		assertEquals("User cannot create projects", exception.getMessage());
+	}
+	
+	@Test
+	public void userAdminCannotDonate() throws UserException, ProjetcException{ 
+		Project project = mock(Project.class);
+		Location location = mock(Location.class);
+		when(project.getLocationProject()).thenReturn(location);
+		when(location.getPopulation()).thenReturn(50000);
+				
+		UserAdmin aUser = new UserAdmin("Fede", "fede@gmail.com", "1234", "facha");
+		
+		UserException exception = Assertions.assertThrows(UserException.class, () -> {			
+			aUser.donate(5000, project, "Donate to project");
+			});	
+		
+		assertEquals("Admin user cannot donate", exception.getMessage());
 	}
 	
 	@Test

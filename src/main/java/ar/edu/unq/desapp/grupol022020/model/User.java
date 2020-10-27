@@ -21,7 +21,6 @@ import javax.persistence.Inheritance;
 @Inheritance
 @Table(name = "user")
 public abstract class User {
-
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "id", updatable = false, nullable = false)
@@ -41,7 +40,6 @@ public abstract class User {
 	private Calendar lastDonationDate;
 	@Column
 	private Integer points;
-//	@JsonManagedReference
 	@JsonBackReference
 	@OneToMany(cascade= CascadeType.ALL, orphanRemoval = true)
 	public List<Donation> donations = new ArrayList<>();

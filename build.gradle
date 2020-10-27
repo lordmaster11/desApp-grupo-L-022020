@@ -54,7 +54,7 @@ jacocoTestReport {
         xml.enabled = true
         html.enabled = true
     }
-    dependsOn test
+    dependsOn test   
 }
 
 check.dependsOn jacocoTestReport

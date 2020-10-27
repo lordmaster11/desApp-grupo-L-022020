@@ -73,18 +73,4 @@ public class LocationController {
     											  + "because it has a current project");
     	}
     }
-	/*
-	@PutMapping("/api/location/{id}")
-    public ResponseEntity<Location> updateLocationById(@PathVariable("id") Integer id, @Validated @RequestBody Location location) {
-    	try {
-    		Location locationUpdate = locationService.update(id, location);
-        
-    		return ResponseEntity.ok().body(locationUpdate);	
-        
-    	} catch (NoSuchElementException e){
-    		throw new ResourceNotFoundException("Location with ID:"+id+" Not Found!");
-    	}
-    }
-    */
-	 
 }
