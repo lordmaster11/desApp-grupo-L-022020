@@ -79,21 +79,21 @@ public class InitServiceInMemory {
 		User userDonor3 = new UserDonor("Ana", "ana@gmail.com", "1234", "Anita");
 		User userDonor4 = new UserDonor("Lisandro", "lopez@gmail.com", "1234", "Licha");
 
-		Donation donation = new Donation(userDonor, project, 1000, "Mi gran donacion");
-		Donation donation2 = new Donation(userDonor, project, 5000, "Mi segunda gran donacion");
-		Donation donation3 = new Donation(userDonor, project3, 2000, "La tercera es la vencida");
-		Donation donation4 = new Donation(userDonor, project6, 3000, "Gracias por la magia!!!");
-
-		Donation donation5 = new Donation(userDonor2, project2, 500, "Mi donacion");
-		Donation donation6 = new Donation(userDonor2, project3, 10000, "Mi segunda donacion");
+		Donation donation  = userDonor.donate(10000, project, "Mi gran donacion");
+		Donation donation2 = userDonor.donate(5000, project, "Mi segunda gran donacion");
+	    Donation donation3 = userDonor.donate(2000, project, "La tercera es la vencida");
+		Donation donation4 = userDonor.donate(3000, project6, "Gracias por la magia!!!");
 		
-		Donation donation7 = new Donation(userDonor3, project4, 1000, "Donación");
-		Donation donation8 = new Donation(userDonor3, project, 6000, "Unión, paz y armonía");
+		Donation donation5 = userDonor2.donate(500, project2, "Mi donacion");
+		Donation donation6 = userDonor2.donate(10000, project3, "Mi segunda donacion");
 
-		Donation donation9 = new Donation(userDonor4, project5, 3000, "Primera");
-		Donation donation10 = new Donation(userDonor4, project3, 3000, "Segunda");
-		Donation donation11 = new Donation(userDonor4, project6, 3000, "Tercera");
-		Donation donation12 = new Donation(userDonor4, project, 3000, "Cuarta");
+		Donation donation7 = userDonor3.donate(1000, project4, "Donación");
+		Donation donation8 = userDonor3.donate(6000, project, "Unión, paz y armonía");
+		
+		Donation donation9 = userDonor4.donate(3000, project5, "Primera");
+		Donation donation10 = userDonor4.donate(3000, project3, "Segunda");
+		Donation donation11 = userDonor4.donate(3000, project6, "Tercera");
+		Donation donation12 = userDonor4.donate(3000, project, "Cuarta");
 
 		donationService.save(donation);
 		donationService.save(donation2);
@@ -109,10 +109,6 @@ public class InitServiceInMemory {
 		donationService.save(donation12);
 
 		userService.save(userAdmin);
-		userService.save(userDonor);
-//		userService.save(userDonor2);
-//		userService.save(userDonor3);
-//		userService.save(userDonor4);
 
 		projectService.save(project);
 		projectService.save(project2);
@@ -139,6 +135,6 @@ public class InitServiceInMemory {
 		locationService.save(location16);
 		locationService.save(location17);
 		locationService.save(location18);	
-		locationService.save(location19);		
+		locationService.save(location19);	
 	}
 }

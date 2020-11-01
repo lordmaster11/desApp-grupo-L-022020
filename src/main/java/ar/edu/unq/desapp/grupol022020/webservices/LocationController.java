@@ -3,6 +3,8 @@ package ar.edu.unq.desapp.grupol022020.webservices;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -16,6 +18,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import ar.edu.unq.desapp.grupol022020.aspects.LogExecutionTime;
+import ar.edu.unq.desapp.grupol022020.aspects.LogExecutionTimeAspectAnnotation;
 import ar.edu.unq.desapp.grupol022020.model.Location;
 import ar.edu.unq.desapp.grupol022020.services.LocationService;
 import ar.edu.unq.desapp.grupol022020.webservices.exceptions.ResourceBadRequestException;
@@ -28,49 +32,67 @@ public class LocationController {
     @Autowired
     private LocationService locationService;
     
+	static Logger logger = LoggerFactory.getLogger(LogExecutionTimeAspectAnnotation.class);
+
+	@LogExecutionTime
     @GetMapping("/api/locations")
     public ResponseEntity<?> allLocations() {
         List<Location> list = locationService.findAll();
+		logger.info("/////// Inside allLocations() method");
+
         return ResponseEntity.ok().body(list);
     } 
     
+	@LogExecutionTime
     @GetMapping("/api/locationsPossible")
     public ResponseEntity<?> locationsPossibleProject() {
         List<Location> list = locationService.findPossibleProject();
+		logger.info("/////// Inside locationsPossibleProject() method");
+
         return ResponseEntity.ok().body(list);
     } 
     
+	@LogExecutionTime
     @GetMapping("/api/locations/{id}")
     public ResponseEntity<?> getLocationById(@PathVariable("id") Integer id) {
     	try {
     		Location location = locationService.findByID(id);
+    		logger.info("/////// Inside getLocationById() method");
+
     		return ResponseEntity.ok().body(location);
         
     	} catch (NoSuchElementException e){
+    		logger.warn("/////// This message is logged because WARN: Location with ID:" +id+" Not Found!");
+
     		throw new ResourceNotFoundException("Location with ID:"+id+" Not Found!");
     	}    	   
     }
     
+	@LogExecutionTime
 	@PostMapping("/api/location")
     public ResponseEntity<Location> createLocation(@Validated @RequestBody Location location) {
     		Location newlocation = locationService.save(location);
-        
+    		logger.info("/////// Inside createLocation() method");
+
     		return ResponseEntity.ok().body(newlocation);	
     }
 	
+	@LogExecutionTime
 	@DeleteMapping(value="/api/location/{id}")
     public ResponseEntity<?> deleteLocationById(@PathVariable("id") Integer id) {
     	try {
     		Location location = locationService.findByID(id);
-        
     		locationService.deleteById(location.getId());
+    		logger.info("/////// Inside deleteLocationById() method");
+
     		return ResponseEntity.ok().body("Location deleted with success!");	
         
     	}catch (NoSuchElementException e){
+    		logger.warn("/////// This message is logged because WARN: Location with ID:" +id+" Not Found!");
+
     		throw new ResourceNotFoundException("Location with ID:"+id+" Not Found!");
     	}catch (DataIntegrityViolationException e){
-    		throw new ResourceBadRequestException("Location with ID:"+id+", cannot be deleted "
-    											  + "because it has a current project");
+    		throw new ResourceBadRequestException("Location with ID:"+id+", cannot be deleted because it has a current project");
     	}
     }
 }

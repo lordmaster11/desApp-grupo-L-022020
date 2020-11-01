@@ -13,10 +13,7 @@ public class UserAdmin extends User{
 		 setRole("ROLE_ADMIN");
 	}
 
-	public void createProject(Location location, String fantasyName, Calendar endOfProject) 
-			throws UserException, ProjetcException{
-
-	}
+	public void createProject(Location location, String fantasyName, Calendar endOfProject) { }
 	
 	public void setFactorInProjet(Project aProject, Integer factor) throws ProjetcException {
 		aProject.setFactor(factor);

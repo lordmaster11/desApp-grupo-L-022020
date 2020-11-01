@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.unq.desapp.grupol022020.model.Donation;
+import ar.edu.unq.desapp.grupol022020.model.Project;
 import ar.edu.unq.desapp.grupol022020.model.ProjetcException;
+import ar.edu.unq.desapp.grupol022020.model.User;
 import ar.edu.unq.desapp.grupol022020.model.UserException;
 import ar.edu.unq.desapp.grupol022020.repositories.DonationRepository;
 
@@ -15,11 +17,14 @@ import ar.edu.unq.desapp.grupol022020.repositories.DonationRepository;
 public class DonationService {
 	@Autowired
 	private DonationRepository repository;
+	@Autowired
+	private UserService userService;
+	@Autowired
+	private ProjectService projectService;
 	
 	@Transactional
-	public Donation save(Donation model) throws UserException, ProjetcException {
-		Donation donation = model.getUser().donate(model.getAmount(), model.getProject(),model.getComment());
-		return donation;
+	public Donation save(Donation donation) {
+		return this.repository.save(donation);
 	}
 
 	public Donation findByID(Integer id) {
@@ -40,5 +45,14 @@ public class DonationService {
 
 	public List<Donation> findByUserID(Integer id) {
 		return this.repository.findIdByUser(id);
+	}
+	
+	public Donation createDonation(Integer userId, Integer projectId, Integer amount, String comment) throws UserException, ProjetcException {
+		User user = this.userService.findByID(userId);
+		Project project = this.projectService.findByID(projectId);
+		
+		Donation newDonation = user.donate(amount, project, comment);
+		
+		return save(newDonation);
 	}
 }
