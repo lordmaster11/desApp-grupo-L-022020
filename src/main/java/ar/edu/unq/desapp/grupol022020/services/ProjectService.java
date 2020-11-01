@@ -6,13 +6,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ar.edu.unq.desapp.grupol022020.model.Location;
 import ar.edu.unq.desapp.grupol022020.model.Project;
+import ar.edu.unq.desapp.grupol022020.model.ProjetcException;
 import ar.edu.unq.desapp.grupol022020.repositories.ProjectRepository;
 
 @Service
 public class ProjectService {
 	@Autowired
-	private ProjectRepository  repository;
+	private ProjectRepository repository;
+	@Autowired
+	private LocationService locationService;
+	
 	
 	@Transactional
 	public Project save(Project model) {
@@ -44,5 +49,17 @@ public class ProjectService {
 		Project project = findByID(id);
 		project.setIsOpen(false);
 		return this.repository.save(project);
+	}
+
+	public Project createProject(Integer locationProjectId, Integer factor, Integer percentageRequiredForClosing, String fantasyName) throws ProjetcException {
+		Location location = this.locationService.findByID(locationProjectId);
+
+		Project newProject = new Project.ProjectBuilder(location)
+				.withFactor(factor)
+				.withPercentageRequiredForClosing(percentageRequiredForClosing)
+				.withFantasyName(fantasyName)
+				.build();
+		
+		return save(newProject);
 	}	
 }

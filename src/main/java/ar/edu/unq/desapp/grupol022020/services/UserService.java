@@ -10,6 +10,7 @@ import ar.edu.unq.desapp.grupol022020.model.User;
 import ar.edu.unq.desapp.grupol022020.model.UserAdmin;
 import ar.edu.unq.desapp.grupol022020.model.UserDonor;
 import ar.edu.unq.desapp.grupol022020.repositories.UserRepository;
+import ar.edu.unq.desapp.grupol022020.webservices.exceptions.ResourceNotFoundException;
 
 @Service
 public class UserService {
@@ -17,7 +18,7 @@ public class UserService {
 	private UserRepository  repository;
 	
 	@Transactional
-	public User save(User model) throws Exception {
+	public User save(User model) {
 		
 		User user = null;
     	try {
@@ -25,7 +26,7 @@ public class UserService {
     		
     	} catch (Exception e){}
     	if(user!= null) {
-    		throw new Exception("Access denied: mail already exist");
+    		throw new ResourceNotFoundException("Access denied: User already exist");
     	}
     	if(model.getRole().equals("ROLE_ADMIN")) {
     		return this.repository.save((UserAdmin) model);
@@ -68,22 +69,22 @@ public class UserService {
 		return this.repository.save(user);
 	}
 	
-    public User login(String mail, String pass) throws Exception {
+    public User login(String mail, String pass) {
     	User user = null;
     	try {
     		user = findByMail(mail);
     		
     	} catch (Exception e){
-    		throw new Exception("Access denied: mail not exist");
+    		throw new ResourceNotFoundException("Access denied: User not exist");
     	}
     	if(!user.getPassword().equals(pass)) {
-    		throw new Exception("Access denied: incorrect password");
+    		throw new ResourceNotFoundException("Access denied: Incorrect password");
     	}
 	
     	return user;
     }
 
-	public User register(String name, String mail, String password, String nick) throws Exception {
+	public User register(String name, String mail, String password, String nick) {
 		User newUser = new UserDonor(name, mail, password, nick);
 				
 		return save(newUser);
