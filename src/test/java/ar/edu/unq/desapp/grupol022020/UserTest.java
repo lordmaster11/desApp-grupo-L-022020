@@ -189,20 +189,6 @@ public class UserTest {
 	}
 	
 	@Test
-	public void createProjectUserDonor() throws UserException, ProjetcException{ 	
-		Location location = mock(Location.class);
-		Calendar endOfProject= new GregorianCalendar(2020, Calendar.SEPTEMBER,1);
-				
-		UserDonor aUser = new UserDonor("Fede", "fede@gmail.com", "1234", "facha");
-		
-		UserException exception = Assertions.assertThrows(UserException.class, () -> {			
-			aUser.createProject(location, "Lonzo", endOfProject);
-			});	
-		
-		assertEquals("User cannot create projects", exception.getMessage());
-	}
-	
-	@Test
 	public void userAdminCannotDonate() throws UserException, ProjetcException{ 
 		Project project = mock(Project.class);
 		Location location = mock(Location.class);
@@ -216,50 +202,6 @@ public class UserTest {
 			});	
 		
 		assertEquals("Admin user cannot donate", exception.getMessage());
-	}
-	
-	@Test
-	public void setFactorInProjetInAdmin() throws UserException, ProjetcException{ 	
-		Project aProject = mock(Project.class);
-				
-		User aUser = new UserAdmin("Fede", "fede@gmail.com", "1234", "facha");	
-		aUser.setFactorInProjet(aProject, 1000);
-		
-		verify(aProject).setFactor(1000);
-	}
-	
-	@Test
-	public void setPercentageRequiredForClosingInProjetInAdmin() throws UserException, ProjetcException{ 	
-		Project aProject = mock(Project.class);
-				
-		User aUser = new UserAdmin("Fede", "fede@gmail.com", "1234", "facha");	
-		aUser.setPercentageRequiredForClosingInProjet(aProject, 60);
-		
-		verify(aProject).setPercentageRequiredForClosing(60);
-	}
-	
-	@Test
-	public void setFactorInProjetInDonor() throws UserException, ProjetcException{ 	
-		Project aProject = mock(Project.class);
-				
-		User aUser = new UserDonor("Fede", "fede@gmail.com", "1234", "facha");
-		UserException exception = Assertions.assertThrows(UserException.class, () -> {			
-			aUser.setFactorInProjet(aProject, 1000);
-			});	
-		
-		assertEquals("User cannot update projects", exception.getMessage());		
-	}
-	
-	@Test
-	public void setPercentageRequiredForClosingInProjetInDonor() throws UserException, ProjetcException{ 	
-		Project aProject = mock(Project.class);
-		
-		User aUser = new UserDonor("Fede", "fede@gmail.com", "1234", "facha");
-		UserException exception = Assertions.assertThrows(UserException.class, () -> {			
-			aUser.setPercentageRequiredForClosingInProjet(aProject, 60);
-			});	
-		
-		assertEquals("User cannot update projects", exception.getMessage());		
 	}
 	
 	@Test

@@ -31,7 +31,7 @@ public class DonationController {
     @Autowired
     private DonationService donationService;
     
-	static Logger logger = LoggerFactory.getLogger(LogExecutionTimeAspectAnnotation.class);
+	private static Logger logger = LoggerFactory.getLogger(LogExecutionTimeAspectAnnotation.class);
 
 	@LogExecutionTime
     @GetMapping("/api/donations")

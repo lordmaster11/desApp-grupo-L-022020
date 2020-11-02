@@ -10,8 +10,7 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Component
 public class LogExecutionTimeAspectAnnotation {
-
-	static Logger logger = LoggerFactory.getLogger(LogExecutionTimeAspectAnnotation.class);
+	private static Logger logger = LoggerFactory.getLogger(LogExecutionTimeAspectAnnotation.class);
 
 	/// ANNOTATION POINTCUT////
 	@Around("@annotation(LogExecutionTime)")

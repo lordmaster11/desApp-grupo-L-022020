@@ -53,7 +53,7 @@ public class ProjectService {
 
 	public Project createProject(Integer locationProjectId, Integer factor, Integer percentageRequiredForClosing, String fantasyName) throws ProjetcException {
 		Location location = this.locationService.findByID(locationProjectId);
-
+		
 		Project newProject = new Project.ProjectBuilder(location)
 				.withFactor(factor)
 				.withPercentageRequiredForClosing(percentageRequiredForClosing)

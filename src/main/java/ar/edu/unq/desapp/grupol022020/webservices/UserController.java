@@ -32,7 +32,7 @@ public class UserController {
     @Autowired
     private UserService userService;  
     
-	static Logger logger = LoggerFactory.getLogger(LogExecutionTimeAspectAnnotation.class);
+	private static Logger logger = LoggerFactory.getLogger(LogExecutionTimeAspectAnnotation.class);
 
 	@LogExecutionTime
     @GetMapping("/api/users")

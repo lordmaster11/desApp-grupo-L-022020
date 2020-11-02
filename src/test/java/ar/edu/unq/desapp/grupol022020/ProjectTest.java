@@ -42,7 +42,8 @@ public class ProjectTest {
 		assertEquals(project.getProjectStart(), dateStart);
 		assertEquals(project.getEndOfProject(), dateEnd);
 		assertEquals(project.getMoneyNeeded(), 100000);
-		assertEquals(project.getDonations().size(), 0);				
+		assertEquals(project.getDonations().size(), 0);		
+		assertEquals(project.getLastDonation(), null);		
 	}
 	
 	@Test
@@ -73,7 +74,6 @@ public class ProjectTest {
 		Project myProject = new Project.ProjectBuilder(location)
 									   .withFactor(10)
 									   .withFantasyName("Project Chaco")
-									   .withEndOfProject(Calendar.getInstance())
 									   .withPercentageRequiredForClosing(75)
 									   .withProjectStart(Calendar.getInstance())
 									   .build();
@@ -86,14 +86,12 @@ public class ProjectTest {
 		Location location = mock(Location.class);
 		when(location.getPopulation()).thenReturn(300);
 		Calendar dateStart = new GregorianCalendar(2020, Calendar.SEPTEMBER,1); 
-		Calendar dateEnd = new GregorianCalendar(2020, Calendar.SEPTEMBER,30); 
 		Calendar lastDonation = new GregorianCalendar(2020, Calendar.AUGUST,30);
 		
 		Project project = new Project.ProjectBuilder(location)
 									 .withFactor(10)
 									 .withFantasyName("Conectarme")
 									 .withProjectStart(dateStart)
-									 .withEndOfProject(dateEnd)
 									 .withPercentageRequiredForClosing(75)
 									 .build();		
 		project.setLastDonation(lastDonation);
@@ -102,10 +100,6 @@ public class ProjectTest {
 		assertEquals(project.getFactor(), 10);
 		assertEquals(project.getFantasyName(), "Conectarme");
 		assertEquals(project.getProjectStart(), dateStart);
-		assertEquals(project.getEndOfProject(), dateEnd);
-		assertEquals(project.getPercentageRequiredForClosing(), 75);
-		assertEquals(project.getDonations().size(), 0);		
-		assertEquals(project.getLastDonation(), lastDonation);
 	}
 	
 	@Test
@@ -232,7 +226,6 @@ public class ProjectTest {
 
 		Project myProject = new Project.ProjectBuilder(location)
 									   .withFactor(200)
-									   .withEndOfProject(todayPlusAMonth)
 									   .build();
 		Donation donation1 = mock(Donation.class);
 		when(donation1.getAmount()).thenReturn(5999);
@@ -262,13 +255,11 @@ public class ProjectTest {
 	
 	@Test
 	public void donateInprojectwithExpiredDate() throws ProjetcException {
-		Calendar endOfProject= new GregorianCalendar(1, Calendar.SEPTEMBER,1);
 		Location location=mock(Location.class);
 		when(location.getPopulation()).thenReturn(300);
 
 		Project myProject = new Project.ProjectBuilder(location)
 									   .withFactor(200)
-									   .withEndOfProject(endOfProject)
 									   .build();
 		Donation donation1 = mock(Donation.class);
 		when(donation1.getAmount()).thenReturn(5999);
@@ -278,9 +269,8 @@ public class ProjectTest {
 		
 		assertEquals(myProject.getEndOfProject().get(Calendar.YEAR),todayPlusAMonth.get(Calendar.YEAR));
 		assertEquals(myProject.getEndOfProject().get(Calendar.MONTH),todayPlusAMonth.get(Calendar.MONTH));
-		assertEquals(myProject.getEndOfProject().get(Calendar.DATE),todayPlusAMonth.get(Calendar.DATE));
 	}
-	
+
 	@Test
 	public void donateInprojectwithEndOfProjectIsNull() throws ProjetcException {
 		Location location=mock(Location.class);
@@ -288,6 +278,7 @@ public class ProjectTest {
 
 		Project myProject = new Project.ProjectBuilder(location)
 									   .withFactor(200)
+									   .withEndOfProject(null)
 									   .build();
 		Donation donation1 = mock(Donation.class);
 		when(donation1.getAmount()).thenReturn(100);
@@ -297,29 +288,31 @@ public class ProjectTest {
 	
 	@Test
 	public void donateInprojectwithEndOfProjectnotIsExireted() throws ProjetcException {
-		Calendar endOfProject= new GregorianCalendar(2030, Calendar.SEPTEMBER,1);
+		Calendar dateEnd = Calendar.getInstance(); 
+
 		Location location=mock(Location.class);
 		when(location.getPopulation()).thenReturn(300);
 
-		Project myProject = new Project.ProjectBuilder(location)
+		Project project = new Project.ProjectBuilder(location)
 									   .withFactor(200)
-									   .withEndOfProject(endOfProject)
+									   .withEndOfProject(dateEnd)
 									   .build();
-		Donation donation1 = mock(Donation.class);
-		when(donation1.getAmount()).thenReturn(100);
+		
+		project.addTimeIfMissing();
+		Calendar endOfProject = dateEnd;
+		endOfProject.add(Calendar.MONTH, 2);
 
-		assertEquals(myProject.getEndOfProject(),endOfProject);	
+		assertEquals(project.getEndOfProject().get(Calendar.YEAR),endOfProject.get(Calendar.YEAR));	
+		assertEquals(project.getEndOfProject().get(Calendar.MONTH),endOfProject.get(Calendar.MONTH));	
 	}
 	
 	@Test
 	public void setLocationProject() throws ProjetcException {
-		Calendar endOfProject= new GregorianCalendar(2030, Calendar.SEPTEMBER,1);
 		Location location=mock(Location.class);
 		when(location.getPopulation()).thenReturn(3000);
 
 		Project project = new Project.ProjectBuilder(location)
 									   .withFactor(200)
-									   .withEndOfProject(endOfProject)
 									   .build();
 		
 		project.setLocationProject(location);

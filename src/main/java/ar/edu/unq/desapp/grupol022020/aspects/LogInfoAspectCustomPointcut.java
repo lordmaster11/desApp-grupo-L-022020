@@ -13,8 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Order(0)
 public class LogInfoAspectCustomPointcut  {
-
-	static Logger logger = LoggerFactory.getLogger(LogInfoAspectCustomPointcut.class);
+	private static Logger logger = LoggerFactory.getLogger(LogInfoAspectCustomPointcut.class);
 	
 	/// CUSTOM  POINTCUT////
 	@Pointcut("execution(* ar.edu.unq.desapp.grupol022020.webservices..*(..))")
