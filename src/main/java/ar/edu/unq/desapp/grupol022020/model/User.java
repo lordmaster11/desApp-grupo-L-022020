@@ -54,14 +54,6 @@ public abstract class User {
 	    this.points = 0;
     	this.donations = new ArrayList<Donation>();
 	}
-	   
-	abstract public void createProject(Location location, String fantasyName, Calendar endOfProject) 
-			throws UserException, ProjetcException;
-	
-	abstract public void setFactorInProjet(Project aProject, Integer factor) throws UserException, ProjetcException;
-	
-	abstract public void setPercentageRequiredForClosingInProjet(Project aProject, Integer percentageRequiredForClosing) 
-			throws UserException, ProjetcException ;
 	
 	abstract public Donation donate(Integer money, Project project, String comment) throws UserException, ProjetcException;
 	

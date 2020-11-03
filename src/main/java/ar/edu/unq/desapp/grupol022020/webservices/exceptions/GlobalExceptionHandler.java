@@ -20,7 +20,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import ar.edu.unq.desapp.grupol022020.webservices.errors.ApiError;
-import ar.edu.unq.desapp.grupol022020.webservices.errors.ResponseEntityBuilder;
+import ar.edu.unq.desapp.grupol022020.webservices.errors.ResponseEntityBuilderUtil;
 
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
@@ -43,7 +43,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
         ApiError err = new ApiError(LocalDateTime.now(), HttpStatus.BAD_REQUEST, "Invalid JSON" ,details);
 		
-		return ResponseEntityBuilder.build(err);
+		return ResponseEntityBuilderUtil.build(err);
 	}
 	
 	// handleHttpMessageNotReadable : triggers when the JSON is malformed
@@ -55,7 +55,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         
         ApiError err = new ApiError(LocalDateTime.now(),HttpStatus.BAD_REQUEST, "Malformed JSON request" ,details);
 		
-		return ResponseEntityBuilder.build(err);
+		return ResponseEntityBuilderUtil.build(err);
     }
 	
 	// handleMethodArgumentNotValid : triggers when @Valid fails
@@ -75,7 +75,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 				"Validation Errors" ,
 				details);
 		
-		return ResponseEntityBuilder.build(err);
+		return ResponseEntityBuilderUtil.build(err);
 	}
 	
 	// handleMissingServletRequestParameter : triggers when there are missing parameters
@@ -89,7 +89,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
 		ApiError err = new ApiError(LocalDateTime.now(),HttpStatus.BAD_REQUEST, "Missing Parameters" ,details);
 		
-		return ResponseEntityBuilder.build(err);
+		return ResponseEntityBuilderUtil.build(err);
     }
 	
 	// handleMethodArgumentTypeMismatch : triggers when a parameter's type does not match
@@ -101,7 +101,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
       
 		ApiError err = new ApiError(LocalDateTime.now(),HttpStatus.BAD_REQUEST, "Mismatch Type" ,details);
 		
-		return ResponseEntityBuilder.build(err);
+		return ResponseEntityBuilderUtil.build(err);
     }
 	
 	// handleConstraintViolationException : triggers when @Validated fails
@@ -113,7 +113,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		
 		ApiError err = new ApiError(LocalDateTime.now(),HttpStatus.BAD_REQUEST, "Constraint Violation" ,details);
 		
-		return ResponseEntityBuilder.build(err);
+		return ResponseEntityBuilderUtil.build(err);
 	}
 	
 	// handleResourceNotFoundException : triggers when there is not resource with the specified ID in BDD
@@ -125,7 +125,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		
 		ApiError err = new ApiError(LocalDateTime.now(),HttpStatus.NOT_FOUND, "Resource Not Found" ,details);
 		
-		return ResponseEntityBuilder.build(err);
+		return ResponseEntityBuilderUtil.build(err);
 	}
 	
 	// handleNoHandlerFoundException : triggers when the handler method is invalid
@@ -138,7 +138,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		
 		ApiError err = new ApiError(LocalDateTime.now(),HttpStatus.BAD_REQUEST, "Method Not Found" ,details);
 		
-        return ResponseEntityBuilder.build(err); 
+        return ResponseEntityBuilderUtil.build(err); 
     }
 	
 	@ExceptionHandler({ Exception.class })
@@ -149,6 +149,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		
 		ApiError err = new ApiError(LocalDateTime.now(),HttpStatus.BAD_REQUEST, "Error occurred" ,details);
 		
-		return ResponseEntityBuilder.build(err);
+		return ResponseEntityBuilderUtil.build(err);
 	}
 }

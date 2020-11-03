@@ -65,7 +65,7 @@ public class Project {
 		this.projectStart = builder.projectStart;
 		this.endOfProject = builder.endOfProject;
 		this.donations = new ArrayList<Donation>();
-		this.lastDonation = builder.lastDonation;
+		this.lastDonation = null;
 		this.donatedAmount = 0;
 		this.isOpen = true;
 		this.MoneyNeeded = factor * locationProject.getPopulation();
@@ -105,7 +105,7 @@ public class Project {
 		return true;
 	}
 
-	private void addTimeIfMissing() {
+	public void addTimeIfMissing() {
 		Calendar today = Calendar.getInstance();
 		if(endOfProject != null && endOfProject.compareTo(today)<0) {
 			today.add(Calendar.MONTH, 2);
@@ -249,14 +249,13 @@ public static class ProjectBuilder {
 	private String fantasyName;
 	private Calendar projectStart;
 	private Calendar endOfProject;
-	private Calendar lastDonation;
 	
 	public ProjectBuilder(Location location) {
 		this.locationProject = location;	
 		this.factor = 1000;
 		this.percentageRequiredForClosing = 100;
 		this.projectStart = Calendar.getInstance();
-		this.lastDonation = Calendar.getInstance();
+		this.endOfProject = sumDays();
 	}
 	
     public ProjectBuilder withFactor(Integer factor) {
@@ -301,4 +300,11 @@ public static class ProjectBuilder {
             }
 		} 
 	}	
+
+	public static Calendar sumDays(){
+		Calendar calendar = Calendar.getInstance();		
+		calendar.add(Calendar.DAY_OF_YEAR, 60);
+
+		return calendar;	
+	}
 }

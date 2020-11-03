@@ -35,7 +35,7 @@ public class ProjectController {
     @Autowired
     private ProjectService projectService;
     
-	static Logger logger = LoggerFactory.getLogger(LogExecutionTimeAspectAnnotation.class);
+	private static Logger logger = LoggerFactory.getLogger(LogExecutionTimeAspectAnnotation.class);
 
 	@LogExecutionTime
     @GetMapping("/api/projects")
