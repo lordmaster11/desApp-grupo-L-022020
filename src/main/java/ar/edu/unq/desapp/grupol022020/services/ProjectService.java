@@ -45,9 +45,9 @@ public class ProjectService {
 		return this.repository.save(project);
 	}
 
-	public Project closeProject(Integer id) {
+	public Project closeProject(Integer id) throws ProjetcException {
 		Project project = findByID(id);
-		project.setIsOpen(false);
+		project.closeProject();
 		return this.repository.save(project);
 	}
 
@@ -61,5 +61,9 @@ public class ProjectService {
 				.build();
 		
 		return save(newProject);
+	}
+
+	public List<Project> getTopLastDonations() {
+		return this.repository.topLastDonation();
 	}	
 }

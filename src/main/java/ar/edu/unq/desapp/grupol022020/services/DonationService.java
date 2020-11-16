@@ -55,4 +55,8 @@ public class DonationService {
 		
 		return save(newDonation);
 	}
+
+	public List<Donation> getTop10() {
+		return this.repository.top10();
+	}
 }

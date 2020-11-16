@@ -65,15 +65,15 @@ public class InitServiceInMemory {
 		Location location18 = new Location("Susquez", "Jujuy", 1949, false);
 		Location location19 = new Location("Huancar", "Jujuy", 1235, false);
 		
-		Project project = new Project.ProjectBuilder(location).withFantasyName("Conectar").withFactor(100).build();
+		Project project = new Project.ProjectBuilder(location).withFantasyName("Conectar").withFactor(100).withPercentageRequiredForClosing(70).build();
 		Project project2 = new Project.ProjectBuilder(location2).withFantasyName("Conectarse").build();
-		Project project3 = new Project.ProjectBuilder(location3).withFantasyName("Internet para todos").withFactor(500).build();
-		Project project4 = new Project.ProjectBuilder(location4).withFantasyName("Internet").build();
-		Project project5 = new Project.ProjectBuilder(location5).withFantasyName("Internet une").build();
+		Project project3 = new Project.ProjectBuilder(location3).withFantasyName("Internet para todos").withFactor(500).withPercentageRequiredForClosing(50).build();
+		Project project4 = new Project.ProjectBuilder(location4).withFantasyName("Internet").withPercentageRequiredForClosing(70).build();
+		Project project5 = new Project.ProjectBuilder(location5).withFantasyName("Internet une").withPercentageRequiredForClosing(60).build();
 		Project project6 = new Project.ProjectBuilder(location6).withFantasyName("Viva Internet").build();
-		Project project7 = new Project.ProjectBuilder(location7).withFantasyName("Internet por fin").build();
+		Project project7 = new Project.ProjectBuilder(location7).withFantasyName("Internet por fin").withPercentageRequiredForClosing(75).build();
 
-		User userAdmin = new UserAdmin("Cesar", "cesar@gmail.com", "1234", "Cesare");
+		User userAdmin = new UserAdmin("Cesar", "donacionesargentinaconectada@gmail.com", "1234", "Cesare");
 		User userDonor = new UserDonor("Marcelo", "jm@gmail.com", "1234", "Master");
 		User userDonor2 = new UserDonor("Esteban", "ban@gmail.com", "1234", "Kito");
 		User userDonor3 = new UserDonor("Ana", "ana@gmail.com", "1234", "Anita");

@@ -64,7 +64,7 @@ public class ProjectController {
 	
 	@LogExecutionTime
 	@PutMapping(path = "/api/closeProject/{id}")
-    public ResponseEntity<Project> updateProjectById(@PathVariable("id") Integer id) {
+    public ResponseEntity<Project> updateProjectById(@PathVariable("id") Integer id) throws ProjetcException {
     	try {
 			Project projectUpdate = projectService.closeProject(id);
 			logger.info("/////// Inside updateProjectById() method");
