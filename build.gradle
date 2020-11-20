@@ -49,7 +49,7 @@ dependencies {
 	compile 'org.springdoc:springdoc-openapi-ui:1.4.8'
 	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-mail
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '2.2.5.RELEASE'
-	
+	testImplementation 'com.tngtech.archunit:archunit-junit4:0.14.1'
 }
 
 jacocoTestReport {

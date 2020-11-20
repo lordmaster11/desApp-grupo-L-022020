@@ -20,7 +20,7 @@ import ar.edu.unq.desapp.grupol022020.model.UserException;
 
 @Service
 @Transactional
-public class InitServiceInMemory {
+public class InitInMemoryService {
 	protected final Log logger = LogFactory.getLog(getClass());
 
 	@Value("${spring.datasource.driverClassName:NONE}")
