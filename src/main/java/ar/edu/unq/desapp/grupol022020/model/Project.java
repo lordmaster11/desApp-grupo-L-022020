@@ -1,5 +1,5 @@
 package ar.edu.unq.desapp.grupol022020.model;
-
+	
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -318,4 +318,5 @@ public static class ProjectBuilder {
                     "Cannot close the project, must reach "+ this.getPercentageRequiredForClosing() + " percent for closure");
             }
 	}
+
 }

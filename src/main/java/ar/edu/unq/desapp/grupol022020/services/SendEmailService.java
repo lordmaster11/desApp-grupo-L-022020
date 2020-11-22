@@ -16,6 +16,7 @@ import javax.mail.internet.MimeMessage;
 
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.List;
 
 @SpringBootApplication
 public class SendEmailService implements CommandLineRunner {
@@ -116,6 +117,36 @@ public class SendEmailService implements CommandLineRunner {
         //FileSystemResource file = new FileSystemResource(new File("path/android.png"));
 
        // helper.addAttachment("my_photo.png", new ClassPathResource("android.png"));
+
+        javaMailSender.send(msg);
+
+    }
+
+	void sendEmailsClose(List<String> emails, String nameProject) {
+		for(String email: emails) {
+		 try {
+			 sendEmailClose(email, nameProject);
+	        }catch (MessagingException e) {
+	        	e.printStackTrace();
+	        }catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	        System.out.println("Done");
+        }
+	}
+		
+	void sendEmailClose(String email, String nameProject) throws MessagingException, IOException {
+
+        MimeMessage msg = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(msg, true);
+
+        helper.setTo(email);
+        helper.setSubject("Proyecto cerrado");
+
+ 
+        helper.setText("El proyecto " + nameProject+" ha sido finalizado.Gracias por Donar", true);
+
+
 
         javaMailSender.send(msg);
 

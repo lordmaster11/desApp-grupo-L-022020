@@ -1,11 +1,13 @@
 package ar.edu.unq.desapp.grupol022020.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ar.edu.unq.desapp.grupol022020.model.Donation;
 import ar.edu.unq.desapp.grupol022020.model.User;
 import ar.edu.unq.desapp.grupol022020.model.UserAdmin;
 import ar.edu.unq.desapp.grupol022020.model.UserDonor;
@@ -16,6 +18,8 @@ import ar.edu.unq.desapp.grupol022020.webservices.exceptions.ResourceNotFoundExc
 public class UserService {
 	@Autowired
 	private UserRepository  repository;
+	@Autowired
+	private DonationService donationService;
 	
 	@Transactional
 	public User save(User model) {
@@ -88,5 +92,16 @@ public class UserService {
 		User newUser = new UserDonor(name, mail, password, nick);
 				
 		return save(newUser);
+	}
+
+	public List<String> findUserDonorProject(Integer id) {
+		List<String> nickDonors = new ArrayList<String>();
+		for(Donation donation : donationService.getDonationsProject(id)) {
+			String nick = donation.getUser().getNick();
+			if(!nickDonors.contains(nick)) {
+				nickDonors.add(nick);
+			}
+		}
+		return nickDonors;
 	}
 }

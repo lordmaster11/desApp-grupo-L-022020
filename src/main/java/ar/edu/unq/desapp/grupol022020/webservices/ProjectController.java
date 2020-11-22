@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 
 import ar.edu.unq.desapp.grupol022020.aspects.LogExecutionTime;
 import ar.edu.unq.desapp.grupol022020.aspects.LogExecutionTimeAspectAnnotation;
+import ar.edu.unq.desapp.grupol022020.model.Donation;
 import ar.edu.unq.desapp.grupol022020.model.Project;
 import ar.edu.unq.desapp.grupol022020.model.ProjetcException;
 import ar.edu.unq.desapp.grupol022020.services.ProjectService;
@@ -109,5 +110,7 @@ public class ProjectController {
 		logger.info("/////// Inside createProject() method");
 
 		return ResponseEntity.ok().body(projectService.save(newProject));
-    }	
+    }
+	
+
 }

@@ -23,4 +23,7 @@ public interface DonationRepository extends CrudRepository<Donation, Integer> {
 	
 	@Query("SELECT r FROM Donation r WHERE rownum<=10 ORDER BY r.amount DESC") 
 	List<Donation> top10();
+
+	@Query("SELECT r FROM Donation r where r.project.id = :id") 
+	List<Donation> findEmailByProject(@Param("id") Integer id);
 }
