@@ -1,5 +1,5 @@
 package ar.edu.unq.desapp.grupol022020.model;
-
+	
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -87,6 +87,7 @@ public class Project {
 			addTimeIfMissing();
 			addDonation(donation);
 			donatedAmount += donation.getAmount();
+			lastDonation = Calendar.getInstance();
 			
 		}else{
 			Integer amountMax = this.getMoneyNeeded() - this.getDonatedAmount();
@@ -307,4 +308,15 @@ public static class ProjectBuilder {
 
 		return calendar;	
 	}
+
+	public void closeProject() throws ProjetcException {
+		Integer percentageNow = (this.getDonatedAmount() * 100) / this.getMoneyNeeded();
+		if(percentageNow >= this.getPercentageRequiredForClosing()) {
+			this.setIsOpen(false);
+		}else {
+			throw new ProjetcException(
+                    "Cannot close the project, must reach "+ this.getPercentageRequiredForClosing() + " percent for closure");
+            }
+	}
+
 }

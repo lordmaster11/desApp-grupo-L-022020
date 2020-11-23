@@ -115,4 +115,20 @@ public class UserController {
 
 		return ResponseEntity.ok().body(userUpdate);	
 	}
+	
+	@LogExecutionTime
+    @GetMapping("/api/donorsOfProject/{id}")
+    public ResponseEntity<?> getDonorsOfProject(@PathVariable("id") Integer id) {
+    	try {
+    		List<String> list = userService.findUserDonorProject(id);
+     		logger.info("/////// Inside findUSerDonorProject() method");
+
+    	    return ResponseEntity.ok().body(list);
+        
+    	} catch (NoSuchElementException e){
+    		logger.warn("/////// This message is logged because WARN: Project with ID:" +id+" Not Found!");
+
+    		throw new ResourceNotFoundException("User with projectID:"+id+" Not Found!");
+    	}    	   
+    }
 }

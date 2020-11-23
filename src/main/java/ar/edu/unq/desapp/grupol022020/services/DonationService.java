@@ -55,4 +55,12 @@ public class DonationService {
 		
 		return save(newDonation);
 	}
+
+	public List<Donation> getTop10() {
+		return this.repository.top10();
+	}
+	
+	public List<Donation> getDonationsProject(Integer Id) {
+		return this.repository.findEmailByProject(Id);
+	}
 }
