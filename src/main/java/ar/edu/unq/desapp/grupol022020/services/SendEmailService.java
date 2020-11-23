@@ -31,111 +31,108 @@ public class SendEmailService {
 	@Autowired
 	private UserService userService;
 	
-	void sendEmailsClose(List<String> emails, String nameProject) {
+	public void sendEmailsClose(List<String> emails, String nameProject) {
 		for(String email: emails) {
 		 try {
 			 sendEmailClose(email, nameProject);
-	        }catch (MessagingException e) {
-	        	e.printStackTrace();
-	        }catch (IOException e) {
-	            e.printStackTrace();
-	        }
-	        System.out.println("Done");
+        }catch (MessagingException e) {
+        	e.printStackTrace();
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Done");
         }
 	}
 		
-	void sendEmailClose(String email, String nameProject) throws MessagingException, IOException {
+	public void sendEmailClose(String email, String nameProject) throws MessagingException, IOException {
 
-        MimeMessage msg = javaMailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(msg, true);
-
-        helper.setTo(email);
-        helper.setSubject("Proyecto cerrado");
-
- 
-        helper.setText("El proyecto " + nameProject+" ha sido finalizado.Gracias por Donar", true);
-
-        javaMailSender.send(msg);
-
+	    MimeMessage msg = javaMailSender.createMimeMessage();
+	    MimeMessageHelper helper = new MimeMessageHelper(msg, true);
+	
+	    helper.setTo(email);
+	    helper.setSubject("Proyecto cerrado");
+	    helper.setText("El proyecto " + nameProject+" ha sido finalizado.Gracias por Donar", true);
+	
+	    javaMailSender.send(msg);
     }
 
-	@Scheduled(cron = "0 16 14 ? * * ")
+	@Scheduled(cron = "0 10 18 ? * * ")
 	public void sendmail() {
-	       try {
-	    	   for(User user:userService.findAll()){
-	   	        try {
-	   	        	sendEmailWithAttachment(user.getMail());
-	   	        }catch (MessagingException e) {
-	   	        	e.printStackTrace();
-	   	        }catch (IOException e) {
-	   	            e.printStackTrace();
-	   	        }
-	   	        System.out.println("Done");
-	           }
+       try {
+    	   for(User user:userService.findAll()){
+   	        try {
+   	        	sendEmailWithAttachment(user.getMail());
+   	        }catch (MessagingException e) {
+   	        	e.printStackTrace();
+   	        }catch (IOException e) {
+   	            e.printStackTrace();
+   	        }
+   	        System.out.println("Done");
+           }
 
-	       } catch (Exception ex) {
-	           System.out.println("error running thread " + ex.getMessage());
-	       }
-	    }
+       } catch (Exception ex) {
+           System.out.println("error running thread " + ex.getMessage());
+       }
+    }
 	   
-	   void sendEmailWithAttachment(String email) throws MessagingException, IOException {
+   public void sendEmailWithAttachment(String email) throws MessagingException, IOException {
 
-	       MimeMessage msg = javaMailSender.createMimeMessage();
-	       MimeMessageHelper helper = new MimeMessageHelper(msg, true);
+       MimeMessage msg = javaMailSender.createMimeMessage();
+       MimeMessageHelper helper = new MimeMessageHelper(msg, true);
 
-	       helper.setTo(email);
-	       helper.setSubject("Ranking donantes");
+       helper.setTo(email);
+       helper.setSubject("Ranking donantes");
 
-	       String res = "";
-	       for(Donation donation: donationService.getTop10()) {
-	       	res = res.concat("<li> <mark>" +donation.getUser().getName() + ": " 
-	       		+ (donation.getAmount()) + "</mark> </li>");
-	       }
-	       String res2 = "";
-	       for(Project project: projectService.getTopLastDonations()) {
-	    	   Calendar donationDate = project.getLastDonation();
-	    	   res2 = res2.concat("<li> <mark>" +project.getFantasyName()+ ": " 
-	        		+ (donationDate.getTime()) + "</mark> </li>");
-	      }
-	      String someHtmlMessage = 
-	      		"<div class=\"leaderboard\">\n" + 
-	      		"  <h1>\n" + 
-	      		"    <svg class=\"ico-cup\">\n" + 
-	      		"      <use xlink:href=\"#cup\"></use>\n" + 
-	      		"    </svg>\n" + 
-	      		"    Mayores donaciones\n" + 
-	      		"  </h1>\n" + 
-	      		"  <ol>\n" + res + 
-	      		"  </ol>\n" + 
-	      		"</div>\n" + 
-	      		"  <h1>\n" + 
-	      		"    <svg class=\"ico-cup\">\n" + 
-	      		"      <use xlink:href=\"#cup\"></use>\n" + 
-	      		"    </svg>\n" + 
-	      		"    Top ultimas localidades sin recibir donaciones\n" + 
-	      		"  </h1>\n" + 
-	      		"  <ol>\n" + res2 + 
-	      		"  </ol>\n" + 
-	      		"\n" ;
-	      
+       String res = "";
+       for(Donation donation: donationService.getTop10()) {
+       	res = res.concat("<li> <mark>" +donation.getUser().getName() + ": " 
+       		+ (donation.getAmount()) + "</mark> </li>");
+       }
+       String res2 = "";
+       for(Project project: projectService.getTopLastDonations()) {
+    	   Calendar donationDate = project.getLastDonation();
+    	   res2 = res2.concat("<li> <mark>" +project.getFantasyName()+ ": " 
+        		+ (donationDate.getTime()) + "</mark> </li>");
+      }
+      String someHtmlMessage = 
+      		"<div class=\"leaderboard\">\n" + 
+      		"  <h1>\n" + 
+      		"    <svg class=\"ico-cup\">\n" + 
+      		"      <use xlink:href=\"#cup\"></use>\n" + 
+      		"    </svg>\n" + 
+      		"    Mayores donaciones\n" + 
+      		"  </h1>\n" + 
+      		"  <ol>\n" + res + 
+      		"  </ol>\n" + 
+      		"</div>\n" + 
+      		"  <h1>\n" + 
+      		"    <svg class=\"ico-cup\">\n" + 
+      		"      <use xlink:href=\"#cup\"></use>\n" + 
+      		"    </svg>\n" + 
+      		"    Top ultimas localidades sin recibir donaciones\n" + 
+      		"  </h1>\n" + 
+      		"  <ol>\n" + res2 + 
+      		"  </ol>\n" + 
+      		"\n" ;
+      
 
-	       helper.setText(someHtmlMessage, true);
-	       
-	       someHtmlMessage.concat(       		
-	       		"<div class=\"leaderboard\">\n" + 
-	          		"  <h1>\n" + 
-	          		"    <svg class=\"ico-cup\">\n" + 
-	          		"      <use xlink:href=\"#cup\"></use>\n" + 
-	          		"    </svg>\n" + 
-	          		"    Mayores donaciones\n" + 
-	          		"  </h1>\n" + 
-	          		"  <ol>\n" + res2 + 
-	          		"  </ol>\n" + 
-	          		"</div>\n" + 
-	          		"\n");
+       helper.setText(someHtmlMessage, true);
+       
+       someHtmlMessage.concat(       		
+       		"<div class=\"leaderboard\">\n" + 
+          		"  <h1>\n" + 
+          		"    <svg class=\"ico-cup\">\n" + 
+          		"      <use xlink:href=\"#cup\"></use>\n" + 
+          		"    </svg>\n" + 
+          		"    Mayores donaciones\n" + 
+          		"  </h1>\n" + 
+          		"  <ol>\n" + res2 + 
+          		"  </ol>\n" + 
+          		"</div>\n" + 
+          		"\n");
 
-	       javaMailSender.send(msg);
+       javaMailSender.send(msg);
 
-	   }
+   }
 
 }
