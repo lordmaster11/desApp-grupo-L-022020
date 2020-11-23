@@ -19,7 +19,7 @@ import java.util.Calendar;
 import java.util.List;
 
 @SpringBootApplication
-public class SendEmailService implements CommandLineRunner {
+public class SendEmailService {
 
     @Autowired
     private JavaMailSender javaMailSender;
@@ -31,10 +31,8 @@ public class SendEmailService implements CommandLineRunner {
 	private UserService userService;
 	
 
-    public static void main(String[] args) {
-        SpringApplication.run(SendEmailService.class, args);
-    }
-
+ 
+/*
     @Override
     public void run(String... args) throws MessagingException, IOException {
 
@@ -60,10 +58,6 @@ public class SendEmailService implements CommandLineRunner {
         helper.setTo(email);
         helper.setSubject("Ranking donantes");
 
-        // default = text/plain
-        //helper.setText("Check attachment for image!");
-
-        // true = text/html
         String res = "";
         for(Donation donation: donationService.getTop10()) {
         	res = res.concat("<li> <mark>" +donation.getUser().getName() + ": " 
@@ -111,17 +105,11 @@ public class SendEmailService implements CommandLineRunner {
            		"  </ol>\n" + 
            		"</div>\n" + 
            		"\n");
-        
-        
-        // hard coded a file path
-        //FileSystemResource file = new FileSystemResource(new File("path/android.png"));
-
-       // helper.addAttachment("my_photo.png", new ClassPathResource("android.png"));
 
         javaMailSender.send(msg);
 
     }
-
+*/
 	void sendEmailsClose(List<String> emails, String nameProject) {
 		for(String email: emails) {
 		 try {
@@ -146,9 +134,8 @@ public class SendEmailService implements CommandLineRunner {
  
         helper.setText("El proyecto " + nameProject+" ha sido finalizado.Gracias por Donar", true);
 
-
-
         javaMailSender.send(msg);
 
     }
+
 }
