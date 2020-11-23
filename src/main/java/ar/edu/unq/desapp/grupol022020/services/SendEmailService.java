@@ -1,21 +1,14 @@
 package ar.edu.unq.desapp.grupol022020.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-
-import ar.edu.unq.desapp.grupol022020.model.Donation;
-import ar.edu.unq.desapp.grupol022020.model.Project;
-import ar.edu.unq.desapp.grupol022020.model.User;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 import java.io.IOException;
-import java.util.Calendar;
 import java.util.List;
 
 @SpringBootApplication
@@ -23,12 +16,12 @@ public class SendEmailService {
 
     @Autowired
     private JavaMailSender javaMailSender;
-	@Autowired
-	private DonationService donationService;
-	@Autowired
-	private ProjectService projectService;
-	@Autowired
-	private UserService userService;
+//	@Autowired
+//	private DonationService donationService;
+//	@Autowired
+//	private ProjectService projectService;
+//	@Autowired
+//	private UserService userService;
 	
 
  
