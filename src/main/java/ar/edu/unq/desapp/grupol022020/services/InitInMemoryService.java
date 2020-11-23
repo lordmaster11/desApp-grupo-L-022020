@@ -73,8 +73,8 @@ public class InitInMemoryService {
 		Project project6 = new Project.ProjectBuilder(location6).withFantasyName("Viva Internet").build();
 		Project project7 = new Project.ProjectBuilder(location7).withFantasyName("Internet por fin").withPercentageRequiredForClosing(75).build();
 
-		User userAdmin = new UserAdmin("Cesar", "donacionesargentina@gmail.com", "1234", "Cesare");
-		User userDonor = new UserDonor("Marcelo", "jm@gmail.com", "1234", "Master");
+		User userAdmin = new UserAdmin("Cesar", "cesar.perez@xappia.com", "1234", "Cesare");
+		User userDonor = new UserDonor("Marcelo", "jmdicostanzo11@gmail.com", "1234", "Master");
 		User userDonor2 = new UserDonor("Esteban", "donacionesargentinaconectada@gmail.com", "1234", "Kito");
 		User userDonor3 = new UserDonor("Ana", "ana@gmail.com", "1234", "Anita");
 		User userDonor4 = new UserDonor("Lisandro", "lopez@gmail.com", "1234", "Licha");
