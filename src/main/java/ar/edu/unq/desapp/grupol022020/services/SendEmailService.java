@@ -56,7 +56,7 @@ public class SendEmailService {
 	    javaMailSender.send(msg);
     }
 
-	@Scheduled(cron = "0 10 18 ? * * ")
+	@Scheduled(cron = "30 00 19 ? * * ")
 	public void sendmail() {
        try {
     	   for(User user:userService.findAll()){
