@@ -64,6 +64,8 @@ public class InitInMemoryService {
 		Location location17 = new Location("Miyuyoc", "Jujuy", 100, false);
 		Location location18 = new Location("Susquez", "Jujuy", 1949, false);
 		Location location19 = new Location("Huancar", "Jujuy", 1235, false);
+		Location location20 = new Location("Santa Rosa", "La Pampa", 103241, false);
+
 		
 		Project project = new Project.ProjectBuilder(location).withFantasyName("Conectar").withFactor(100).withPercentageRequiredForClosing(70).build();
 		Project project2 = new Project.ProjectBuilder(location2).withFantasyName("Conectarse").build();
@@ -72,30 +74,35 @@ public class InitInMemoryService {
 		Project project5 = new Project.ProjectBuilder(location5).withFantasyName("Internet une").withPercentageRequiredForClosing(60).build();
 		Project project6 = new Project.ProjectBuilder(location6).withFantasyName("Viva Internet").build();
 		Project project7 = new Project.ProjectBuilder(location7).withFantasyName("Internet por fin").withPercentageRequiredForClosing(75).build();
+		Project project8 = new Project.ProjectBuilder(location20).withFantasyName("Pampa mía").withPercentageRequiredForClosing(60).build();
 
 		User userAdmin = new UserAdmin("Cesar", "cesar.perez@xappia.com", "1234", "Cesare");
 		User userDonor = new UserDonor("Marcelo", "jmdicostanzo11@gmail.com", "1234", "Master");
 		User userDonor2 = new UserDonor("Esteban", "donacionesargentinaconectada@gmail.com", "1234", "Kito");
 		User userDonor3 = new UserDonor("Ana", "ana@gmail.com", "1234", "Anita");
 		User userDonor4 = new UserDonor("Lisandro", "lopez@gmail.com", "1234", "Licha");
+		User userAdmin2 = new UserAdmin("admin", "admin@gmail.com", "1234", "Admin");
 
 		Donation donation  = userDonor.donate(10000, project, "Mi gran donacion");
 		Donation donation2 = userDonor.donate(5000, project, "Mi segunda gran donacion");
 	    Donation donation3 = userDonor.donate(2000, project, "La tercera es la vencida");
 		Donation donation4 = userDonor.donate(3000, project6, "Gracias por la magia!!!");
-		
+		Donation donation14 = userDonor.donate(1000, project8, "Mi donación!!!");
+
 		Donation donation5 = userDonor2.donate(500, project2, "Mi donacion");
 		Donation donation6 = userDonor2.donate(10000, project3, "Mi segunda donacion");
+		Donation donation15 = userDonor2.donate(2000, project8, "Mi tercera!!!");
 
 		Donation donation7 = userDonor3.donate(1000, project4, "Donación");
 		Donation donation8 = userDonor3.donate(6000, project, "Unión, paz y armonía");
-		
+		Donation donation16 = userDonor3.donate(3000, project5, "Unión, paz y armonía");
+
 		Donation donation9 = userDonor4.donate(3000, project5, "Primera");
 		Donation donation10 = userDonor4.donate(3000, project3, "Segunda");
 		Donation donation11 = userDonor4.donate(3000, project6, "Tercera");
 		Donation donation12 = userDonor4.donate(3000, project, "Cuarta");
 		
-		Donation donation13 = userDonor3.donate(490000, project7, "DOnacion para cierre");
+		Donation donation13 = userDonor3.donate(490000, project7, "Donación para cierre");
 		
 		donationService.save(donation);
 		donationService.save(donation2);
@@ -110,8 +117,12 @@ public class InitInMemoryService {
 		donationService.save(donation11);
 		donationService.save(donation12);
 		donationService.save(donation13);
-		
+		donationService.save(donation14);
+		donationService.save(donation15);
+		donationService.save(donation16);
+
 		userService.save(userAdmin);
+		userService.save(userAdmin2);
 
 		projectService.save(project);
 		projectService.save(project2);
@@ -138,6 +149,6 @@ public class InitInMemoryService {
 		locationService.save(location16);
 		locationService.save(location17);
 		locationService.save(location18);	
-		locationService.save(location19);	
+		locationService.save(location19);		
 	}
 }

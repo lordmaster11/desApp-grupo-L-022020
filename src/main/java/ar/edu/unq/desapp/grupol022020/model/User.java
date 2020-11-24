@@ -11,6 +11,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -26,12 +29,23 @@ public abstract class User {
 	@Column(name = "id", updatable = false, nullable = false)
 	private Integer id;
 	
+	@NotBlank(message= "Name cannot be blank")
+    @Size(min= 4, message= "Name must be longer than 4 characters")
 	@Column
 	private String name;
+	
+	@NotBlank(message= "Email cannot be blank")
+    @Email(message= "Not a valid email")
 	@Column
 	private String mail;
+	
+	@NotBlank(message= "password cannot be blank")
+    @Size(min= 4, message= "Password must be longer than 4 characters")
 	@Column
 	private String password;
+	
+	@NotBlank(message= "password cannot be blank")
+    @Size(min= 4, message= "Nick must be longer than 4 characters")
 	@Column
 	private String nick;
 	@Column

@@ -16,6 +16,7 @@ import ar.edu.unq.desapp.grupol022020.model.Location;
 import ar.edu.unq.desapp.grupol022020.model.Project;
 import ar.edu.unq.desapp.grupol022020.model.ProjetcException;
 import ar.edu.unq.desapp.grupol022020.model.User;
+import ar.edu.unq.desapp.grupol022020.model.UserException;
 
 public class ProjectTest {
 	@Test
@@ -401,5 +402,26 @@ public class ProjectTest {
 
 		assertEquals(project.getNumberOfDonors(), 1);
 		assertEquals(project.isNewDonor(user), true);
+	}
+	
+	@Test
+	public void notCloseProject() throws ProjetcException, UserException{
+		Location location = mock(Location.class);
+		when(location.getPopulation()).thenReturn(300);
+		User user = mock(User.class);
+
+
+		Project project = new Project.ProjectBuilder(location)
+									   .withFactor(10)
+									   .withPercentageRequiredForClosing(70)
+									   .build();
+				
+		user.donate(1000, project, "Donación");
+		
+		ProjetcException exception = Assertions.assertThrows(ProjetcException.class, () -> {
+				project.closeProject();
+		  });	
+		
+		assertEquals("Cannot close the project, must reach "+ project.getPercentageRequiredForClosing() + " percent for closure", exception.getMessage());
 	}
 }
