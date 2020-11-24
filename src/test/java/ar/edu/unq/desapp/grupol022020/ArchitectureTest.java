@@ -17,7 +17,7 @@ import com.tngtech.archunit.core.importer.ImportOption;
 import com.tngtech.archunit.lang.ArchRule;
 import com.tngtech.archunit.lang.syntax.ArchRuleDefinition;
 
-class ArchitectureTest {	
+public class ArchitectureTest {	
 	JavaClasses classes = new ClassFileImporter()
 			.withImportOption(ImportOption.Predefined.DO_NOT_INCLUDE_TESTS)
 		    .withImportOption(ImportOption.Predefined.DO_NOT_INCLUDE_ARCHIVES)
@@ -26,7 +26,7 @@ class ArchitectureTest {
 	//////SERVICE  	
 	@Test
 	public void serviceClassesShouldBeAnnotatedWithServiceAnnotation() {
-	    ArchRule rule = ArchRuleDefinition.classes()
+	    ArchRule rule = classes()
 	    		.that().haveSimpleNameEndingWith("Service")
 	    		.should().beAnnotatedWith(Service.class);
 	    
@@ -54,7 +54,7 @@ class ArchitectureTest {
 	
 	@Test
 	public void transactionalAnnotationChecks() {
-	    ArchRule rule = ArchRuleDefinition.classes()      
+	    ArchRule rule = classes()      
 	    		.that()
 	    		.areAssignableTo(Entity.class)
 	    		.should().onlyBeAccessed()
@@ -66,7 +66,7 @@ class ArchitectureTest {
 	//////REPOSITORY
 	@Test
 	public void repositoryClassesShouldBeAnnotatedWithRepositoryAnnotation() {
-	    ArchRule rule = ArchRuleDefinition.classes()
+	    ArchRule rule = classes()
 	    		.that().haveSimpleNameEndingWith("Repository")
 	            .and().areNotInterfaces()
 	            .should().beAnnotatedWith(Repository.class);
@@ -86,7 +86,7 @@ class ArchitectureTest {
 	/////MODEL
 	@Test
 	public void modelClassesShouldOnlyBeAccessedByOtherModelClasses() {
-	    ArchRule rule = ArchRuleDefinition.classes()
+	    ArchRule rule = classes()
 	    		.that().resideInAPackage(".model..")
 	    		.should().onlyBeAccessed().byAnyPackage(".model..");
 	    
@@ -107,7 +107,7 @@ class ArchitectureTest {
 	//////CONTROLLER  	
 	@Test
 	public void controllerClassesShouldBeAnnotatedWithControllerOrRestControllerAnnotation() {
-	    ArchRule rule = ArchRuleDefinition.classes()      
+	    ArchRule rule = classes()      
 	    		.that()
 	    		.haveSimpleNameEndingWith("Controller")
 	    		.should().beAnnotatedWith(Controller.class)

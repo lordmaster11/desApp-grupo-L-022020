@@ -1,9 +1,11 @@
 package ar.edu.unq.desapp.grupol022020.webservices;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.util.NoSuchElementException;
+
+import javax.validation.Valid;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -32,45 +34,41 @@ public class UserController {
     @Autowired
     private UserService userService;  
     
-	private static Logger logger = LoggerFactory.getLogger(LogExecutionTimeAspectAnnotation.class);
-
 	@LogExecutionTime
+	@LogExecutionTimeAspectAnnotation
     @GetMapping("/api/users")
     public ResponseEntity<?> allUsers() {
         List<User> list = userService.findAll();
-		logger.info("/////// Inside allUsers() method");
 
         return ResponseEntity.ok().body(list);
     }
 	
 	@LogExecutionTime
+	@LogExecutionTimeAspectAnnotation
     @GetMapping("/api/users/{id}")
     public ResponseEntity<?> getUserById(@PathVariable("id") Integer id) {
     	try {
     		User user = userService.findByID(id);
-    		logger.info("/////// Inside getUserById() method");
     		return ResponseEntity.ok().body(user);
         
     	} catch (NoSuchElementException e){
-    		logger.warn("/////// This message is logged because WARN: User with ID:" +id+" Not Found!");
 
     		throw new ResourceNotFoundException("User with ID:"+id+" Not Found!");
     	}    	   
     }
     
 	@LogExecutionTime
+	@LogExecutionTimeAspectAnnotation
 	@DeleteMapping(value="/api/users/{id}")
     public ResponseEntity<?> deleteUserById(@PathVariable("id") Integer id) {
     	try {
     		User user = userService.findByID(id);
         
     		userService.deleteById(user.getId());
-    		logger.info("/////// Inside deleteUserById() method");
 
     		return ResponseEntity.ok().body("User deleted with success!");	
         
     	} catch (NoSuchElementException e){
-    		logger.warn("/////// This message is logged because WARN: User with ID:" +id+" Not Found!");
 
     		throw new ResourceNotFoundException("User with ID:"+id+" Not Found!");
     	} catch (DataIntegrityViolationException e){
@@ -79,56 +77,55 @@ public class UserController {
     }
 	
 	@LogExecutionTime
+	@LogExecutionTimeAspectAnnotation
 	@PostMapping("/api/users/login")
-	public ResponseEntity<User> login(@RequestParam ("mail") String mail,
-									  @RequestParam ("password") String password) {	
+	public ResponseEntity<User> login(@Valid @RequestParam ("mail") @NotBlank @Email String mail,
+									  @RequestParam ("password") @NotBlank String password) {	
 		
 		User userLogin = userService.login(mail, password);
-		logger.info("/////// Inside login() method");
 
 		return ResponseEntity.ok().body(userLogin);	
 	}
 	
 	@LogExecutionTime
+	@LogExecutionTimeAspectAnnotation
 	@PostMapping(path="/api/users/register")
-	public ResponseEntity<User> register(@RequestParam ("name") String name,
-										 @RequestParam ("mail") String mail,
-										 @RequestParam ("password") String password,
-									  	 @RequestParam ("nick") String nick) {
+	public ResponseEntity<User> register(@Valid @RequestParam ("name") @NotBlank String name,
+										 @RequestParam ("mail") @NotBlank @Email String mail,
+										 @RequestParam ("password") @NotBlank String password,
+									  	 @RequestParam ("nick") @NotBlank String nick) {
 		
 		User userRegistrate = userService.register(name, mail, password, nick);
-		logger.info("/////// Inside register() method");
 		
 		return ResponseEntity.ok().body(userRegistrate);	
 	}
 	
 	@LogExecutionTime
+	@LogExecutionTimeAspectAnnotation
 	@PutMapping("/api/users/{id}")
-	public ResponseEntity<User> updateUserById(@PathVariable("id") Integer id, 
+	public ResponseEntity<User> updateUserById(@Valid @PathVariable("id") Integer id, 
 			@RequestParam (value = "name", required=false) String name,
 			@RequestParam (value = "password", required=false) String password,
 			@RequestParam (value = "nick", required=false) String nick, 
 			@RequestParam (value = "role", required=false) String role) {
 		
 		User userUpdate = userService.update(id,name,password,nick,role);
-		logger.info("/////// Inside updateUserById() method");
 
 		return ResponseEntity.ok().body(userUpdate);	
 	}
 	
 	@LogExecutionTime
+	@LogExecutionTimeAspectAnnotation
     @GetMapping("/api/donorsOfProject/{id}")
     public ResponseEntity<?> getDonorsOfProject(@PathVariable("id") Integer id) {
     	try {
     		List<String> list = userService.findUserDonorProject(id);
-     		logger.info("/////// Inside findUSerDonorProject() method");
 
     	    return ResponseEntity.ok().body(list);
         
     	} catch (NoSuchElementException e){
-    		logger.warn("/////// This message is logged because WARN: Project with ID:" +id+" Not Found!");
 
-    		throw new ResourceNotFoundException("User with projectID:"+id+" Not Found!");
+    		throw new ResourceNotFoundException("Project with ID:"+id+" Not Found!");
     	}    	   
     }
 }
