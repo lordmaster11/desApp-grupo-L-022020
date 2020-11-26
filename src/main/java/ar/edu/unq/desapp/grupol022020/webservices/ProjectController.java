@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 
 import ar.edu.unq.desapp.grupol022020.aspects.LogExecutionTime;
-import ar.edu.unq.desapp.grupol022020.aspects.LogExecutionTimeAspectAnnotation;
 import ar.edu.unq.desapp.grupol022020.model.Project;
 import ar.edu.unq.desapp.grupol022020.model.ProjetcException;
 import ar.edu.unq.desapp.grupol022020.services.ProjectService;
@@ -34,7 +33,6 @@ public class ProjectController {
     private ProjectService projectService;
     
 	@LogExecutionTime
-	@LogExecutionTimeAspectAnnotation
     @GetMapping("/api/projects")
     public ResponseEntity<?> allProjects() {
         List<Project> list = projectService.findAll();
@@ -43,7 +41,6 @@ public class ProjectController {
     } 
 	
 	@LogExecutionTime
-	@LogExecutionTimeAspectAnnotation
     @GetMapping("/api/project/{id}")
     public ResponseEntity<?> getProjectById(@PathVariable("id") Integer id) {
     	try {
@@ -58,7 +55,6 @@ public class ProjectController {
     }
 	
 	@LogExecutionTime
-	@LogExecutionTimeAspectAnnotation
 	@PutMapping(path = "/api/closeProject/{id}")
     public ResponseEntity<Project> updateProjectById(@PathVariable("id") Integer id) throws ProjetcException {
     	try {
@@ -73,7 +69,6 @@ public class ProjectController {
     }
 
 	@LogExecutionTime
-	@LogExecutionTimeAspectAnnotation
 	@DeleteMapping(value="/api/project/{id}")
     public ResponseEntity<?> deleteProjectById(@PathVariable("id") Integer id) {
     	try {
@@ -91,7 +86,6 @@ public class ProjectController {
     }
 	
 	@LogExecutionTime
-	@LogExecutionTimeAspectAnnotation
     @PostMapping("/api/newProject")
     public ResponseEntity<Project> createProject(@Validated 
     		@RequestParam ("locationProjectId") Integer locationProjectId, 

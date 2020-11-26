@@ -2,10 +2,7 @@ package ar.edu.unq.desapp.grupol022020.webservices;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-
 import javax.validation.Valid;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -21,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ar.edu.unq.desapp.grupol022020.aspects.LogExecutionTime;
-import ar.edu.unq.desapp.grupol022020.aspects.LogExecutionTimeAspectAnnotation;
 import ar.edu.unq.desapp.grupol022020.model.User;
 import ar.edu.unq.desapp.grupol022020.services.UserService;
 import ar.edu.unq.desapp.grupol022020.webservices.exceptions.ResourceBadRequestException;
@@ -35,7 +31,6 @@ public class UserController {
     private UserService userService;  
     
 	@LogExecutionTime
-	@LogExecutionTimeAspectAnnotation
     @GetMapping("/api/users")
     public ResponseEntity<?> allUsers() {
         List<User> list = userService.findAll();
@@ -44,7 +39,6 @@ public class UserController {
     }
 	
 	@LogExecutionTime
-	@LogExecutionTimeAspectAnnotation
     @GetMapping("/api/users/{id}")
     public ResponseEntity<?> getUserById(@PathVariable("id") Integer id) {
     	try {
@@ -58,7 +52,6 @@ public class UserController {
     }
     
 	@LogExecutionTime
-	@LogExecutionTimeAspectAnnotation
 	@DeleteMapping(value="/api/users/{id}")
     public ResponseEntity<?> deleteUserById(@PathVariable("id") Integer id) {
     	try {
@@ -77,10 +70,9 @@ public class UserController {
     }
 	
 	@LogExecutionTime
-	@LogExecutionTimeAspectAnnotation
 	@PostMapping("/api/users/login")
-	public ResponseEntity<User> login(@Valid @RequestParam ("mail") @NotBlank @Email String mail,
-									  @RequestParam ("password") @NotBlank String password) {	
+	public ResponseEntity<User> login(@Valid @RequestParam ("mail") String mail,
+									  @RequestParam ("password") String password) {	
 		
 		User userLogin = userService.login(mail, password);
 
@@ -88,12 +80,11 @@ public class UserController {
 	}
 	
 	@LogExecutionTime
-	@LogExecutionTimeAspectAnnotation
 	@PostMapping(path="/api/users/register")
-	public ResponseEntity<User> register(@Valid @RequestParam ("name") @NotBlank String name,
-										 @RequestParam ("mail") @NotBlank @Email String mail,
-										 @RequestParam ("password") @NotBlank String password,
-									  	 @RequestParam ("nick") @NotBlank String nick) {
+	public ResponseEntity<User> register(@Valid @RequestParam ("name") String name,
+										 @RequestParam ("mail") String mail,
+										 @RequestParam ("password") String password,
+									  	 @RequestParam ("nick") String nick) throws Exception {
 		
 		User userRegistrate = userService.register(name, mail, password, nick);
 		
@@ -101,7 +92,6 @@ public class UserController {
 	}
 	
 	@LogExecutionTime
-	@LogExecutionTimeAspectAnnotation
 	@PutMapping("/api/users/{id}")
 	public ResponseEntity<User> updateUserById(@Valid @PathVariable("id") Integer id, 
 			@RequestParam (value = "name", required=false) String name,
@@ -115,7 +105,6 @@ public class UserController {
 	}
 	
 	@LogExecutionTime
-	@LogExecutionTimeAspectAnnotation
     @GetMapping("/api/donorsOfProject/{id}")
     public ResponseEntity<?> getDonorsOfProject(@PathVariable("id") Integer id) {
     	try {

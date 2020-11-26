@@ -2,6 +2,7 @@ package ar.edu.unq.desapp.grupol022020.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -88,7 +89,8 @@ public class UserService {
     	return user;
     }
 
-	public User register(String name, String mail, String password, String nick) {
+	public User register(String name, String mail, String password, String nick) throws Exception {
+		validateMail(mail);
 		User newUser = new UserDonor(name, mail, password, nick);
 				
 		return save(newUser);
@@ -103,5 +105,19 @@ public class UserService {
 			}
 		}
 		return nickDonors;
+	}
+	
+	public void validateMail(String mail) {
+		try {
+			String isValidEmail = "^(?=.{1,64}@)[\\p{L}0-9_-]+(\\.[\\p{L}0-9_-]+)*@"
+		            + "[^-][\\p{L}0-9-]+(\\.[\\p{L}0-9-]+)*(\\.[\\p{L}]{2,})$";
+			
+			Pattern pattern = Pattern.compile(isValidEmail);
+			if (!pattern.matcher(mail).matches())
+				throw new Exception();
+    		
+    	} catch (Exception e){
+    		throw new ResourceNotFoundException("Access denied: Mail not valid");
+    	}			
 	}
 }

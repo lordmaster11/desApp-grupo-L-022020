@@ -1,73 +1,34 @@
 package ar.edu.unq.desapp.grupol022020.aspects;
 
-import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoField;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.core.annotation.Order;
 
 @Aspect
 @Component
-public class LogInfoAspectCustomPointcut {
+@Order(0)
+public class LogInfoAspectCustomPointcut  {
 
-	Logger logger = LoggerFactory.getLogger(LogInfoAspectCustomPointcut.class);
+	public static Logger logger = LoggerFactory.getLogger(LogInfoAspectCustomPointcut.class);
+	
+	/// CUSTOM  POINTCUT////
+	@Pointcut("execution(* ar.edu.unq.desapp.grupol022020.webservices..*(..))")
 
-    @Around("@annotation(LogExecutionTime)")
-    public Object logExecutionTime(ProceedingJoinPoint joinPoint) throws Throwable {
-    	MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-        getTime(signature, "started");
-        long start = System.currentTimeMillis();
-        Object proceed = joinPoint.proceed();
-        long executionTime = System.currentTimeMillis() - start;
-        getTime(signature, "FINISHED");
-        logger.info("METHOD: " + signature.getName() + " in CLASS: " + signature.getDeclaringType().getSimpleName() + " EXECUTED in: " + executionTime + " ms");
-	        
-        return proceed;
-    }
+	public void methodsStarterServicePointcut() {
+	}
 
-    @Around("@annotation(LogExecutionTimeAspectAnnotation)")
-    public Object logExecutionArguments(ProceedingJoinPoint joinPoint) throws Throwable {
-        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-        Method method = signature.getMethod();
-        List<Parameter> parameters = Arrays.asList(method.getParameters());
-        List<Object> arguments = Arrays.asList(joinPoint.getArgs());
-        getArguments(signature, parameters, arguments);
-        Object proceed = joinPoint.proceed();
-        
-        return proceed;
-    }
+	@Before("methodsStarterServicePointcut()")
+	public void beforeMethods() throws Throwable {
+		logger.info("/////// BEFORE /////");
+	}
 
-	private void getTime(MethodSignature signature, String operation) {
-		LocalDateTime now = LocalDateTime.now();
-		int year = now.getYear();
-		int month = now.getMonthValue();
-		int day = now.getDayOfMonth();
-		int hour = now.getHour();
-		int minute = now.getMinute();
-		int second = now.getSecond();
-		int millis = now.get(ChronoField.MILLI_OF_SECOND);
-		logger.info("METHOD: " + signature.getName() + " in CLASS: " + signature.getDeclaringType().getSimpleName() + 
-				" " + operation + " at: " +hour + ":" + minute + ":" + second + ":" + millis + " on " + day + "-" + month + "-" + year);
-	    }
-
-	private void getArguments(MethodSignature signature, List<Parameter> parameters, List<Object> arguments) {
-		logger.info("METHOD: " + signature.getName() + " in CLASS: " + signature.getDeclaringType().getSimpleName() + " called with arguments:");
-        Iterator<Parameter> it1 = parameters.iterator();
-        Iterator<Object> it2 = arguments.iterator();
-        while(it1.hasNext() && it2.hasNext()) {
-            Parameter parameter = (Parameter) it1.next();
-            Object argument = it2.next();
-            logger.info("TYPE: " + parameter.getType().getSimpleName() + " | NAME: " + parameter.getName() + " | VALUE:  " + argument.toString());
-        }
-    }
+	@After("methodsStarterServicePointcut()")
+	public void afterMethods() throws Throwable {
+		logger.info("/////// AFTER  /////");
+	}
 }
