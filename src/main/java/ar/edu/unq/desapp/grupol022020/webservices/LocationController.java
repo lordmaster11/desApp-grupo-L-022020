@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import ar.edu.unq.desapp.grupol022020.aspects.LogExecutionTime;
-import ar.edu.unq.desapp.grupol022020.aspects.LogExecutionTimeAspectAnnotation;
 import ar.edu.unq.desapp.grupol022020.model.Location;
 import ar.edu.unq.desapp.grupol022020.services.LocationService;
 import ar.edu.unq.desapp.grupol022020.webservices.exceptions.ResourceBadRequestException;
@@ -31,7 +30,6 @@ public class LocationController {
     private LocationService locationService;
     
 	@LogExecutionTime
-	@LogExecutionTimeAspectAnnotation
     @GetMapping("/api/locations")
     public ResponseEntity<?> allLocations() {
         List<Location> list = locationService.findAll();
@@ -40,7 +38,6 @@ public class LocationController {
     } 
     
 	@LogExecutionTime
-	@LogExecutionTimeAspectAnnotation
     @GetMapping("/api/locationsPossible")
     public ResponseEntity<?> locationsPossibleProject() {
         List<Location> list = locationService.findPossibleProject();
@@ -49,7 +46,6 @@ public class LocationController {
     } 
     
 	@LogExecutionTime
-	@LogExecutionTimeAspectAnnotation
     @GetMapping("/api/locations/{id}")
     public ResponseEntity<?> getLocationById(@PathVariable("id") Integer id) {
     	try {
@@ -64,7 +60,6 @@ public class LocationController {
     }
     
 	@LogExecutionTime
-	@LogExecutionTimeAspectAnnotation
 	@PostMapping("/api/location")
     public ResponseEntity<Location> createLocation(@Validated @RequestBody Location location) {
     		Location newlocation = locationService.save(location);
@@ -73,7 +68,6 @@ public class LocationController {
     }
 	
 	@LogExecutionTime
-	@LogExecutionTimeAspectAnnotation
 	@DeleteMapping(value="/api/location/{id}")
     public ResponseEntity<?> deleteLocationById(@PathVariable("id") Integer id) {
     	try {

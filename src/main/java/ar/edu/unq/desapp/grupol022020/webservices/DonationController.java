@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ar.edu.unq.desapp.grupol022020.aspects.LogExecutionTime;
-import ar.edu.unq.desapp.grupol022020.aspects.LogExecutionTimeAspectAnnotation;
 import ar.edu.unq.desapp.grupol022020.model.Donation;
 import ar.edu.unq.desapp.grupol022020.model.ProjetcException;
 import ar.edu.unq.desapp.grupol022020.model.UserException;
@@ -30,7 +29,6 @@ public class DonationController {
     private DonationService donationService;
     
 	@LogExecutionTime
-	@LogExecutionTimeAspectAnnotation
     @GetMapping("/api/donations")
     public ResponseEntity<?> allDonations() {
         List<Donation> list = donationService.findAll();
@@ -39,7 +37,6 @@ public class DonationController {
     }
     
 	@LogExecutionTime
-	@LogExecutionTimeAspectAnnotation
     @GetMapping("/api/donations/{id}")
     public ResponseEntity<?> getDonationById(@PathVariable("id") Integer id) {
     	try {
@@ -54,7 +51,6 @@ public class DonationController {
     }
     
 	@LogExecutionTime
-	@LogExecutionTimeAspectAnnotation
     @GetMapping("/api/donationsUser/{id}")
     public ResponseEntity<?> getDonationsByUserId(@PathVariable("id") Integer id) {
     	try {
@@ -69,7 +65,6 @@ public class DonationController {
     }
     
 	@LogExecutionTime
-	@LogExecutionTimeAspectAnnotation
     @PostMapping("/api/donation")
     public ResponseEntity<Donation> createDonation(@Validated 
     		@RequestParam ("userId") Integer userId,

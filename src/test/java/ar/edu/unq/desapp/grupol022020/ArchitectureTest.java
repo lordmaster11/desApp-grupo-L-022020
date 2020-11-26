@@ -18,7 +18,7 @@ import com.tngtech.archunit.lang.ArchRule;
 import com.tngtech.archunit.lang.syntax.ArchRuleDefinition;
 
 public class ArchitectureTest {	
-	JavaClasses classes = new ClassFileImporter()
+	private JavaClasses classes = new ClassFileImporter()
 			.withImportOption(ImportOption.Predefined.DO_NOT_INCLUDE_TESTS)
 		    .withImportOption(ImportOption.Predefined.DO_NOT_INCLUDE_ARCHIVES)
 		    .importPackages("ar.edu.unq.desapp.grupol022020");
